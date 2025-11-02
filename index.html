@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FATTO CRIMINAL - Jogos de Mistério e Investigação</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0d0d0d;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        /* ==================== HEADER ==================== */
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 20px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(220, 53, 69, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #dc3545;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: #dc3545;
+        }
+
+        .btn-primary {
+            background: #dc3545;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #dc3545;
+            padding: 12px 30px;
+            border-radius: 25px;
+            border: 2px solid #dc3545;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* ==================== SECTIONS ==================== */
+        .section {
+            display: none;
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 5%;
+        }
+
+        /* ==================== HOME ==================== */
+        .hero {
+            padding: 100px 5% 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border: 1px solid #ffc107;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .card-stack {
+            position: relative;
+            width: 350px;
+            height: 450px;
+            margin: 0 auto;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .card:nth-child(1) {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            transform: rotate(-5deg) translateY(20px);
+            z-index: 3;
+        }
+
+        .card:nth-child(2) {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            transform: rotate(3deg) translateY(-10px);
+            z-index: 2;
+        }
+
+        .card:hover {
+            transform: scale(1.05) rotate(0deg);
+        }
+
+        /* ==================== COMO FUNCIONA ==================== */
+        .como-funciona {
+            padding: 80px 5%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .como-funciona h2 {
+            text-align: center;
+            font-size: 42px;
+            color: #dc3545;
+            margin-bottom: 60px;
+        }
+
+        .funciona-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .funciona-card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .funciona-card .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .funciona-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .funciona-card p {
+            color: #999;
+        }
+
+        /* ==================== CASOS ==================== */
+        .casos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .caso-card {
+            background: rgba(20, 20, 20, 0.9);
+            border: 2px solid rgba(220, 53, 69, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .caso-card:hover {
+            border-color: #dc3545;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(220, 53, 69, 0.3);
+        }
+
+        .caso-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .caso-content {
+            padding: 20px;
+        }
+
+        .caso-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .caso-desc {
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .caso-info {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .info-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .caso-price {
+            font-size: 24px;
+            color: #ffc107;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* ==================== RANKING ==================== */
+        .podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .podium-place {
+            text-align: center;
+        }
+
+        .podium-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #dc3545 0%, #8B0000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin: 0 auto 15px;
+            border: 4px solid gold;
+        }
+
+        .podium-place.first .podium-avatar {
+            width: 120px;
+            height: 120px;
+        }
+
+        .podium-place.second .podium-avatar {
+            border-color: silver;
+        }
+
+        .podium-place.third .podium-avatar {
+            border-color: #cd7f32;
+        }
+
+        .ranking-list {
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 15px;
+            border: 2px solid rgba(220, 53, 69, 0.3);
+            overflow: hidden;
+        }
+
+        .ranking-header {
+            background: #dc3545;
+            padding: 20px 30px;
+            display: grid;
+            grid-template-columns: 80px 1fr 150px 100px 100px;
+            gap: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .ranking-item {
+            padding: 20px 30px;
+            display: grid;
+            grid-template-columns: 80px 1fr 150px 100px 100px;
+            gap: 20px;
+            align-items: center;
+            border-bottom: 1px solid rgba(220, 53, 69, 0.1);
+        }
+
+        .ranking-item.user-highlight {
+            background: rgba(220, 53, 69, 0.2);
+            border: 2px solid #dc3545;
+        }
+
+        /* ==================== MODAL ==================== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 450px;
+            width: 90%;
+            border: 2px solid #dc3545;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #dc3545;
+            border-radius: 10px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 24px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: #dc3545;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            color: #dc3545;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .modal-subtitle {
+            text-align: center;
+            color: #999;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(220, 53, 69, 0.3);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 15px;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: #dc3545;
+            border-bottom-color: #dc3545;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #cccccc;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(220, 53, 69, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 15px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #dc3545;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            display: none;
+            font-size: 14px;
+        }
+
+        .message.success {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #2ecc71;
+            color: #2ecc71;
+        }
+
+        .message.error {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+            color: #e74c3c;
+        }
+
+        /* ==================== BOTÃO FLUTUANTE ==================== */
+        .delegado-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(46, 204, 113, 0.4);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .delegado-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.6);
+        }
+
+        /* ==================== RODAPÉ ==================== */
+        footer {
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 2px solid rgba(220, 53, 69, 0.3);
+            padding: 40px 5%;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #999;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .footer-section a:hover {
+            color: #dc3545;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(220, 53, 69, 0.2);
+            color: #666;
+        }
+
+        /* ==================== ÁREA DO DETETIVE ==================== */
+        .area-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .area-tab {
+            padding: 15px 25px;
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid rgba(220, 53, 69, 0.3);
+            border-radius: 10px;
+            color: #999;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .area-tab:hover {
+            border-color: #dc3545;
+        }
+
+        .area-tab.active {
+            background: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+
+        .area-content {
+            display: none;
+        }
+
+        .area-content.active {
+            display: block;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .ranking-header,
+            .ranking-item {
+                grid-template-columns: 50px 1fr 100px;
+            }
+
+            .ranking-header > :nth-child(4),
+            .ranking-header > :nth-child(5),
+            .ranking-item > :nth-child(4),
+            .ranking-item > :nth-child(5) {
+                display: none;
+            }
+
+            .modal-content {
+                padding: 20px;
+                max-height: 90vh;
+            }
+
+            .modal-title {
+                font-size: 20px;
+            }
+
+            .form-group input {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================== HEADER ==================== -->
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="showSection('home')">FATTO CRIMINAL</div>
+            <nav id="main-nav">
+                <a onclick="showSection('home')">Início</a>
+                <a onclick="showSection('casos')">Casos</a>
+                <a onclick="showSection('ranking')">Ranking</a>
+                <a onclick="showSection('ajuda')">Ajuda</a>
+            </nav>
+            <div id="header-buttons">
+                <button class="btn-primary" onclick="openLoginModal()">LOGIN</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== HOME SECTION ==================== -->
+    <div id="home-section" class="section active">
+        <div class="hero">
+            <div class="hero-content">
+                <div class="badge">🔥 JOGO DE INVESTIGAÇÃO PREMIUM</div>
+                <h1>RESOLVA A <span class="gradient-text">HISTÓRIA DE UM CRIME</span></h1>
+                <p>Decifre quebra-cabeças, investigue pistas e use suas habilidades de detetive para desvendar mistérios complexos. Um jogo cooperativo de dedução que desafia sua mente.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="showSection('casos')">VER CASOS</button>
+                    <button class="btn-secondary" onclick="scrollToComo()">COMO FUNCIONA</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="card-stack">
+                    <div class="card"></div>
+                    <div class="card"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMO FUNCIONA -->
+        <div class="como-funciona" id="como-funciona">
+            <h2>COMO FUNCIONA</h2>
+            <div class="funciona-grid">
+                <div class="funciona-card">
+                    <div class="icon">🔍</div>
+                    <h3>Explore as Provas</h3>
+                    <p>Tem acesso a relatórios policiais, laudos técnicos e evidências. Cada item é uma pista crucial.</p>
+                </div>
+                <div class="funciona-card">
+                    <div class="icon">🌐</div>
+                    <h3>Vá Além do Básico</h3>
+                    <p>Use a plataforma digital para acessar áudios de interrogatórios e simulações virtuais.</p>
+                </div>
+                <div class="funciona-card">
+                    <div class="icon">🎯</div>
+                    <h3>Monte Sua Teoria</h3>
+                    <p>Conecte as pistas, deduza o assassino, a arma e o motivo. Valide sua teoria no sistema.</p>
+                </div>
+                <div class="funciona-card">
+                    <div class="icon">🏆</div>
+                    <h3>Seja o Melhor Detetive</h3>
+                    <p>Ganhe pontos, desbloqueie tags e suba no ranking global. Torne-se uma lenda!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CASOS SECTION ==================== -->
+    <div id="casos-section" class="section">
+        <div class="container">
+            <h1 style="font-size: 42px; color: #dc3545; margin-bottom: 40px; text-align: center;">TODOS OS CASOS</h1>
+            <p style="text-align: center; color: #999; margin-bottom: 60px;">6 mistérios para desvendar</p>
+            
+            <div class="casos-grid" id="casosGrid"></div>
+        </div>
+    </div>
+
+    <!-- ==================== RANKING SECTION ==================== -->
+    <div id="ranking-section" class="section">
+        <div class="container">
+            <h1 style="text-align: center; font-size: 48px; color: #dc3545; margin-bottom: 50px;">🏆 RANKING GLOBAL</h1>
+
+            <div class="podium" id="podium"></div>
+
+            <div class="ranking-list">
+                <div class="ranking-header">
+                    <div>POS</div>
+                    <div>DETETIVE</div>
+                    <div>PATENTE</div>
+                    <div>PONTOS</div>
+                    <div>CASOS</div>
+                </div>
+                <div id="rankingListContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ÁREA DO DETETIVE ==================== -->
+    <div id="area-section" class="section">
+        <div class="container">
+            <h1 style="font-size: 42px; color: #dc3545; margin-bottom: 40px;">ÁREA DO DETETIVE</h1>
+
+            <div class="area-tabs">
+                <div class="area-tab active" onclick="showAreaTab('meus-casos')">Meus Casos</div>
+                <div class="area-tab" onclick="showAreaTab('promocoes')">Promoções</div>
+                <div class="area-tab" onclick="showAreaTab('conquistas')">Conquistas</div>
+                <div class="area-tab" onclick="showAreaTab('pontuacao')">Pontuação</div>
+                <div class="area-tab" onclick="showAreaTab('resumo')">Resumo</div>
+            </div>
+
+            <div id="meus-casos" class="area-content active">
+                <div id="meusCasosContainer"></div>
+            </div>
+
+            <div id="promocoes" class="area-content">
+                <h2 style="color: #dc3545; margin-bottom: 30px;">Promoções de Patente</h2>
+                <div id="promocoesContainer"></div>
+            </div>
+
+            <div id="conquistas" class="area-content">
+                <h2 style="color: #dc3545; margin-bottom: 30px;">Conquistas de Desempenho</h2>
+                <div id="conquistasContainer"></div>
+            </div>
+
+            <div id="pontuacao" class="area-content">
+                <h2 style="color: #dc3545; margin-bottom: 30px;">Sistema de Pontuação</h2>
+                <div id="pontuacaoContainer"></div>
+            </div>
+
+            <div id="resumo" class="area-content">
+                <h2 style="color: #dc3545; margin-bottom: 30px;">Ficha do Detetive</h2>
+                <div id="resumoContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== AJUDA SECTION ==================== -->
+    <div id="ajuda-section" class="section">
+        <div class="container">
+            <h1 style="font-size: 42px; color: #dc3545; margin-bottom: 40px; text-align: center;">AJUDA</h1>
+            
+            <div style="max-width: 800px; margin: 0 auto;">
+                <h2 style="color: #ffc107; margin-bottom: 20px;">Perguntas Frequentes</h2>
+                
+                <div style="background: rgba(20, 20, 20, 0.9); border: 2px solid rgba(220, 53, 69, 0.3); border-radius: 10px; padding: 20px; margin-bottom: 20px;">
+                    <h3 style="color: #dc3545; margin-bottom: 10px;">Como funciona o jogo?</h3>
+                    <p style="color: #ccc;">Você compra um caso, recebe as evidências e precisa descobrir: quem é o assassino, qual arma foi usada, o motivo e o local do crime.</p>
+                </div>
+
+                <div style="background: rgba(20, 20, 20, 0.9); border: 2px solid rgba(220, 53, 69, 0.3); border-radius: 10px; padding: 20px; margin-bottom: 20px;">
+                    <h3 style="color: #dc3545; margin-bottom: 10px;">Quantas tentativas tenho?</h3>
+                    <p style="color: #ccc;">Você tem 5 tentativas para resolver cada caso. Na primeira tentativa você ganha 500 pontos, na segunda 400, e assim por diante.</p>
+                </div>
+
+                <div style="background: rgba(20, 20, 20, 0.9); border: 2px solid rgba(220, 53, 69, 0.3); border-radius: 10px; padding: 20px; margin-bottom: 20px;">
+                    <h3 style="color: #dc3545; margin-bottom: 10px;">Como funciona o sistema de pontuação?</h3>
+                    <p style="color: #ccc;">Você ganha pontos ao comprar casos (+100), resolver casos (500 a 100 dependendo da tentativa), receber tags especiais e subir de patente.</p>
+                </div>
+
+                <div style="background: rgba(20, 20, 20, 0.9); border: 2px solid rgba(220, 53, 69, 0.3); border-radius: 10px; padding: 20px; margin-bottom: 40px;">
+                    <h3 style="color: #dc3545; margin-bottom: 10px;">O que são as Tags?</h3>
+                    <p style="color: #ccc;">Tags são conquistas especiais que você ganha ao resolver casos dentro do tempo limite. A Lupa de Ouro (+150 pts) é dada ao resolver na primeira tentativa rapidamente.</p>
+                </div>
+
+                <div style="text-align: center;">
+                    <h3 style="color: #2ecc71; margin-bottom: 20px;">Fale com o Delegado Virtual</h3>
+                    <button class="btn-primary" onclick="window.open('https://wa.me/5517997045868', '_blank')">📱 ABRIR WHATSAPP</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PERFIL SECTION ==================== -->
+    <div id="perfil-section" class="section">
+        <div class="container">
+            <h1 style="font-size: 42px; color: #dc3545; margin-bottom: 40px;">PERFIL</h1>
+            
+            <div style="max-width: 600px; margin: 0 auto; background: rgba(20, 20, 20, 0.9); border: 2px solid rgba(220, 53, 69, 0.3); border-radius: 15px; padding: 40px;">
+                <h2 style="color: #dc3545; margin-bottom: 30px;">Dados do Detetive</h2>
+                
+                <form id="perfilForm">
+                    <div class="form-group">
+                        <label>ID do Cadastro</label>
+                        <input type="text" id="perfilId" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Nome/Nick (pode ser alterado)</label>
+                        <input type="text" id="perfilNome">
+                    </div>
+                    <div class="form-group">
+                        <label>Email (não pode ser alterado)</label>
+                        <input type="email" id="perfilEmail" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Nova Senha (deixe em branco para não alterar)</label>
+                        <input type="password" id="perfilSenha" placeholder="Mínimo 6 caracteres">
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 30px;">
+                        <button type="button" class="btn-secondary" style="flex: 1;" onclick="showSection('area')">CANCELAR</button>
+                        <button type="submit" class="btn-primary" style="flex: 1;">SALVAR</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL LOGIN ==================== -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+            <h2 class="modal-title">🔍 FATTO CRIMINAL</h2>
+            <p class="modal-subtitle">Resolva Casos Reais de Mistério</p>
+
+            <div class="tabs">
+                <button class="tab active" onclick="showLoginTab()">LOGIN</button>
+                <button class="tab" onclick="showCadastroTab()">CADASTRAR</button>
+            </div>
+
+            <div id="message" class="message"></div>
+
+            <!-- Form Login -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="loginPassword" placeholder="Sua senha" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">ENTRAR</button>
+            </form>
+
+            <!-- Form Cadastro -->
+            <form id="cadastroForm" style="display: none;">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="cadastroNome" placeholder="Seu nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="cadastroEmail" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="tel" id="cadastroTelefone" placeholder="(00) 00000-0000">
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="cadastroPassword" placeholder="Mínimo 6 caracteres" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirmar Senha</label>
+                    <input type="password" id="cadastroPasswordConfirm" placeholder="Digite novamente" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">CRIAR CONTA</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== BOTÃO FLUTUANTE ==================== -->
+    <button class="delegado-btn" onclick="window.open('https://wa.me/5517997045868', '_blank')">
+        <span>🕵️</span>
+        <span>Fale com o Delegado Virtual</span>
+    </button>
+
+    <!-- ==================== RODAPÉ ==================== -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>FATTO CRIMINAL</h3>
+                <p>Jogos de Mistério e Investigação</p>
+                <p>Catanduva, SP - CEP 15810-215</p>
+                <p>fattocriminal@gmail.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>NAVEGAÇÃO</h3>
+                <a href="#" onclick="showSection('home')">Início</a>
+                <a href="#" onclick="showSection('casos')">Casos</a>
+                <a href="#" onclick="showSection('ranking')">Ranking</a>
+                <a href="#" onclick="showSection('ajuda')">Ajuda</a>
+            </div>
+            <div class="footer-section">
+                <h3>SUPORTE</h3>
+                <a href="#" onclick="showSection('ajuda')">Perguntas Frequentes</a>
+                <a href="#" onclick="window.open('https://wa.me/5517997045868', '_blank')">Fale com o Delegado Virtual</a>
+                <a href="#">Política de Privacidade</a>
+                <a href="#">Termos de Uso</a>
+            </div>
+            <div class="footer-section">
+                <h3>REDES SOCIAIS</h3>
+                <a href="#">Instagram</a>
+                <a href="#">TikTok</a>
+                <a href="#">YouTube</a>
+                <a href="#">Facebook</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Fatto Criminal. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- ==================== FIREBASE & SCRIPTS ==================== -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile, updatePassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, doc, setDoc, getDoc, updateDoc, serverTimestamp, collection, query, orderBy, getDocs, limit } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBEKgN6EGkdx5NjIBw9EL72-ZYBvMWb74",
+            authDomain: "fattocriminal-d1d0c.firebaseapp.com",
+            projectId: "fattocriminal-d1d0c",
+            storageBucket: "fattocriminal-d1d0c.firebasestorage.app",
+            messagingSenderId: "878854827803",
+            appId: "1:878854827803:web:6c03e6c0e66e0e8e0e6c29"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+
+        // Dados dos casos
+        const casos = [
+            {
+                id: 'FC00001',
+                titulo: 'O Expresso Noturno 247',
+                descricao: 'Uma morte no trem. Um mistério a ser resolvido.',
+                imagem: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                dificuldade: 'Médio',
+                duracao: '3h',
+                jogadores: '2-6',
+                idade: '16 anos',
+                preco: 59.90,
+                precoFisico: 89.90
+            },
+            {
+                id: 'FC00002',
+                titulo: 'A Última Exposição',
+                descricao: 'Morte no galeria de arte',
+                imagem: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                dificuldade: 'Difícil',
+                duracao: '4h',
+                jogadores: '2-4',
+                idade: '18 anos',
+                preco: 69.90,
+                precoFisico: 99.90
+            },
+            {
+                id: 'FC00003',
+                titulo: 'Silêncio no Farol',
+                descricao: 'Faroleiro desaparecido',
+                imagem: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                dificuldade: 'Difícil',
+                duracao: '4h',
+                jogadores: '2h',
+                idade: '18 anos',
+                preco: 79.90,
+                precoFisico: 109.90
+            },
+            {
+                id: 'FC00004',
+                titulo: 'Caos no Cassino Royal',
+                descricao: 'Jogador assassinado',
+                imagem: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                dificuldade: 'Médio',
+                duracao: '3h',
+                jogadores: '2-4',
+                idade: '16 anos',
+                preco: 59.90,
+                precoFisico: 89.90
+            },
+            {
+                id: 'FC00005',
+                titulo: 'Overdose no Hospital Central',
+                descricao: 'Médico-Chefe assassinado',
+                imagem: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                dificuldade: 'Difícil',
+                duracao: '4h',
+                jogadores: '2-6',
+                idade: '18 anos',
+                preco: 69.90,
+                precoFisico: 99.90
+            },
+            {
+                id: 'FC00006',
+                titulo: 'Traição no Palco',
+                descricao: 'Ator principal morto',
+                imagem: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+                dificuldade: 'Fácil',
+                duracao: '2h',
+                jogadores: '2-4',
+                idade: '14 anos',
+                preco: 49.90,
+                precoFisico: 79.90
+            }
+        ];
+
+        // Funções globais
+        window.showSection = function(sectionName) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`${sectionName}-section`).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        window.scrollToComo = function() {
+            document.getElementById('como-funciona').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.openLoginModal = function() {
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        window.closeLoginModal = function() {
+            document.getElementById('loginModal').classList.remove('active');
+            hideMessage();
+        }
+
+        window.showLoginTab = function() {
+            document.querySelectorAll('.tab')[0].classList.add('active');
+            document.querySelectorAll('.tab')[1].classList.remove('active');
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('cadastroForm').style.display = 'none';
+            hideMessage();
+        }
+
+        window.showCadastroTab = function() {
+            document.querySelectorAll('.tab')[1].classList.add('active');
+            document.querySelectorAll('.tab')[0].classList.remove('active');
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('cadastroForm').style.display = 'block';
+            hideMessage();
+        }
+
+        window.showAreaTab = function(tabName) {
+            document.querySelectorAll('.area-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.area-content').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        window.logout = async function() {
+            await signOut(auth);
+            showSection('home');
+            showMessage('Até logo, detetive! 👋', 'success');
+            setTimeout(() => hideMessage(), 2000);
+        }
+
+        function showMessage(text, type) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = `message ${type}`;
+            msg.style.display = 'block';
+        }
+
+        function hideMessage() {
+            document.getElementById('message').style.display = 'none';
+        }
+
+        // Renderizar casos
+        function renderCasos() {
+            const grid = document.getElementById('casosGrid');
+            grid.innerHTML = casos.map(caso => `
+                <div class="caso-card">
+                    <div class="caso-image" style="background: ${caso.imagem}"></div>
+                    <div class="caso-content">
+                        <div class="caso-title">${caso.titulo}</div>
+                        <div class="caso-desc">${caso.descricao}</div>
+                        <div class="caso-info">
+                            <div class="info-badge">⚡ ${caso.dificuldade}</div>
+                            <div class="info-badge">⏱️ ${caso.duracao}</div>
+                            <div class="info-badge">👥 ${caso.jogadores}</div>
+                            <div class="info-badge">🔞 ${caso.idade}</div>
+                        </div>
+                        <div class="caso-price">R$ ${caso.preco.toFixed(2)}</div>
+                        <button class="btn-primary" style="width: 100%;" onclick="alert('Faça login para comprar!')">VER CASO</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showMessage('Login realizado com sucesso!', 'success');
+                setTimeout(() => {
+                    closeLoginModal();
+                    showSection('area');
+                }, 1000);
+            } catch (error) {
+                showMessage('E-mail ou senha incorretos!', 'error');
+            }
+        });
+
+        // Cadastro
+        document.getElementById('cadastroForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nome = document.getElementById('cadastroNome').value.trim();
+            const email = document.getElementById('cadastroEmail').value.trim();
+            const telefone = document.getElementById('cadastroTelefone').value.trim();
+            const password = document.getElementById('cadastroPassword').value;
+            const confirmPassword = document.getElementById('cadastroPasswordConfirm').value;
+
+            // Validações
+            if (!nome) {
+                showMessage('Por favor, preencha seu nome!', 'error');
+                return;
+            }
+
+            if (!email) {
+                showMessage('Por favor, preencha seu e-mail!', 'error');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showMessage('As senhas não coincidem!', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('A senha deve ter no mínimo 6 caracteres!', 'error');
+                return;
+            }
+
+            try {
+                showMessage('Criando sua conta...', 'success');
+                
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                await updateProfile(user, { displayName: nome });
+
+                await setDoc(doc(db, 'usuarios', user.uid), {
+                    nome: nome,
+                    email: email,
+                    telefone: telefone || '',
+                    totalPontos: 0,
+                    casosResolvidos: 0,
+                    patente: 'Detetive Júnior',
+                    tags: [],
+                    createdAt: serverTimestamp()
+                });
+
+                showMessage('Conta criada com sucesso! Bem-vindo! 🎉', 'success');
+                setTimeout(() => {
+                    closeLoginModal();
+                    showSection('area');
+                }, 1500);
+            } catch (error) {
+                console.error('Erro completo:', error);
+                
+                if (error.code === 'auth/email-already-in-use') {
+                    showMessage('Este e-mail já está cadastrado!', 'error');
+                } else if (error.code === 'auth/invalid-email') {
+                    showMessage('E-mail inválido!', 'error');
+                } else if (error.code === 'auth/weak-password') {
+                    showMessage('Senha muito fraca. Use no mínimo 6 caracteres!', 'error');
+                } else {
+                    showMessage('Erro ao criar conta: ' + (error.message || 'Tente novamente'), 'error');
+                }
+            }
+        });
+
+        // Auth State
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                document.getElementById('header-buttons').innerHTML = `
+                    <button class="btn-primary" onclick="showSection('area')">MINHA ÁREA</button>
+                    <button class="btn-secondary" onclick="logout()">SAIR</button>
+                `;
+                await carregarDadosUsuario();
+            } else {
+                currentUser = null;
+                document.getElementById('header-buttons').innerHTML = `
+                    <button class="btn-primary" onclick="openLoginModal()">LOGIN</button>
+                `;
+            }
+        });
+
+        async function carregarDadosUsuario() {
+            if (!currentUser) return;
+
+            const userDoc = await getDoc(doc(db, 'usuarios', currentUser.uid));
+            const userData = userDoc.data();
+
+            // Carregar Ranking
+            await carregarRanking();
+
+            // Carregar Área do Detetive
+            renderMeusCasos();
+            renderPromocoes(userData);
+            renderConquistas(userData);
+            renderPontuacao();
+            renderResumo(userData);
+
+            // Carregar Perfil
+            document.getElementById('perfilId').value = currentUser.uid;
+            document.getElementById('perfilNome').value = userData?.nome || currentUser.displayName;
+            document.getElementById('perfilEmail').value = currentUser.email;
+        }
+
+        async function carregarRanking() {
+            const q = query(collection(db, 'usuarios'), orderBy('totalPontos', 'desc'), limit(20));
+            const querySnapshot = await getDocs(q);
+            
+            const usuarios = [];
+            querySnapshot.forEach((doc) => {
+                usuarios.push({ id: doc.id, ...doc.data() });
+            });
+
+            // Pódio (top 3)
+            const podium = document.getElementById('podium');
+            if (usuarios.length >= 3) {
+                podium.innerHTML = `
+                    <div class="podium-place second">
+                        <div class="podium-avatar">🥈</div>
+                        <div style="font-weight: bold;">#2 ${usuarios[1].nome}</div>
+                        <div style="color: #ffc107;">${usuarios[1].totalPontos} pts</div>
+                    </div>
+                    <div class="podium-place first">
+                        <div class="podium-avatar">🥇</div>
+                        <div style="font-weight: bold; font-size: 20px;">#1 ${usuarios[0].nome}</div>
+                        <div style="color: #ffc107; font-size: 18px;">${usuarios[0].totalPontos} pts</div>
+                    </div>
+                    <div class="podium-place third">
+                        <div class="podium-avatar">🥉</div>
+                        <div style="font-weight: bold;">#3 ${usuarios[2].nome}</div>
+                        <div style="color: #ffc107;">${usuarios[2].totalPontos} pts</div>
+                    </div>
+                `;
+            }
+
+            // Lista completa
+            const listContainer = document.getElementById('rankingListContainer');
+            listContainer.innerHTML = usuarios.map((u, index) => `
+                <div class="ranking-item ${u.id === currentUser?.uid ? 'user-highlight' : ''}">
+                    <div style="font-weight: bold; color: #ffc107;">#${index + 1}</div>
+                    <div>${u.nome}</div>
+                    <div>${u.patente || 'Detetive Júnior'}</div>
+                    <div style="color: #ffc107; font-weight: bold;">${u.totalPontos}</div>
+                    <div>${u.casosResolvidos || 0}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderMeusCasos() {
+            document.getElementById('meusCasosContainer').innerHTML = `
+                <div style="text-align: center; padding: 60px 20px;">
+                    <div style="font-size: 48px; margin-bottom: 20px;">📂</div>
+                    <h3 style="color: #999; margin-bottom: 20px;">NENHUM CASO ADQUIRIDO</h3>
+                    <button class="btn-primary" onclick="showSection('casos')">COMPRAR CASOS</button>
+                </div>
+            `;
+        }
+
+        function renderPromocoes(userData) {
+            const patentes = [
+                { nome: 'Detetive Júnior', casos: 'Inicial', pontos: 0, bloqueada: false },
+                { nome: 'Sargento', casos: '1 caso resolvido', pontos: 200, bloqueada: !userData || userData.casosResolvidos < 1 },
+                { nome: 'Inspetor', casos: '3 casos resolvidos', pontos: 250, bloqueada: !userData || userData.casosResolvidos < 3 },
+                { nome: 'Inspetor-Chefe', casos: '5 casos resolvidos', pontos: 300, bloqueada: !userData || userData.casosResolvidos < 5 },
+                { nome: 'Lenda: Sherlock Holmes', casos: '10 casos resolvidos', pontos: 500, bloqueada: !userData || userData.casosResolvidos < 10 }
+            ];
+
+            document.getElementById('promocoesContainer').innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                    ${patentes.map(p => `
+                        <div style="background: rgba(20, 20, 20, 0.9); border: 2px solid ${p.bloqueada ? 'rgba(100, 100, 100, 0.3)' : 'rgba(220, 53, 69, 0.3)'}; border-radius: 10px; padding: 20px; text-align: center; ${p.bloqueada ? 'opacity: 0.5;' : ''}">
+                            <div style="font-size: 36px; margin-bottom: 15px;">${p.bloqueada ? '🔒' : '⭐'}</div>
+                            <div style="font-weight: bold; margin-bottom: 10px;">${p.nome}</div>
+                            <div style="color: #999; font-size: 12px; margin-bottom: 10px;">${p.casos}</div>
+                            ${p.pontos > 0 ? `<div style="color: #ffc107; font-weight: bold;">+${p.pontos} pts</div>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function renderConquistas(userData) {
+            const tags = [
+                { nome: 'Lupa de Ouro', descricao: '1ª tentativa + tempo', pontos: 150, desbloqueada: false },
+                { nome: 'Lupa de Prata', descricao: '2ª tentativa + tempo', pontos: 120, desbloqueada: false },
+                { nome: 'Lupa de Bronze', descricao: '3ª tentativa + tempo', pontos: 100, desbloqueada: false },
+                { nome: 'Ajudante de Honra', descricao: '4ª tentativa + tempo', pontos: 70, desbloqueada: false },
+                { nome: 'Advertido', descricao: '5ª tentativa + tempo', pontos: 50, desbloqueada: false }
+            ];
+
+            document.getElementById('conquistasContainer').innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                    ${tags.map(t => `
+                        <div style="background: rgba(20, 20, 20, 0.9); border: 2px solid ${t.desbloqueada ? '#ffc107' : 'rgba(100, 100, 100, 0.3)'}; border-radius: 10px; padding: 20px; text-align: center; ${!t.desbloqueada ? 'opacity: 0.5;' : ''}">
+                            <div style="font-size: 36px; margin-bottom: 15px;">${t.desbloqueada ? '🏆' : '🔒'}</div>
+                            <div style="font-weight: bold; margin-bottom: 10px;">${t.nome}</div>
+                            <div style="color: #999; font-size: 12px; margin-bottom: 10px;">${t.descricao}</div>
+                            <div style="color: #ffc107; font-weight: bold;">+${t.pontos} pts</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function renderPontuacao() {
+            document.getElementById('pontuacaoContainer').innerHTML = `
+                <div style="background: rgba(20, 20, 20, 0.9); border: 2px solid rgba(220, 53, 69, 0.3); border-radius: 15px; padding: 30px;">
+                    <h3 style="color: #ffc107; margin-bottom: 20px;">💰 Pontos por Resolução de Casos</h3>
+                    <div style="display: grid; gap: 10px; margin-bottom: 30px;">
+                        <div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 5px;">
+                            <span>1ª tentativa</span>
+                            <span style="color: #2ecc71; font-weight: bold;">500 pontos</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 5px;">
+                            <span>2ª tentativa</span>
+                            <span style="color: #f39c12; font-weight: bold;">400 pontos</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 5px;">
+                            <span>3ª tentativa</span>
+                            <span style="color: #e67e22; font-weight: bold;">300 pontos</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 5px;">
+                            <span>4ª tentativa</span>
+                            <span style="color: #e74c3c; font-weight: bold;">200 pontos</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 5px;">
+                            <span>5ª tentativa</span>
+                            <span style="color: #c0392b; font-weight: bold;">100 pontos</span>
+                        </div>
+                    </div>
+
+                    <h3 style="color: #ffc107; margin-bottom: 20px;">⏱️ Bônus de Tempo (Tags)</h3>
+                    <p style="color: #999; margin-bottom: 15px;">Resolva o caso dentro do tempo limite para ganhar tags especiais e bônus de pontos:</p>
+                    <div style="display: grid; gap: 10px; margin-bottom: 30px;">
+                        <div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 5px;">
+                            <span>🏆 Lupa de Ouro (1ª + tempo)</span>
+                            <span style="color: #ffc107; font-weight: bold;">+150 pontos</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 5px;">
+                            <span>🥈 Lupa de Prata (2ª + tempo)</span>
+                            <span style="color: #ffc107; font-weight: bold;">+120 pontos</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 5px;">
+                            <span>🥉 Lupa de Bronze (3ª + tempo)</span>
+                            <span style="color: #ffc107; font-weight: bold;">+100 pontos</span>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(255, 193, 7, 0.1); border: 2px solid #ffc107; border-radius: 10px; padding: 20px;">
+                        <div style="font-weight: bold; color: #ffc107; margin-bottom: 10px;">💡 Dica Importante</div>
+                        <p style="color: #ccc;">Para maximizar sua pontuação: resolva casos na primeira tentativa dentro do tempo limite! Você ganhará até <strong style="color: #ffc107;">650 pontos</strong> por caso (500 + 150 da Lupa de Ouro).</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderResumo(userData) {
+            document.getElementById('resumoContainer').innerHTML = `
+                <div style="background: rgba(20, 20, 20, 0.9); border: 2px solid rgba(220, 53, 69, 0.3); border-radius: 15px; padding: 40px;">
+                    <div style="text-align: center; margin-bottom: 40px;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">🕵️</div>
+                        <div style="font-size: 12px; color: #666; margin-bottom: 5px;">ID: ${currentUser.uid}</div>
+                        <div style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">${userData?.nome || 'Detetive'}</div>
+                        <div style="background: linear-gradient(135deg, #ffc107 0%, #ff8c00 100%); padding: 10px 20px; border-radius: 20px; display: inline-block; font-weight: bold;">
+                            ⭐ ${userData?.patente || 'Detetive Júnior'}
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;">
+                        <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                            <div style="color: #ffc107; font-size: 36px; font-weight: bold;">${userData?.totalPontos || 0}</div>
+                            <div style="color: #999; font-size: 12px;">PONTOS TOTAIS</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                            <div style="color: #2ecc71; font-size: 36px; font-weight: bold;">${userData?.casosResolvidos || 0}</div>
+                            <div style="color: #999; font-size: 12px;">CASOS RESOLVIDOS</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                            <div style="color: #dc3545; font-size: 36px; font-weight: bold;">${userData?.tags?.length || 0}</div>
+                            <div style="color: #999; font-size: 12px;">CONQUISTAS</div>
+                        </div>
+                    </div>
+
+                    <h3 style="color: #dc3545; margin-bottom: 20px;">📊 Estatísticas de Casos</h3>
+                    <div style="display: grid; gap: 15px;">
+                        <div style="display: flex; justify-content: space-between; padding: 15px; background: rgba(46, 204, 113, 0.1); border-left: 4px solid #2ecc71; border-radius: 5px;">
+                            <span>✅ Casos Resolvidos</span>
+                            <span style="font-weight: bold; color: #2ecc71;">${userData?.casosResolvidos || 0}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 15px; background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c; border-radius: 5px;">
+                            <span>❌ Casos Não Solucionados</span>
+                            <span style="font-weight: bold; color: #e74c3c;">0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 15px; background: rgba(241, 196, 15, 0.1); border-left: 4px solid #f1c40f; border-radius: 5px;">
+                            <span>📂 Casos Em Aberto</span>
+                            <span style="font-weight: bold; color: #f1c40f;">0</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Perfil Form
+        document.getElementById('perfilForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nome = document.getElementById('perfilNome').value;
+            const senha = document.getElementById('perfilSenha').value;
+
+            try {
+                if (nome !== currentUser.displayName) {
+                    await updateProfile(currentUser, { displayName: nome });
+                    await updateDoc(doc(db, 'usuarios', currentUser.uid), { nome: nome });
+                }
+
+                if (senha) {
+                    await updatePassword(currentUser, senha);
+                }
+
+                alert('Perfil atualizado com sucesso!');
+                showSection('area');
+            } catch (error) {
+                alert('Erro ao atualizar perfil. Tente novamente.');
+            }
+        });
+
+        // Inicializar
+        renderCasos();
+        carregarRanking();
+    </script>
+</body>
+</html>
