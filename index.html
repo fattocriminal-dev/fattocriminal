@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FATTO CRIMINAL - Resolva Casos Reais de Mistério</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0d0d0d;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        /* ==================== HEADER ==================== */
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 20px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(220, 53, 69, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #dc3545;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: #dc3545;
+        }
+
+        .btn-primary {
+            background: #dc3545;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+        }
+
+        /* ==================== SEÇÕES ==================== */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* ==================== HOME SECTION ==================== */
+        #home-section {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .hero {
+            padding: 100px 5% 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border: 1px solid #ffc107;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #dc3545;
+            padding: 12px 30px;
+            border-radius: 25px;
+            border: 2px solid #dc3545;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        .hero-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-stack {
+            position: relative;
+            width: 350px;
+            height: 450px;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .card:nth-child(1) {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            transform: rotate(-5deg) translateY(20px);
+            z-index: 3;
+        }
+
+        .card:nth-child(2) {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            transform: rotate(3deg) translateY(-10px);
+            z-index: 2;
+        }
+
+        .card:hover {
+            transform: scale(1.05) rotate(0deg);
+        }
+
+        /* ==================== MODAL LOGIN ==================== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 450px;
+            width: 90%;
+            border: 2px solid #dc3545;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #dc3545;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            color: #dc3545;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .modal-subtitle {
+            text-align: center;
+            color: #999;
+            margin-bottom: 30px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(220, 53, 69, 0.3);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: #dc3545;
+            border-bottom-color: #dc3545;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #cccccc;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(220, 53, 69, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #dc3545;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+        .message.success {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #2ecc71;
+            color: #2ecc71;
+        }
+
+        .message.error {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+            color: #e74c3c;
+        }
+
+        /* ==================== DASHBOARD ==================== */
+        #dashboard-section {
+            margin-top: 100px;
+            padding: 40px 5%;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .welcome-card {
+            background: rgba(220, 53, 69, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(220, 53, 69, 0.3);
+            margin-bottom: 40px;
+        }
+
+        .welcome-card h1 {
+            font-size: 32px;
+            color: #dc3545;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(20, 20, 20, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(220, 53, 69, 0.3);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #dc3545;
+            box-shadow: 0 10px 30px rgba(220, 53, 69, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .stat-value {
+            font-size: 42px;
+            color: #dc3545;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .case-card {
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid rgba(220, 53, 69, 0.3);
+        }
+
+        .case-header {
+            background: linear-gradient(135deg, #dc3545 0%, #8B0000 100%);
+            padding: 25px;
+            color: white;
+        }
+
+        .case-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .case-body {
+            padding: 25px;
+        }
+
+        .pasta-status {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .pasta-badge {
+            flex: 1;
+            padding: 15px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 12px;
+            border: 2px solid rgba(220, 53, 69, 0.3);
+        }
+
+        .pasta-badge.resolvida {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: #2ecc71;
+            color: #2ecc71;
+        }
+
+        .pasta-badge.bloqueada {
+            opacity: 0.5;
+        }
+
+        /* ==================== CASO SECTION ==================== */
+        #caso-section {
+            margin-top: 100px;
+            padding: 40px 5%;
+        }
+
+        .folder-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .folder-tab {
+            flex: 1;
+            padding: 20px;
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid rgba(220, 53, 69, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .folder-tab:hover {
+            border-color: #dc3545;
+        }
+
+        .folder-tab.active {
+            background: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .folder-tab.locked {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .document-card {
+            background: rgba(40, 40, 40, 0.8);
+            border: 2px solid rgba(220, 53, 69, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .document-card:hover {
+            border-color: #dc3545;
+            transform: translateY(-5px);
+        }
+
+        .document-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .validation-section {
+            background: rgba(40, 40, 40, 0.8);
+            border: 2px solid #dc3545;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        /* ==================== RANKING ==================== */
+        #ranking-section {
+            margin-top: 100px;
+            padding: 40px 5%;
+        }
+
+        .podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .podium-place {
+            text-align: center;
+        }
+
+        .podium-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #dc3545 0%, #8B0000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin: 0 auto 15px;
+            border: 4px solid gold;
+        }
+
+        .podium-place.first .podium-avatar {
+            width: 120px;
+            height: 120px;
+        }
+
+        .ranking-list {
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 15px;
+            border: 2px solid rgba(220, 53, 69, 0.3);
+            overflow: hidden;
+        }
+
+        .ranking-header {
+            background: #dc3545;
+            padding: 20px 30px;
+            display: grid;
+            grid-template-columns: 80px 1fr 150px;
+            gap: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .ranking-item {
+            padding: 20px 30px;
+            display: grid;
+            grid-template-columns: 80px 1fr 150px;
+            gap: 20px;
+            align-items: center;
+            border-bottom: 1px solid rgba(220, 53, 69, 0.1);
+        }
+
+        .ranking-item.user-highlight {
+            background: rgba(220, 53, 69, 0.2);
+            border: 2px solid #dc3545;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .folder-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================== HEADER ==================== -->
+    <header>
+        <div class="header-content">
+            <div class="logo">FATTO CRIMINAL</div>
+            <nav id="main-nav">
+                <a onclick="showSection('home')">Início</a>
+                <a onclick="scrollTo('como-funciona')">Como Funciona</a>
+                <a onclick="scrollTo('casos')">Casos</a>
+                <a onclick="scrollTo('precos')">Preços</a>
+            </nav>
+            <div id="header-buttons">
+                <button class="btn-primary" onclick="openLoginModal()">COMPRAR AGORA</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== HOME SECTION ==================== -->
+    <div id="home-section" class="section active">
+        <div class="hero">
+            <div class="hero-content">
+                <div class="badge">🔥 JOGO DE INVESTIGAÇÃO PREMIUM</div>
+                <h1>RESOLVA A <span class="gradient-text">HISTÓRIA DE UM CRIME</span></h1>
+                <p>Decifre quebra-cabeças, investigue pistas e use suas habilidades de detetive para desvendar mistérios complexos. Um jogo cooperativo de dedução que desafia sua mente.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="openLoginModal()">VER CASOS DISPONÍVEIS</button>
+                    <button class="btn-secondary" onclick="scrollTo('como-funciona')">COMO FUNCIONA</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="card-stack">
+                    <div class="card"></div>
+                    <div class="card"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Como Funciona -->
+        <div id="como-funciona" style="padding: 80px 5%; background: rgba(0,0,0,0.5);">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 42px; color: #dc3545; margin-bottom: 60px;">COMO FUNCIONA</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+                    <div style="text-align: center; padding: 30px;">
+                        <div style="font-size: 64px; margin-bottom: 20px;">📂</div>
+                        <h3 style="font-size: 24px; margin-bottom: 15px;">PASTA 1 - O MÉTODO</h3>
+                        <p style="color: #999;">Analise documentos para descobrir COMO o crime foi cometido.</p>
+                    </div>
+                    <div style="text-align: center; padding: 30px;">
+                        <div style="font-size: 64px; margin-bottom: 20px;">🕵️</div>
+                        <h3 style="font-size: 24px; margin-bottom: 15px;">PASTA 2 - O CULPADO</h3>
+                        <p style="color: #999;">Interrogue suspeitos e descubra QUEM executou o crime.</p>
+                    </div>
+                    <div style="text-align: center; padding: 30px;">
+                        <div style="font-size: 64px; margin-bottom: 20px;">💰</div>
+                        <h3 style="font-size: 24px; margin-bottom: 15px;">PASTA 3 - O MOTIVO</h3>
+                        <p style="color: #999;">Desvende a conspiração e revele o MOTIVO.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL LOGIN ==================== -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+            <h2 class="modal-title">🔍 FATTO CRIMINAL</h2>
+            <p class="modal-subtitle">Resolva Casos Reais de Mistério</p>
+
+            <div class="tabs">
+                <button class="tab active" onclick="showLoginTab()">LOGIN</button>
+                <button class="tab" onclick="showCadastroTab()">CADASTRAR</button>
+            </div>
+
+            <div id="message" class="message"></div>
+
+            <!-- Form Login -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="loginPassword" placeholder="Sua senha" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">ENTRAR</button>
+            </form>
+
+            <!-- Form Cadastro -->
+            <form id="cadastroForm" style="display: none;">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="cadastroNome" placeholder="Seu nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="cadastroEmail" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="cadastroPassword" placeholder="Mínimo 6 caracteres" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirmar Senha</label>
+                    <input type="password" id="cadastroPasswordConfirm" placeholder="Digite novamente" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">CRIAR CONTA</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== DASHBOARD SECTION ==================== -->
+    <div id="dashboard-section" class="section">
+        <div class="container">
+            <div class="welcome-card">
+                <h1>Bem-vindo, <span id="dashboardUserName">Detetive</span>!</h1>
+                <p>Continue sua investigação ou veja o ranking</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value" id="totalPontos">0</div>
+                    <div class="stat-label">Pontos Totais</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value" id="casosResolvidos">0</div>
+                    <div class="stat-label">Casos Resolvidos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value" id="posicaoRanking">-</div>
+                    <div class="stat-label">Posição no Ranking</div>
+                </div>
+            </div>
+
+            <div id="casoCardContainer"></div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button class="btn-secondary" onclick="showSection('ranking')" style="margin-right: 10px;">🏆 VER RANKING</button>
+                <button class="btn-secondary" onclick="logout()">SAIR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CASO SECTION ==================== -->
+    <div id="caso-section" class="section">
+        <div class="container">
+            <div style="background: linear-gradient(135deg, #dc3545 0%, #8B0000 100%); padding: 40px; border-radius: 15px; text-align: center; margin-bottom: 40px;">
+                <h1 style="font-size: 36px; margin-bottom: 10px;">🎙️ CASO #001: O Assassino da Transmissão</h1>
+                <p>Um influenciador morto ao vivo. Seis suspeitos. Uma verdade oculta.</p>
+            </div>
+
+            <div class="folder-tabs">
+                <div class="folder-tab active" id="tab1" onclick="mostrarPasta(1)">
+                    <div style="font-weight: bold; font-size: 18px;">📂 PASTA 1</div>
+                    <div id="status1">O Método</div>
+                </div>
+                <div class="folder-tab locked" id="tab2" onclick="mostrarPasta(2)">
+                    <div style="font-weight: bold; font-size: 18px;">📂 PASTA 2</div>
+                    <div id="status2">🔒 Bloqueada</div>
+                </div>
+                <div class="folder-tab locked" id="tab3" onclick="mostrarPasta(3)">
+                    <div style="font-weight: bold; font-size: 18px;">📂 PASTA 3</div>
+                    <div id="status3">🔒 Bloqueada</div>
+                </div>
+            </div>
+
+            <div id="pastaContent"></div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button class="btn-secondary" onclick="showSection('dashboard')">← VOLTAR AO DASHBOARD</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== RANKING SECTION ==================== -->
+    <div id="ranking-section" class="section">
+        <div class="container">
+            <h1 style="text-align: center; font-size: 48px; color: #dc3545; margin-bottom: 50px;">🏆 RANKING GLOBAL</h1>
+
+            <div class="podium" id="podium"></div>
+
+            <div class="ranking-list">
+                <div class="ranking-header">
+                    <div>POS</div>
+                    <div>DETETIVE</div>
+                    <div>PONTOS</div>
+                </div>
+                <div id="rankingListContainer"></div>
+            </div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button class="btn-secondary" onclick="showSection('dashboard')">← VOLTAR AO DASHBOARD</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== FIREBASE & SCRIPTS ==================== -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, doc, setDoc, getDoc, updateDoc, serverTimestamp, collection, query, orderBy, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // ⚠️ COLE SUAS CREDENCIAIS AQUI
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBEKgN6EGkdx5NjIBw9EL72-ZYBvMWb74",
+            authDomain: "fattocriminal-d1d0c.firebaseapp.com",
+            projectId: "fattocriminal-d1d0c",
+            storageBucket: "fattocriminal-d1d0c.firebasestorage.app",
+            messagingSenderId: "878854827803",
+            appId: "1:878854827803:web:6c03e6c0e66e0e8e0e6c29"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let progressoData = null;
+        let pastaAtual = 1;
+
+        // Documentos
+        const documentos = {
+            1: [
+                { id: 1, titulo: 'Print da Transmissão', icone: '📱', arquivo: 'PASTA_1/01_print_transmissao.pdf' },
+                { id: 2, titulo: 'Relatório de Autópsia', icone: '🩺', arquivo: 'PASTA_1/02_relatorio_autopsia.pdf' },
+                { id: 3, titulo: 'Timeline Policial', icone: '⏰', arquivo: 'PASTA_1/03_timeline_policial.pdf' },
+                { id: 4, titulo: 'Planta do Apartamento', icone: '🏠', arquivo: 'PASTA_1/04_planta_apartamento.pdf' },
+                { id: 5, titulo: 'Depoimentos Iniciais', icone: '📝', arquivo: 'PASTA_1/05_depoimentos_iniciais.pdf' },
+                { id: 6, titulo: 'Solução Oficial', icone: '✅', arquivo: 'PASTA_1/09_solucao_pasta1.pdf' }
+            ],
+            2: [
+                { id: 1, titulo: 'Celular de Lucas', icone: '📱', arquivo: 'PASTA_2/01_celular_lucas.pdf' },
+                { id: 2, titulo: 'Relatório Forense', icone: '🔬', arquivo: 'PASTA_2/02_relatorio_forense.pdf' },
+                { id: 3, titulo: 'Extratos Bancários', icone: '💰', arquivo: 'PASTA_2/05_extratos_bancarios.pdf' },
+                { id: 4, titulo: 'Solução Oficial', icone: '✅', arquivo: 'PASTA_2/07_solucao_pasta2.pdf' }
+            ],
+            3: [
+                { id: 1, titulo: 'E-mail Secreto', icone: '✉️', arquivo: 'PASTA_3/01_email_secreto_julia.pdf' },
+                { id: 2, titulo: 'Dossiê Letícia', icone: '📋', arquivo: 'PASTA_3/02_dossie_leticia_2020.pdf' },
+                { id: 3, titulo: 'Confissão Júlia', icone: '📜', arquivo: 'PASTA_3/08_confissao_julia.pdf' },
+                { id: 4, titulo: 'Solução Oficial', icone: '✅', arquivo: 'PASTA_3/10_solucao_pasta3.pdf' }
+            ]
+        };
+
+        // Funções globais
+        window.showSection = function(sectionName) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`${sectionName}-section`).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        window.openLoginModal = function() {
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        window.closeLoginModal = function() {
+            document.getElementById('loginModal').classList.remove('active');
+        }
+
+        window.showLoginTab = function() {
+            document.querySelectorAll('.tab')[0].classList.add('active');
+            document.querySelectorAll('.tab')[1].classList.remove('active');
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('cadastroForm').style.display = 'none';
+            hideMessage();
+        }
+
+        window.showCadastroTab = function() {
+            document.querySelectorAll('.tab')[1].classList.add('active');
+            document.querySelectorAll('.tab')[0].classList.remove('active');
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('cadastroForm').style.display = 'block';
+            hideMessage();
+        }
+
+        function showMessage(text, type) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = `message ${type}`;
+            msg.style.display = 'block';
+        }
+
+        function hideMessage() {
+            document.getElementById('message').style.display = 'none';
+        }
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showMessage('Login realizado!', 'success');
+                setTimeout(() => {
+                    closeLoginModal();
+                    showSection('dashboard');
+                }, 1000);
+            } catch (error) {
+                showMessage('E-mail ou senha incorretos.', 'error');
+            }
+        });
+
+        // Cadastro
+        document.getElementById('cadastroForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nome = document.getElementById('cadastroNome').value;
+            const email = document.getElementById('cadastroEmail').value;
+            const password = document.getElementById('cadastroPassword').value;
+            const confirmPassword = document.getElementById('cadastroPasswordConfirm').value;
+
+            if (password !== confirmPassword) {
+                showMessage('As senhas não coincidem!', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('A senha deve ter no mínimo 6 caracteres!', 'error');
+                return;
+            }
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                await updateProfile(user, { displayName: nome });
+
+                await setDoc(doc(db, 'usuarios', user.uid), {
+                    nome: nome,
+                    email: email,
+                    totalPontos: 0,
+                    casosResolvidos: 0,
+                    createdAt: serverTimestamp()
+                });
+
+                await setDoc(doc(db, 'progressos', `${user.uid}_caso001`), {
+                    userId: user.uid,
+                    casoId: 'caso001',
+                    pasta1: { resolvida: false, pontos: 0, tentativas: 0 },
+                    pasta2: { resolvida: false, pontos: 0, tentativas: 0, desbloqueada: false },
+                    pasta3: { resolvida: false, pontos: 0, tentativas: 0, desbloqueada: false },
+                    casoResolvido: false,
+                    pontosTotal: 0,
+                    createdAt: serverTimestamp()
+                });
+
+                showMessage('Conta criada com sucesso!', 'success');
+                setTimeout(() => {
+                    closeLoginModal();
+                    showSection('dashboard');
+                }, 1500);
+            } catch (error) {
+                if (error.code === 'auth/email-already-in-use') {
+                    showMessage('Este e-mail já está cadastrado!', 'error');
+                } else {
+                    showMessage('Erro ao criar conta.', 'error');
+                }
+            }
+        });
+
+        // Auth State
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                await carregarDashboard(user);
+            } else {
+                currentUser = null;
+                document.getElementById('header-buttons').innerHTML = '<button class="btn-primary" onclick="openLoginModal()">COMPRAR AGORA</button>';
+            }
+        });
+
+        async function carregarDashboard(user) {
+            document.getElementById('header-buttons').innerHTML = `
+                <button class="btn-primary" onclick="showSection('dashboard')">MEU PAINEL</button>
+                <button class="btn-secondary" onclick="logout()">SAIR</button>
+            `;
+
+            const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
+            const userData = userDoc.data();
+            const nome = userData?.nome || user.displayName || 'Detetive';
+
+            document.getElementById('dashboardUserName').textContent = nome;
+            document.getElementById('totalPontos').textContent = userData?.totalPontos || 0;
+            document.getElementById('casosResolvidos').textContent = userData?.casosResolvidos || 0;
+
+            const progressoDoc = await getDoc(doc(db, 'progressos', `${user.uid}_caso001`));
+            progressoData = progressoDoc.data();
+
+            renderizarCasoCard();
+            atualizarTabsCaso();
+        }
+
+        function renderizarCasoCard() {
+            const pasta1 = progressoData?.pasta1 || { resolvida: false, pontos: 0 };
+            const pasta2 = progressoData?.pasta2 || { resolvida: false, pontos: 0, desbloqueada: false };
+            const pasta3 = progressoData?.pasta3 || { resolvida: false, pontos: 0, desbloqueada: false };
+            const casoResolvido = progressoData?.casoResolvido || false;
+
+            let pastasResolvidas = 0;
+            if (pasta1.resolvida) pastasResolvidas++;
+            if (pasta2.resolvida) pastasResolvidas++;
+            if (pasta3.resolvida) pastasResolvidas++;
+
+            const html = `
+                <div class="case-card">
+                    <div class="case-header">
+                        <div class="case-title">🎙️ CASO #001: O Assassino da Transmissão</div>
+                        <div>Um influenciador morto ao vivo. Seis suspeitos. Uma verdade.</div>
+                    </div>
+                    <div class="case-body">
+                        <p style="margin-bottom: 20px;">Progresso: ${pastasResolvidas}/3 pastas resolvidas</p>
+                        <div class="pasta-status">
+                            <div class="pasta-badge ${pasta1.resolvida ? 'resolvida' : ''}">
+                                📂 PASTA 1<br>${pasta1.resolvida ? '✅ Resolvida' : '🔓 Aberta'}
+                            </div>
+                            <div class="pasta-badge ${pasta2.resolvida ? 'resolvida' : pasta2.desbloqueada ? '' : 'bloqueada'}">
+                                📂 PASTA 2<br>${pasta2.resolvida ? '✅ Resolvida' : pasta2.desbloqueada ? '🔓 Aberta' : '🔒 Bloqueada'}
+                            </div>
+                            <div class="pasta-badge ${pasta3.resolvida ? 'resolvida' : pasta3.desbloqueada ? '' : 'bloqueada'}">
+                                📂 PASTA 3<br>${pasta3.resolvida ? '✅ Resolvida' : pasta3.desbloqueada ? '🔓 Aberta' : '🔒 Bloqueada'}
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="showSection('caso')" style="width: 100%; margin-top: 20px;">
+                            ${casoResolvido ? '✅ CASO RESOLVIDO' : '🔍 CONTINUAR INVESTIGAÇÃO'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('casoCardContainer').innerHTML = html;
+        }
+
+        function atualizarTabsCaso() {
+            const pasta1 = progressoData?.pasta1 || { resolvida: false };
+            const pasta2 = progressoData?.pasta2 || { resolvida: false, desbloqueada: false };
+            const pasta3 = progressoData?.pasta3 || { resolvida: false, desbloqueada: false };
+
+            document.getElementById('status1').textContent = pasta1.resolvida ? '✅ Resolvida' : 'O Método';
+
+            const tab2 = document.getElementById('tab2');
+            if (pasta2.desbloqueada || pasta2.resolvida) {
+                tab2.classList.remove('locked');
+                document.getElementById('status2').textContent = pasta2.resolvida ? '✅ Resolvida' : 'O Culpado';
+            }
+
+            const tab3 = document.getElementById('tab3');
+            if (pasta3.desbloqueada || pasta3.resolvida) {
+                tab3.classList.remove('locked');
+                document.getElementById('status3').textContent = pasta3.resolvida ? '✅ Resolvida' : 'O Motivo';
+            }
+        }
+
+        window.mostrarPasta = function(numeroPasta) {
+            if (numeroPasta === 2 && !progressoData?.pasta2?.desbloqueada && !progressoData?.pasta2?.resolvida) {
+                alert('🔒 Você precisa resolver a PASTA 1 primeiro!');
+                return;
+            }
+            if (numeroPasta === 3 && !progressoData?.pasta3?.desbloqueada && !progressoData?.pasta3?.resolvida) {
+                alert('🔒 Você precisa resolver a PASTA 2 primeiro!');
+                return;
+            }
+
+            pastaAtual = numeroPasta;
+            document.querySelectorAll('.folder-tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(`tab${numeroPasta}`).classList.add('active');
+            renderizarPasta(numeroPasta);
+        }
+
+        function renderizarPasta(numeroPasta) {
+            const docs = documentos[numeroPasta];
+            const pasta = progressoData?.[`pasta${numeroPasta}`] || { resolvida: false };
+
+            let descricao = '';
+            let pergunta = '';
+            let campos = '';
+
+            if (numeroPasta === 1) {
+                descricao = 'Analise os documentos para descobrir COMO o crime foi cometido.';
+                pergunta = '🔍 DESCOBRIR O MÉTODO';
+                campos = `
+                    <div class="form-group">
+                        <label>Qual foi a arma do crime?</label>
+                        <input type="text" id="arma" placeholder="Digite sua resposta" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Onde a vítima foi atingida?</label>
+                        <input type="text" id="local" placeholder="Digite sua resposta" required>
+                    </div>
+                `;
+            } else if (numeroPasta === 2) {
+                descricao = 'Investigue os suspeitos e descubra QUEM executou o crime.';
+                pergunta = '🔍 IDENTIFICAR O CULPADO';
+                campos = `
+                    <div class="form-group">
+                        <label>Quem executou o crime?</label>
+                        <input type="text" id="culpado" placeholder="Digite o nome do culpado" required>
+                    </div>
+                `;
+            } else if (numeroPasta === 3) {
+                descricao = 'Desvende a conspiração e revele o MOTIVO por trás do assassinato.';
+                pergunta = '🔍 REVELAR O MOTIVO';
+                campos = `
+                    <div class="form-group">
+                        <label>Quem foi o mandante?</label>
+                        <input type="text" id="mandante" placeholder="Digite sua resposta" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Qual foi o motivo?</label>
+                        <input type="text" id="motivo" placeholder="Digite sua resposta" required>
+                    </div>
+                `;
+            }
+
+            let docsHtml = docs.map(doc => `
+                <div class="document-card">
+                    <div class="document-icon">${doc.icone}</div>
+                    <div style="font-weight: bold; margin-bottom: 15px;">${doc.titulo}</div>
+                    <button class="btn-primary" onclick="window.open('./pdfs/${doc.arquivo}', '_blank')" style="width: 100%;">📥 BAIXAR</button>
+                </div>
+            `).join('');
+
+            let validacaoHtml = '';
+            if (pasta.resolvida) {
+                validacaoHtml = `
+                    <div style="background: rgba(46, 204, 113, 0.2); border: 2px solid #2ecc71; color: #2ecc71; padding: 20px; border-radius: 10px; text-align: center; font-weight: bold; margin-top: 30px;">
+                        ✅ PASTA ${numeroPasta} RESOLVIDA! (+${pasta.pontos} pontos)
+                    </div>
+                `;
+            } else {
+                validacaoHtml = `
+                    <div class="validation-section">
+                        <h2 style="font-size: 24px; color: #dc3545; margin-bottom: 20px; text-align: center;">${pergunta}</h2>
+                        <form onsubmit="validarResposta(event, ${numeroPasta})" style="max-width: 600px; margin: 0 auto;">
+                            ${campos}
+                            <button type="submit" class="btn-primary" style="width: 100%;">VALIDAR RESPOSTA</button>
+                            <div id="messagePasta${numeroPasta}" class="message"></div>
+                        </form>
+                    </div>
+                `;
+            }
+
+            document.getElementById('pastaContent').innerHTML = `
+                <div style="background: rgba(20, 20, 20, 0.9); border: 2px solid rgba(220, 53, 69, 0.3); border-radius: 15px; padding: 40px;">
+                    <p style="font-size: 18px; color: #cccccc; margin-bottom: 30px;">${descricao}</p>
+                    <div class="documents-grid">
+                        ${docsHtml}
+                    </div>
+                    ${validacaoHtml}
+                </div>
+            `;
+        }
+
+        window.validarResposta = async function(event, numeroPasta) {
+            event.preventDefault();
+            const messageEl = document.getElementById(`messagePasta${numeroPasta}`);
+            let correto = false;
+            let pontos = 0;
+
+            if (numeroPasta === 1) {
+                const arma = document.getElementById('arma').value.toLowerCase().trim();
+                const local = document.getElementById('local').value.toLowerCase().trim();
+                const armasCorretas = ['oleandrina', 'veneno', 'espirradeira'];
+                const locaisCorretos = ['nuca', 'cervical', 'pescoço', 'pescoco'];
+                correto = armasCorretas.some(a => arma.includes(a)) && locaisCorretos.some(l => local.includes(l));
+                pontos = 750;
+            } else if (numeroPasta === 2) {
+                const culpado = document.getElementById('culpado').value.toLowerCase().trim();
+                correto = culpado.includes('julia');
+                pontos = 1300;
+            } else if (numeroPasta === 3) {
+                const mandante = document.getElementById('mandante').value.toLowerCase().trim();
+                const motivo = document.getElementById('motivo').value.toLowerCase().trim();
+                correto = mandante.includes('diego') && (motivo.includes('chantagem') || motivo.includes('silenciar'));
+                pontos = 2200;
+            }
+
+            if (correto) {
+                try {
+                    const updates = {
+                        [`pasta${numeroPasta}.resolvida`]: true,
+                        [`pasta${numeroPasta}.pontos`]: pontos,
+                        updatedAt: serverTimestamp()
+                    };
+
+                    if (numeroPasta < 3) {
+                        updates[`pasta${numeroPasta + 1}.desbloqueada`] = true;
+                    }
+
+                    if (numeroPasta === 3) {
+                        updates.casoResolvido = true;
+                        updates.pontosTotal = 4250;
+                    } else {
+                        updates.pontosTotal = progressoData.pontosTotal + pontos;
+                    }
+
+                    await updateDoc(doc(db, 'progressos', `${currentUser.uid}_caso001`), updates);
+
+                    const userDoc = await getDoc(doc(db, 'usuarios', currentUser.uid));
+                    const userData = userDoc.data();
+                    await updateDoc(doc(db, 'usuarios', currentUser.uid), {
+                        totalPontos: (userData.totalPontos || 0) + pontos,
+                        casosResolvidos: numeroPasta === 3 ? (userData.casosResolvidos || 0) + 1 : userData.casosResolvidos || 0
+                    });
+
+                    messageEl.textContent = `✅ CORRETO! +${pontos} pontos! ${numeroPasta < 3 ? `PASTA ${numeroPasta + 1} desbloqueada!` : 'CASO RESOLVIDO! 🎉'}`;
+                    messageEl.className = 'message success';
+                    messageEl.style.display = 'block';
+
+                    setTimeout(() => location.reload(), 2000);
+                } catch (error) {
+                    messageEl.textContent = '❌ Erro ao salvar. Tente novamente.';
+                    messageEl.className = 'message error';
+                    messageEl.style.display = 'block';
+                }
+            } else {
+                messageEl.textContent = '❌ Resposta incorreta. Analise melhor os documentos!';
+                messageEl.className = 'message error';
+                messageEl.style.display = 'block';
+            }
+        }
+
+        window.logout = async function() {
+            await signOut(auth);
+            showSection('home');
+        }
+
+        // Inicializar pasta ao abrir a seção
+        const observer = new MutationObserver(() => {
+            if (document.getElementById('caso-section').classList.contains('active') && progressoData) {
+                mostrarPasta(1);
+            }
+        });
+        observer.observe(document.getElementById('caso-section'), { attributes: true, attributeFilter: ['class'] });
+    </script>
+</body>
+</html>
