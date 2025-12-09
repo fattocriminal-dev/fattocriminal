@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Lucas Mendes</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+	/* GADGET DE TEMPO */
+.weather-gadget {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 12px 18px;
+    margin: 20px auto;
+    max-width: 320px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.weather-icon {
+    font-size: 40px;
+}
+
+.weather-info {
+    flex: 1;
+}
+
+.weather-temp {
+    font-size: 28px;
+    font-weight: 300;
+    color: #fff;
+    line-height: 1;
+}
+
+.weather-location {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 2px;
+}
+
+.weather-details {
+    display: flex;
+    gap: 12px;
+}
+
+.weather-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detail-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+}
+
+.detail-value {
+    font-size: 15px;
+    color: #fff;
+    font-weight: 500;
+}
+	/* ÍCONES DA DOCK */
+.dock {
+    position: absolute;
+    bottom: 20px;
+	margin: 0 auto;
+	width: fit-content;
+    display: flex;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    padding: 12px 20px;
+    border-radius: 25px;
+}
+
+.dock-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.dock-icon i {
+    font-size: 30px;
+    color: white;
+}
+
+.dock-icon.phone {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+}
+
+.dock-icon.messages {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.dock-icon.browser {
+    background: linear-gradient(135deg, #db4437, #f4b400, #0f9d58, #4285f4);
+}
+	
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .iphone-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .iphone-frame {
+            width: 375px;
+            height: 812px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #1a1a1a;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ========================================
+           BARRA DE STATUS
+        ======================================== */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 20px;
+            padding-top: 14px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ========================================
+           HOME SCREEN
+        ======================================== */
+        .home-screen {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 30px);
+            padding: 20px;
+            color: #fff;
+        }
+
+        .wallpaper-info {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        .home-date {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .home-time {
+            font-size: 56px;
+            font-weight: 200;
+            margin: 0;
+        }
+
+        /* ========================================
+           GRID DE APPS
+        ======================================== */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            margin-top: 10px;
+        }
+
+        .app-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            text-decoration: none;
+        }
+
+        .app-icon:hover {
+            transform: scale(1.05);
+        }
+
+        .app-icon:active {
+            transform: scale(0.95);
+        }
+
+        .icon-bg {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+			font-size: 36px;
+			color: white !important;
+        }
+
+        .icon-bg.gmail {
+            background: linear-gradient(135deg, #ea4335 0%, #d32f2f 100%);
+        }
+
+        .icon-bg.whatsapp {
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+        }
+
+        .icon-bg.galeria {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+        }
+
+        .icon-bg.notas {
+            background: linear-gradient(135deg, #ffd93d 0%, #f6c23e 100%);
+        }
+
+        .icon-bg.banco {
+            background: linear-gradient(135deg, #4158d0 0%, #c850c0 100%);
+        }
+
+        .icon-bg.contatos {
+            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+        }
+
+        .app-name {
+            color: #fff;
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Badges de notificação */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff3b30;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon-wrapper {
+            position: relative;
+        }
+
+        /* ========================================
+           DOCK (barra inferior)
+        ======================================== */
+        .dock {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 10px 20px;
+            margin: 0 auto;
+			width: fit-content;
+			position: absolute;
+			bottom: 60px;
+			left: 0;
+			right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .dock-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .dock-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .dock-icon:active {
+            transform: scale(0.95);
+        }
+
+        /* ========================================
+           BOTÃO VOLTAR
+        ======================================== */
+        .back-button {
+position: absolute;
+bottom: 72px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 9999;
+            pointer-events: auto;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        /* ========================================
+           RESPONSIVO
+        ======================================== */
+        @media (max-height: 900px) {
+            .iphone-frame {
+                transform: scale(0.85);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .iphone-frame {
+                transform: scale(0.75);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-container">
+        <div class="iphone-frame">
+            <div class="notch"></div>
+            
+            <div class="iphone-screen">
+                <!-- Barra de status -->
+                <div class="status-bar">
+                    <span class="status-left">📶 5G</span>
+                    <span class="status-right">🔋 87% 20:35</span>
+                </div>
+                
+                <!-- Home Screen -->
+                <div class="home-screen">
+                    <!-- Data e Hora -->
+                    <div class="wallpaper-info">
+                        <p class="home-date">Segunda, 30 Set</p>
+                        <h1 class="home-time">20:35</h1>
+
+<div class="weather-gadget">
+    <div class="weather-icon">🌙</div>
+    <div class="weather-info">
+	        <div class="weather-temp">22°</div>
+		<div class="weather-condition">Céu Limpo</div>
+        <div class="weather-location">São Paulo</div>
+    </div>
+    <div class="weather-details">
+        <div class="weather-detail">
+            <span class="detail-label">Máx</span>
+            <span class="detail-value">32°</span>
+        </div>
+        <div class="weather-detail">
+            <span class="detail-label">Mín</span>
+            <span class="detail-value">22°</span>
+        </div>
+    </div>
+</div>
+                    </div>
+                    
+                    <!-- Grade de Apps -->
+<div class="apps-grid">
+    <!-- Gmail -->
+    <a href="gmail.html" class="app-icon">
+        <div class="icon-wrapper">
+            <div class="icon-bg gmail">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <span class="notification-badge">8</span>
+        </div>
+        <span class="app-name">Gmail</span>
+    </a>
+    
+    <!-- WhatsApp -->
+    <a href="whatsapp.html" class="app-icon">
+        <div class="icon-wrapper">
+            <div class="icon-bg whatsapp">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+            <span class="notification-badge">5</span>
+        </div>
+        <span class="app-name">WhatsApp</span>
+    </a>
+    
+    <!-- Galeria -->
+    <a href="galeria.html" class="app-icon">
+        <div class="icon-bg galeria">
+            <i class="fas fa-image"></i>
+        </div>
+        <span class="app-name">Galeria</span>
+    </a>
+    
+    <!-- Notas -->
+    <a href="notas.html" class="app-icon">
+        <div class="icon-wrapper">
+            <div class="icon-bg notas">
+                <i class="fas fa-sticky-note"></i>
+            </div>
+            <span class="notification-badge">6</span>
+        </div>
+        <span class="app-name">Notas</span>
+    </a>
+    
+    <!-- Banco -->
+    <a href="banco.html" class="app-icon">
+        <div class="icon-bg banco">
+            <i class="fas fa-university"></i>
+        </div>
+        <span class="app-name">Banco</span>
+    </a>
+    
+    <!-- Contatos -->
+    <a href="contatos.html" class="app-icon">
+        <div class="icon-bg contatos">
+            <i class="fas fa-address-book"></i>
+        </div>
+        <span class="app-name">Contatos</span>
+    </a>
+</div>
+                    
+                    <!-- Dock -->
+<div class="dock">
+    <div class="dock-icon phone">
+        <i class="fas fa-phone"></i>
+    </div>
+    
+    <div class="dock-icon messages">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    
+    <div class="dock-icon browser">
+        <i class="fab fa-chrome"></i>
+    </div>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Botão para voltar à tela de bloqueio -->
+    <button class="back-button">
+        ← Voltar para Tela de Bloqueio
+    </button>
+    
+    <script>
+        console.log("🏠 Home Screen carregada!");
+        console.log("📱 Apps disponíveis: Gmail, WhatsApp, Galeria, Notas, Banco, Contatos");
+        
+        // Adicionar efeito de clique nos apps
+        document.querySelectorAll('.app-icon').forEach(app => {
+            app.addEventListener('click', (e) => {
+                const appName = app.querySelector('.app-name').textContent;
+                console.log(`📲 App clicado: ${appName}`);
+            });
+        });
+        
+        // Garantir que o botão de voltar funcione
+        document.querySelector('.back-button').addEventListener('click', function() {
+            console.log("🔙 Voltando para tela de bloqueio...");
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
