@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Recuperar Senha — FATTO CRIMINAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#070708; --card:#0f1113; --muted:#9da3a9; --accent:#dc3545; --accent-2:#ffd93d;
+      --maxw:1400px; --radius:14px; color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#070708; color:#e9eef2; margin:0; -webkit-font-smoothing:antialiased; display:flex; flex-direction:column}
+
+/* TOP MARQUEE */
+.topbar{background:linear-gradient(90deg, rgba(220,53,69,0.08), rgba(220,53,69,0.02));font-weight:700;padding:10px 0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.02);overflow:hidden}
+.marquee{display:inline-block;white-space:nowrap;animation:scroll 20s linear infinite}
+@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(5,5,6,0.9), rgba(5,5,6,0.8));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.02)}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+
+    /* MAIN */
+    main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+
+    /* CARD */
+    .reset-card{max-width:480px;width:100%;background:transparent;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:48px;backdrop-filter:blur(10px)}
+
+    .reset-header{text-align:center;margin-bottom:32px}
+    .reset-icon{width:80px;height:80px;margin:0 auto 20px;background:linear-gradient(135deg,var(--accent),#8b0000);border-radius:50%;display:grid;place-items:center;font-size:36px;color:#fff}
+    .reset-header h1{font-family:Montserrat;font-size:28px;font-weight:800;margin:0 0 8px 0}
+    .reset-header p{color:var(--muted);font-size:15px;margin:0;line-height:1.6}
+
+    /* STEPS */
+    .step{display:none}
+    .step.active{display:block}
+
+    /* FORM */
+    .form-group{margin-bottom:24px}
+    .form-group label{display:block;font-size:14px;font-weight:600;margin-bottom:8px;color:#fff}
+    .form-group input{
+      width:100%;
+      padding:14px 16px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:10px;
+      color:#fff;
+      font-size:15px;
+      font-family:Inter;
+      transition:all 0.3s;
+    }
+    .form-group input:focus{
+      outline:none;
+      border-color:var(--accent);
+      background:rgba(255,255,255,0.08);
+    }
+
+    /* CODE INPUT */
+    .code-inputs{display:flex;gap:12px;justify-content:center;margin-bottom:24px}
+    .code-input{width:60px;height:60px;text-align:center;font-size:24px;font-weight:800;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:Montserrat}
+    .code-input:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,0.08)}
+
+    /* BUTTONS */
+    .btn{width:100%;padding:14px;border-radius:10px;font-weight:800;font-size:15px;cursor:pointer;transition:all 0.3s;border:none;display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(220,53,69,0.4)}
+    .btn-secondary{background:rgba(255,255,255,0.05);color:var(--muted);margin-top:12px}
+    .btn-secondary:hover{background:rgba(255,255,255,0.08);color:#fff}
+
+    /* INFO BOX */
+    .info-box{background:rgba(220,53,69,0.05);border:1px solid rgba(220,53,69,0.1);border-radius:10px;padding:16px;margin-bottom:24px;font-size:14px;color:var(--muted);line-height:1.6}
+    .info-box i{color:var(--accent);margin-right:8px}
+
+    /* SUCCESS */
+    .success-icon{width:100px;height:100px;margin:0 auto 24px;background:linear-gradient(135deg,#10b981,#059669);border-radius:50%;display:grid;place-items:center;font-size:48px;color:#fff;animation:scaleIn 0.5s ease}
+    @keyframes scaleIn{from{transform:scale(0)} to{transform:scale(1)}}
+
+    /* RESEND */
+    .resend-text{text-align:center;margin-top:20px;font-size:14px;color:var(--muted)}
+    .resend-text a{color:var(--accent);text-decoration:none;font-weight:600;cursor:pointer}
+    .resend-text a:hover{text-decoration:underline}
+
+    footer{border-top:1px solid rgba(255,255,255,0.02);padding:24px 0;color:var(--muted);text-align:center;font-size:14px}
+    
+    @media(max-width:580px){
+      .reset-card{padding:32px 24px}
+      .code-input{width:50px;height:50px;font-size:20px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="marquee">🔥 NOVO CASO: "A ÚLTIMA TRANSMISSÃO" DISPONÍVEL AGORA • COMPRE E JOGUE NO MESMO DIA • ACESSO VITALÍCIO GARANTIDO 🔥</div>
+</div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <img src="images/logo.png" alt="FATTO CRIMINAL" style="height:70px;width:auto;">
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <div class="reset-card">
+      
+      <!-- STEP 1: EMAIL -->
+      <div class="step active" id="step1">
+        <div class="reset-header">
+          <div class="reset-icon">
+            <i class="fas fa-lock"></i>
+          </div>
+          <h1>Esqueceu sua senha?</h1>
+          <p>Sem problemas! Digite seu email e enviaremos um código de verificação</p>
+        </div>
+
+        <form id="emailForm">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="emailInput" placeholder="seu@email.com" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i>
+            Enviar Código
+          </button>
+
+          <a href="login.html" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i>
+            Voltar ao Login
+          </a>
+        </form>
+      </div>
+
+      <!-- STEP 2: CODE -->
+      <div class="step" id="step2">
+        <div class="reset-header">
+          <div class="reset-icon">
+            <i class="fas fa-envelope-open"></i>
+          </div>
+          <h1>Verificar Código</h1>
+          <p>Digite o código de 6 dígitos enviado para <strong id="emailDisplay"></strong></p>
+        </div>
+
+        <div class="info-box">
+          <i class="fas fa-info-circle"></i>
+          O código expira em <strong>10 minutos</strong>. Verifique sua caixa de spam se não receber.
+        </div>
+
+        <form id="codeForm">
+          <div class="code-inputs">
+            <input type="text" class="code-input" maxlength="1" pattern="[0-9]" required />
+            <input type="text" class="code-input" maxlength="1" pattern="[0-9]" required />
+            <input type="text" class="code-input" maxlength="1" pattern="[0-9]" required />
+            <input type="text" class="code-input" maxlength="1" pattern="[0-9]" required />
+            <input type="text" class="code-input" maxlength="1" pattern="[0-9]" required />
+            <input type="text" class="code-input" maxlength="1" pattern="[0-9]" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-check"></i>
+            Verificar Código
+          </button>
+
+          <div class="resend-text">
+            Não recebeu o código? <a onclick="resendCode()">Reenviar</a>
+          </div>
+        </form>
+      </div>
+
+      <!-- STEP 3: NEW PASSWORD -->
+      <div class="step" id="step3">
+        <div class="reset-header">
+          <div class="reset-icon">
+            <i class="fas fa-key"></i>
+          </div>
+          <h1>Nova Senha</h1>
+          <p>Crie uma senha forte para proteger sua conta</p>
+        </div>
+
+        <form id="passwordForm">
+          <div class="form-group">
+            <label>Nova Senha</label>
+            <input type="password" id="newPassword" placeholder="Mínimo 8 caracteres" required />
+          </div>
+
+          <div class="form-group">
+            <label>Confirmar Senha</label>
+            <input type="password" id="confirmPassword" placeholder="Digite a senha novamente" required />
+          </div>
+
+          <div class="info-box">
+            <i class="fas fa-shield-alt"></i>
+            Use pelo menos 8 caracteres com letras maiúsculas, minúsculas, números e símbolos.
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-check-circle"></i>
+            Redefinir Senha
+          </button>
+        </form>
+      </div>
+
+      <!-- STEP 4: SUCCESS -->
+      <div class="step" id="step4">
+        <div class="reset-header">
+          <div class="success-icon">
+            <i class="fas fa-check"></i>
+          </div>
+          <h1>Senha Redefinida!</h1>
+          <p>Sua senha foi alterada com sucesso. Agora você pode fazer login com sua nova senha.</p>
+        </div>
+
+        <a href="login.html" class="btn btn-primary">
+          <i class="fas fa-sign-in-alt"></i>
+          Fazer Login
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      © <strong>FATTO CRIMINAL</strong> 2024 — Todos os direitos reservados
+    </div>
+  </footer>
+
+  <script>
+    let userEmail = '';
+
+    // STEP 1: Email Submission
+    document.getElementById('emailForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      userEmail = document.getElementById('emailInput').value;
+      
+      // TODO: Send verification code via backend
+      console.log('Sending code to:', userEmail);
+      
+      // Show success and move to step 2
+      alert(`✓ Código de verificação enviado para ${userEmail}`);
+      document.getElementById('emailDisplay').textContent = userEmail;
+      showStep(2);
+    });
+
+    // CODE INPUT AUTO-FOCUS
+    const codeInputs = document.querySelectorAll('.code-input');
+    codeInputs.forEach((input, index) => {
+      input.addEventListener('input', function(e) {
+        if (e.target.value && index < codeInputs.length - 1) {
+          codeInputs[index + 1].focus();
+        }
+      });
+      
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Backspace' && !e.target.value && index > 0) {
+          codeInputs[index - 1].focus();
+        }
+      });
+    });
+
+    // STEP 2: Code Verification
+    document.getElementById('codeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const code = Array.from(codeInputs).map(input => input.value).join('');
+      
+      if (code.length !== 6) {
+        alert('Por favor, digite o código completo de 6 dígitos.');
+        return;
+      }
+      
+      // TODO: Verify code via backend
+      console.log('Verifying code:', code);
+      
+      // Simulate verification
+      if (code === '123456') { // Placeholder check
+        alert('✓ Código verificado com sucesso!');
+        showStep(3);
+      } else {
+        alert('⚠️ Código inválido. Para este demo, use: 123456');
+      }
+    });
+
+    // STEP 3: Password Reset
+    document.getElementById('passwordForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const newPass = document.getElementById('newPassword').value;
+      const confirmPass = document.getElementById('confirmPassword').value;
+      
+      // Validate
+      if (newPass.length < 8) {
+        alert('A senha deve ter pelo menos 8 caracteres.');
+        return;
+      }
+      
+      if (newPass !== confirmPass) {
+        alert('As senhas não coincidem.');
+        return;
+      }
+      
+      // TODO: Update password via backend
+      console.log('Updating password for:', userEmail);
+      
+      // Success!
+      showStep(4);
+    });
+
+    // Resend Code
+    function resendCode() {
+      alert(`✓ Novo código enviado para ${userEmail}`);
+      // TODO: Resend code via backend
+      console.log('Resending code to:', userEmail);
+    }
+
+    // Show Step
+    function showStep(stepNumber) {
+      document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+      document.getElementById(`step${stepNumber}`).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>

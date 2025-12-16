@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Configurações — FATTO CRIMINAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#070708; --card:#0f1113; --muted:#9da3a9; --accent:#dc3545; --accent-2:#ffd93d;
+      --maxw:1400px; --radius:14px; color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#070708; color:#e9eef2; margin:0; -webkit-font-smoothing:antialiased}
+
+/* TOP MARQUEE */
+.topbar{background:linear-gradient(90deg, rgba(220,53,69,0.08), rgba(220,53,69,0.02));font-weight:700;padding:10px 0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.02);overflow:hidden}
+.marquee{display:inline-block;white-space:nowrap;animation:scroll 20s linear infinite}
+@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(5,5,6,0.9), rgba(5,5,6,0.8));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.02)}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    nav.desktop{display:flex;gap:18px;align-items:center}
+    nav.desktop a{color:var(--muted);text-decoration:none;font-weight:600;transition:color 0.3s;font-size:14px}
+    nav.desktop a:hover{color:#fff}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-weight:800;border:none;cursor:pointer;transition:all 0.3s}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(220,53,69,0.4)}
+
+    /* PAGE HEADER */
+    .page-header{padding:40px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .page-header h1{font-family:Montserrat;font-size:42px;font-weight:900;margin:0 0 12px 0}
+    .page-header p{font-size:16px;color:var(--muted);margin:0}
+
+    /* SETTINGS LAYOUT */
+    .settings-layout{display:grid;grid-template-columns:280px 1fr;gap:32px;padding:40px 0 80px}
+    @media(max-width:968px){.settings-layout{grid-template-columns:1fr}}
+
+    /* SIDEBAR */
+    .settings-sidebar{position:sticky;top:100px}
+    .settings-menu{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:12px;overflow:hidden}
+    .settings-menu-item{padding:16px 20px;display:flex;align-items:center;gap:12px;color:var(--muted);font-weight:600;cursor:pointer;transition:all 0.3s;border-left:3px solid transparent}
+    .settings-menu-item:hover{background:rgba(255,255,255,0.02);color:#fff}
+    .settings-menu-item.active{background:rgba(220,53,69,0.08);color:#fff;border-left-color:var(--accent)}
+    .settings-menu-item i{font-size:18px;width:24px}
+
+    /* CONTENT */
+    .settings-content{max-width:700px}
+    .settings-section{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:32px;margin-bottom:24px;display:none}
+    .settings-section.active{display:block}
+    .settings-section h2{font-family:Montserrat;font-size:24px;font-weight:800;margin:0 0 8px 0}
+    .settings-section > p{color:var(--muted);font-size:14px;margin:0 0 24px 0}
+
+    /* FORM ELEMENTS */
+    .form-group{margin-bottom:24px}
+    .form-group label{display:block;font-size:14px;font-weight:600;margin-bottom:8px;color:#fff}
+    .form-group input, .form-group select, .form-group textarea{
+      width:100%;
+      padding:12px 16px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:10px;
+      color:#fff;
+      font-size:15px;
+      font-family:Inter;
+      transition:all 0.3s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus{
+      outline:none;
+      border-color:var(--accent);
+      background:rgba(255,255,255,0.05);
+    }
+    .form-group textarea{min-height:100px;resize:vertical}
+    .form-hint{font-size:13px;color:var(--muted);margin-top:6px}
+
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:580px){.form-row{grid-template-columns:1fr}}
+
+    /* TOGGLE SWITCH */
+    .toggle-group{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .toggle-group:last-child{border-bottom:none}
+    .toggle-info h4{font-size:16px;margin:0 0 4px 0;font-weight:600}
+    .toggle-info p{font-size:13px;color:var(--muted);margin:0}
+
+    .toggle-switch{position:relative;width:52px;height:28px;flex-shrink:0}
+    .toggle-switch input{opacity:0;width:0;height:0}
+    .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,0.1);border-radius:28px;transition:0.3s}
+    .toggle-slider:before{position:absolute;content:"";height:20px;width:20px;left:4px;bottom:4px;background:#fff;border-radius:50%;transition:0.3s}
+    .toggle-switch input:checked + .toggle-slider{background:linear-gradient(90deg,var(--accent),#8b0000)}
+    .toggle-switch input:checked + .toggle-slider:before{transform:translateX(24px)}
+
+    /* AVATAR UPLOAD */
+    .avatar-section{display:flex;gap:24px;align-items:center;padding:24px;background:rgba(255,255,255,0.02);border-radius:10px;margin-bottom:24px}
+    .current-avatar{width:100px;height:100px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:50%;display:grid;place-items:center;font-size:40px;color:#fff;font-weight:800}
+    .avatar-actions{flex:1}
+    .avatar-actions h4{font-size:16px;margin:0 0 8px 0;font-weight:600}
+    .avatar-actions p{font-size:13px;color:var(--muted);margin:0 0 16px 0}
+    .avatar-buttons{display:flex;gap:10px}
+    .btn-secondary{padding:10px 20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:#fff;font-weight:600;font-size:14px;cursor:pointer;transition:all 0.3s}
+    .btn-secondary:hover{background:rgba(255,255,255,0.08)}
+    .btn-danger{background:rgba(220,53,69,0.1);color:var(--accent);border-color:rgba(220,53,69,0.2)}
+    .btn-danger:hover{background:rgba(220,53,69,0.2)}
+
+    /* BUTTONS */
+    .btn-save{padding:12px 28px;background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:15px;cursor:pointer;transition:all 0.3s;display:inline-flex;align-items:center;gap:8px}
+    .btn-save:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(220,53,69,0.4)}
+
+    /* DANGER ZONE */
+    .danger-zone{background:rgba(220,53,69,0.05);border:1px solid rgba(220,53,69,0.1);border-radius:10px;padding:24px;margin-top:32px}
+    .danger-zone h3{font-size:18px;color:var(--accent);margin:0 0 8px 0;font-weight:700;display:flex;align-items:center;gap:8px}
+    .danger-zone p{color:var(--muted);font-size:14px;margin:0 0 16px 0}
+    .danger-zone .btn-danger{background:var(--accent);color:#fff;padding:10px 20px;border:none}
+    .danger-zone .btn-danger:hover{background:#b92b3a}
+
+    footer{border-top:1px solid rgba(255,255,255,0.02);padding:32px 0;margin-top:60px;color:var(--muted);text-align:center}
+    
+    @media(max-width:880px){nav.desktop{display:none}}
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="marquee">🔥 NOVO CASO: "A ÚLTIMA TRANSMISSÃO" DISPONÍVEL AGORA • COMPRE E JOGUE NO MESMO DIA • ACESSO VITALÍCIO GARANTIDO 🔥</div>
+</div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <img src="images/logo.png" alt="FATTO CRIMINAL" style="height:70px;width:auto;">
+      </a>
+
+      <nav class="desktop">
+        <a href="index.html">Início</a>
+        <a href="casos.html">Casos</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="configuracoes.html" style="color:#fff">Configurações</a>
+        <a href="login.html" class="btn-primary">Sair</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <section class="container page-header">
+    <h1><i class="fas fa-cog"></i> Configurações</h1>
+    <p>Gerencie sua conta e preferências</p>
+  </section>
+
+  <!-- SETTINGS -->
+  <main class="container">
+    <div class="settings-layout">
+      
+      <!-- SIDEBAR -->
+      <aside class="settings-sidebar">
+        <nav class="settings-menu">
+          <div class="settings-menu-item active" data-section="profile">
+            <i class="fas fa-user"></i>
+            <span>Perfil</span>
+          </div>
+          <div class="settings-menu-item" data-section="account">
+            <i class="fas fa-key"></i>
+            <span>Conta</span>
+          </div>
+          <div class="settings-menu-item" data-section="notifications">
+            <i class="fas fa-bell"></i>
+            <span>Notificações</span>
+          </div>
+          <div class="settings-menu-item" data-section="privacy">
+            <i class="fas fa-shield-alt"></i>
+            <span>Privacidade</span>
+          </div>
+          <div class="settings-menu-item" data-section="preferences">
+            <i class="fas fa-sliders-h"></i>
+            <span>Preferências</span>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- CONTENT -->
+      <div class="settings-content">
+        
+        <!-- PERFIL -->
+        <section class="settings-section active" data-section="profile">
+          <h2>Informações do Perfil</h2>
+          <p>Atualize suas informações pessoais</p>
+
+          <div class="avatar-section">
+            <div class="current-avatar">GM</div>
+            <div class="avatar-actions">
+              <h4>Foto de Perfil</h4>
+              <p>JPG, PNG ou GIF. Máximo 2MB.</p>
+              <div class="avatar-buttons">
+                <button class="btn-secondary">Alterar Foto</button>
+                <button class="btn-secondary btn-danger">Remover</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nome</label>
+              <input type="text" value="Guilherme" />
+            </div>
+            <div class="form-group">
+              <label>Sobrenome</label>
+              <input type="text" value="Matos" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Nome de Usuário</label>
+            <input type="text" value="@detective_gm" />
+            <div class="form-hint">Este é seu identificador único no ranking</div>
+          </div>
+
+          <div class="form-group">
+            <label>Bio</label>
+            <textarea placeholder="Conte um pouco sobre você...">Detetive amador apaixonado por mistérios e puzzles complexos.</textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Localização</label>
+            <input type="text" value="São Paulo, Brasil" />
+          </div>
+
+          <button class="btn-save">
+            <i class="fas fa-check"></i> Salvar Alterações
+          </button>
+        </section>
+
+        <!-- CONTA -->
+        <section class="settings-section" data-section="account">
+          <h2>Segurança da Conta</h2>
+          <p>Gerencie email, senha e autenticação</p>
+
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" value="guilherme@email.com" />
+            <div class="form-hint">Email verificado ✓</div>
+          </div>
+
+          <div class="form-group">
+            <label>Senha Atual</label>
+            <input type="password" placeholder="Digite sua senha atual" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nova Senha</label>
+              <input type="password" placeholder="Nova senha" />
+            </div>
+            <div class="form-group">
+              <label>Confirmar Senha</label>
+              <input type="password" placeholder="Confirme a senha" />
+            </div>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Autenticação de Dois Fatores</h4>
+              <p>Proteja sua conta com verificação em duas etapas</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <button class="btn-save">
+            <i class="fas fa-check"></i> Atualizar Conta
+          </button>
+
+          <div class="danger-zone">
+            <h3><i class="fas fa-exclamation-triangle"></i> Zona de Perigo</h3>
+            <p>Uma vez excluída, sua conta não poderá ser recuperada. Todos os seus dados, progresso e compras serão perdidos permanentemente.</p>
+            <button class="btn-danger" onclick="confirmDeleteAccount()">
+              <i class="fas fa-trash"></i> Excluir Conta
+            </button>
+          </div>
+        </section>
+
+        <!-- NOTIFICAÇÕES -->
+        <section class="settings-section" data-section="notifications">
+          <h2>Notificações</h2>
+          <p>Controle como você recebe atualizações</p>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Notificações por Email</h4>
+              <p>Receber atualizações importantes por email</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Novos Casos</h4>
+              <p>Ser notificado quando novos casos forem lançados</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Promoções</h4>
+              <p>Receber ofertas especiais e cupons de desconto</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Atualizações de Ranking</h4>
+              <p>Notificações quando sua posição no ranking mudar</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Newsletter Semanal</h4>
+              <p>Resumo semanal de atividades e novidades</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <button class="btn-save">
+            <i class="fas fa-check"></i> Salvar Preferências
+          </button>
+        </section>
+
+        <!-- PRIVACIDADE -->
+        <section class="settings-section" data-section="privacy">
+          <h2>Privacidade</h2>
+          <p>Controle quem pode ver suas informações</p>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Perfil Público</h4>
+              <p>Permitir que outros usuários vejam seu perfil</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Mostrar no Ranking</h4>
+              <p>Aparecer na classificação global de detetives</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Exibir Estatísticas</h4>
+              <p>Permitir visualização das suas estatísticas</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Mostrar Casos Resolvidos</h4>
+              <p>Exibir lista de casos que você completou</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <button class="btn-save">
+            <i class="fas fa-check"></i> Salvar Configurações
+          </button>
+        </section>
+
+        <!-- PREFERÊNCIAS -->
+        <section class="settings-section" data-section="preferences">
+          <h2>Preferências de Jogo</h2>
+          <p>Personalize sua experiência investigativa</p>
+
+          <div class="form-group">
+            <label>Idioma</label>
+            <select>
+              <option>Português (Brasil)</option>
+              <option>English</option>
+              <option>Español</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Tema</label>
+            <select>
+              <option>Escuro (Padrão)</option>
+              <option>Claro</option>
+              <option>Automático</option>
+            </select>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Dicas Automáticas</h4>
+              <p>Receber sugestões sutis durante a investigação</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Temporizador Visível</h4>
+              <p>Mostrar cronômetro durante a investigação</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Confirmação de Resposta</h4>
+              <p>Pedir confirmação antes de enviar solução</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <h4>Sons e Efeitos</h4>
+              <p>Ativar sons ambientes e efeitos sonoros</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <button class="btn-save">
+            <i class="fas fa-check"></i> Salvar Preferências
+          </button>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      © <strong>FATTO CRIMINAL</strong> 2024 — Todos os direitos reservados
+    </div>
+  </footer>
+
+  <script>
+    // Menu Navigation
+    document.querySelectorAll('.settings-menu-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const section = item.dataset.section;
+        
+        // Update active menu item
+        document.querySelectorAll('.settings-menu-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        
+        // Update active section
+        document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+        document.querySelector(`.settings-section[data-section="${section}"]`).classList.add('active');
+      });
+    });
+
+    // Save Buttons
+    document.querySelectorAll('.btn-save').forEach(btn => {
+      if (!btn.onclick) {
+        btn.addEventListener('click', () => {
+          alert('✓ Configurações salvas com sucesso!');
+        });
+      }
+    });
+
+    // Delete Account Confirmation
+    function confirmDeleteAccount() {
+      const confirm1 = window.confirm(
+        '⚠️ ATENÇÃO: Esta ação é IRREVERSÍVEL!\n\n' +
+        'Você está prestes a excluir sua conta permanentemente. ' +
+        'Todos os seus dados, progresso, conquistas e compras serão perdidos.\n\n' +
+        'Deseja realmente continuar?'
+      );
+      
+      if (confirm1) {
+        const confirm2 = window.confirm(
+          'Última confirmação:\n\n' +
+          'Digite "EXCLUIR" na próxima tela para confirmar a exclusão da conta.'
+        );
+        
+        if (confirm2) {
+          const typed = prompt('Digite "EXCLUIR" para confirmar:');
+          if (typed === 'EXCLUIR') {
+            alert('Conta excluída. Você será redirecionado para a página inicial.');
+            // TODO: Delete account via backend
+            window.location.href = 'index.html';
+          } else {
+            alert('Texto incorreto. Exclusão cancelada.');
+          }
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

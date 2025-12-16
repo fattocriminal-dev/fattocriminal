@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — FATTO CRIMINAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#070708; --card:#0f1113; --muted:#9da3a9; --accent:#dc3545; --accent-2:#ffd93d;
+      --maxw:1400px; --radius:14px; color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#070708; color:#e9eef2; margin:0; -webkit-font-smoothing:antialiased}
+
+/* TOP MARQUEE */
+.topbar{background:linear-gradient(90deg, rgba(220,53,69,0.08), rgba(220,53,69,0.02));font-weight:700;padding:10px 0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.02);overflow:hidden}
+.marquee{display:inline-block;white-space:nowrap;animation:scroll 20s linear infinite}
+@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(5,5,6,0.9), rgba(5,5,6,0.8));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.02)}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    nav.desktop{display:flex;gap:18px;align-items:center}
+    nav.desktop a{color:var(--muted);text-decoration:none;font-weight:600;transition:color 0.3s;font-size:14px}
+    nav.desktop a:hover{color:#fff}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-weight:800;border:none;cursor:pointer;transition:all 0.3s}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(220,53,69,0.4)}
+
+    /* LOGIN PAGE */
+    .login-container{min-height:calc(100vh - 100px);display:grid;place-items:center;padding:40px 20px}
+    .login-box{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:40px;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+    .login-header{text-align:center;margin-bottom:32px}
+    .login-header h2{font-family:Montserrat;font-size:28px;margin:0 0 8px 0;font-weight:800}
+    .login-header p{color:var(--muted);margin:0;font-size:14px}
+    
+    .form-group{margin-bottom:20px}
+    .form-group label{display:block;margin-bottom:8px;font-weight:600;font-size:14px;color:#e9eef2}
+    .form-group input{width:100%;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-size:15px;transition:all 0.3s}
+    .form-group input:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,0.05)}
+    
+    .form-options{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;font-size:14px}
+    .checkbox-wrapper{display:flex;align-items:center;gap:8px}
+    .checkbox-wrapper input{width:auto}
+    .forgot-link{color:var(--accent);text-decoration:none;font-weight:600}
+    .forgot-link:hover{text-decoration:underline}
+    
+    .btn-login{width:100%;padding:16px;background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:10px}
+    .btn-login:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(220,53,69,0.5)}
+    
+    .divider{display:flex;align-items:center;gap:12px;margin:28px 0;color:var(--muted);font-size:13px}
+    .divider::before, .divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.08)}
+    
+    .social-login{display:grid;gap:12px}
+    .btn-social{padding:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-weight:600;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+    .btn-social:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.12)}
+    .btn-social i{font-size:18px}
+    
+    .signup-link{text-align:center;margin-top:24px;color:var(--muted);font-size:14px}
+    .signup-link a{color:var(--accent);text-decoration:none;font-weight:700}
+    .signup-link a:hover{text-decoration:underline}
+    
+    footer{border-top:1px solid rgba(255,255,255,0.02);padding:32px 0;margin-top:40px;color:var(--muted);text-align:center}
+    
+    @media(max-width:880px){nav.desktop{display:none}}
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="marquee">🔥 NOVO CASO: "A ÚLTIMA TRANSMISSÃO" DISPONÍVEL AGORA • COMPRE E JOGUE NO MESMO DIA • ACESSO VITALÍCIO GARANTIDO 🔥</div>
+</div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <img src="images/logo.png" alt="FATTO CRIMINAL" style="height:70px;width:auto;">
+      </a>
+
+      <nav class="desktop">
+        <a href="index.html">Início</a>
+        <a href="casos.html">Casos</a>
+        <a href="como-funciona.html">Como Funciona</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="contato.html">Contato</a>
+        <a href="cadastro.html" class="btn-primary">Criar Conta</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- LOGIN FORM -->
+  <div class="login-container">
+    <div class="login-box">
+      <div class="login-header">
+        <h2>Bem-vindo de volta!</h2>
+        <p>Entre na sua conta para continuar investigando</p>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Email</label>
+          <input type="email" id="email" placeholder="seu@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> Senha</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+
+        <div class="form-options">
+          <div class="checkbox-wrapper">
+            <input type="checkbox" id="remember">
+            <label for="remember" style="margin:0;font-weight:400">Lembrar de mim</label>
+          </div>
+          <a href="recuperar-senha.html" class="forgot-link">Esqueceu a senha?</a>
+        </div>
+
+        <button type="submit" class="btn-login">
+          <i class="fas fa-sign-in-alt"></i>
+          Entrar
+        </button>
+      </form>
+
+      <div class="divider">ou continue com</div>
+
+      <div class="social-login">
+        <button class="btn-social" id="googleLogin">
+          <i class="fab fa-google"></i>
+          Entrar com Google
+        </button>
+        <button class="btn-social" id="facebookLogin">
+          <i class="fab fa-facebook"></i>
+          Entrar com Facebook
+        </button>
+      </div>
+
+      <div class="signup-link">
+        Não tem uma conta? <a href="cadastro.html">Cadastre-se gratuitamente</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      © <strong>FATTO CRIMINAL</strong> 2024 — Todos os direitos reservados
+    </div>
+  </footer>
+
+  <script>
+    // Form submission
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      // TODO: Integrar com Firebase Authentication
+      console.log('Login attempt:', email);
+      
+      // Placeholder - redirect to profile
+      alert('Login em desenvolvimento! Redirecionando para o perfil...');
+      window.location.href = 'perfil.html';
+    });
+
+    // Social login placeholders
+    document.getElementById('googleLogin').addEventListener('click', () => {
+      alert('Login com Google em desenvolvimento!');
+    });
+
+    document.getElementById('facebookLogin').addEventListener('click', () => {
+      alert('Login com Facebook em desenvolvimento!');
+    });
+  </script>
+</body>
+</html>

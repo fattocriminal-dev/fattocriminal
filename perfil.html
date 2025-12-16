@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Meu Perfil — FATTO CRIMINAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#070708; --card:#0f1113; --muted:#9da3a9; --accent:#dc3545; --accent-2:#ffd93d;
+      --maxw:1400px; --radius:14px; color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#070708; color:#e9eef2; margin:0; -webkit-font-smoothing:antialiased}
+
+/* TOP MARQUEE */
+.topbar{background:linear-gradient(90deg, rgba(220,53,69,0.08), rgba(220,53,69,0.02));font-weight:700;padding:10px 0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.02);overflow:hidden}
+.marquee{display:inline-block;white-space:nowrap;animation:scroll 20s linear infinite}
+@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(5,5,6,0.9), rgba(5,5,6,0.8));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.02)}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    nav.desktop{display:flex;gap:18px;align-items:center}
+    nav.desktop a{color:var(--muted);text-decoration:none;font-weight:600;transition:color 0.3s;font-size:14px}
+    nav.desktop a:hover{color:#fff}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-weight:800;border:none;cursor:pointer;transition:all 0.3s;font-size:14px}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(220,53,69,0.4)}
+
+    /* PROFILE HEADER */
+    .profile-header{padding:40px 0;display:flex;align-items:center;gap:32px;background:transparent;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .profile-avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#dc3545,#8b0000);display:grid;place-items:center;font-size:48px;font-weight:800;color:#fff;border:4px solid rgba(255,255,255,0.1)}
+    .profile-info h2{font-family:Montserrat;font-size:32px;margin:0 0 8px 0;font-weight:900}
+    .profile-stats{display:flex;gap:24px;margin-top:16px}
+    .stat{display:flex;flex-direction:column;gap:4px}
+    .stat-value{font-size:24px;font-weight:800;color:var(--accent)}
+    .stat-label{font-size:13px;color:var(--muted)}
+
+    /* TABS */
+    .tabs{display:flex;gap:8px;padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .tab{padding:12px 24px;background:transparent;border:none;color:var(--muted);cursor:pointer;font-weight:600;border-radius:10px 10px 0 0;transition:all 0.3s}
+    .tab:hover{color:#fff;background:rgba(255,255,255,0.03)}
+    .tab.active{color:#fff;background:rgba(255,255,255,0.05);border-bottom:2px solid var(--accent)}
+
+    /* TAB CONTENT */
+    .tab-content{display:none;padding:32px 0}
+    .tab-content.active{display:block}
+
+    /* CARDS */
+    .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    @media(max-width:1100px){.cards-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:680px){.cards-grid{grid-template-columns:1fr}}
+    
+    .card{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;transition:all 0.3s}
+    .card:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-4px)}
+    .card h3{font-size:18px;font-weight:700;margin:0 0 12px 0}
+    .card p{color:var(--muted);margin:0;line-height:1.6;font-size:14px}
+
+    /* ACHIEVEMENTS */
+    .achievements{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    @media(max-width:880px){.achievements{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:580px){.achievements{grid-template-columns:1fr}}
+    
+    .achievement{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:20px;text-align:center;transition:all 0.3s}
+    .achievement:hover{border-color:var(--accent);transform:scale(1.05)}
+    .achievement.locked{opacity:0.4}
+    .achievement-icon{font-size:48px;margin-bottom:12px}
+    .achievement-name{font-weight:700;font-size:14px;margin-bottom:4px}
+    .achievement-desc{font-size:12px;color:var(--muted)}
+
+    /* MY CASES */
+    .my-cases{display:grid;gap:20px}
+    .my-case{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center}
+    .case-icon{width:80px;height:80px;background:linear-gradient(135deg,#667eea 0%, #764ba2 100%);border-radius:10px;display:grid;place-items:center;font-size:32px;color:#fff}
+    .case-details h3{font-size:18px;margin:0 0 8px 0;font-weight:700}
+    .case-details p{color:var(--muted);margin:0 0 12px 0;font-size:14px}
+    .progress-bar{height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden}
+    .progress-fill{height:100%;background:var(--accent);border-radius:3px}
+    .case-actions{display:flex;gap:10px}
+    .btn-small{padding:10px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.3s;border:none}
+    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.1);color:#fff}
+    .btn-outline:hover{background:rgba(255,255,255,0.05)}
+
+    /* RANKING */
+    .ranking-table{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:12px;overflow:hidden}
+    .ranking-row{display:grid;grid-template-columns:60px 1fr 120px 120px;gap:16px;align-items:center;padding:16px 24px;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .ranking-row:last-child{border-bottom:none}
+    .ranking-row.me{background:rgba(220,53,69,0.1)}
+    .rank{font-weight:800;font-size:24px;color:var(--accent)}
+    .rank-user{display:flex;align-items:center;gap:12px}
+    .rank-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:grid;place-items:center;color:#fff;font-weight:700}
+    .rank-stat{text-align:right;font-weight:600}
+
+    footer{border-top:1px solid rgba(255,255,255,0.02);padding:32px 0;margin-top:40px;color:var(--muted);text-align:center}
+    
+    @media(max-width:880px){nav.desktop{display:none}.profile-header{flex-direction:column;text-align:center}.profile-stats{justify-content:center}}
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="marquee">🔥 NOVO CASO: "A ÚLTIMA TRANSMISSÃO" DISPONÍVEL AGORA • COMPRE E JOGUE NO MESMO DIA • ACESSO VITALÍCIO GARANTIDO 🔥</div>
+</div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <img src="images/logo.png" alt="FATTO CRIMINAL" style="height:70px;width:auto;">
+      </a>
+
+      <nav class="desktop">
+        <a href="index.html">Início</a>
+        <a href="casos.html">Casos</a>
+        <a href="perfil.html" style="color:#fff">Perfil</a>
+        <button class="btn-primary" onclick="alert('Logout em desenvolvimento')">Sair <i class="fas fa-sign-out-alt"></i></button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PROFILE CONTENT -->
+  <main class="container">
+    
+    <!-- PROFILE HEADER -->
+    <div class="profile-header">
+      <div class="profile-avatar">JD</div>
+      <div class="profile-info">
+        <h2>João Detetive</h2>
+        <p style="color:var(--muted);margin:0">Detetive Iniciante • Membro desde Dez 2024</p>
+        <div class="profile-stats">
+          <div class="stat">
+            <div class="stat-value">1</div>
+            <div class="stat-label">Casos Resolvidos</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">87%</div>
+            <div class="stat-label">Taxa de Acerto</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">#42</div>
+            <div class="stat-label">Ranking Global</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">2.450</div>
+            <div class="stat-label">Pontos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" data-tab="cases">Meus Casos</button>
+      <button class="tab" data-tab="achievements">Conquistas</button>
+      <button class="tab" data-tab="ranking">Ranking</button>
+      <button class="tab" data-tab="stats">Estatísticas</button>
+    </div>
+
+    <!-- TAB: MY CASES -->
+    <div class="tab-content active" id="tab-cases">
+      <h3 style="font-family:Montserrat;font-size:24px;margin-bottom:24px">Casos em Progresso</h3>
+      
+      <div class="my-cases">
+        <div class="my-case">
+          <div class="case-icon"><i class="fas fa-skull-crossbones"></i></div>
+          <div class="case-details">
+            <h3>A Última Transmissão</h3>
+            <p>Um streamer morre ao vivo durante sua transmissão...</p>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:65%"></div>
+            </div>
+            <small style="color:var(--muted);margin-top:4px;display:block">65% completo • 1h 23min jogado</small>
+          </div>
+          <div class="case-actions">
+            <button class="btn-primary" onclick="window.location.href='caso-ultima-transmissao.html'">Continuar</button>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-family:Montserrat;font-size:24px;margin:48px 0 24px">Casos Disponíveis</h3>
+      <div class="cards-grid">
+        <div class="card">
+          <h3><i class="fas fa-theater-masks"></i> O Silêncio da Máscara</h3>
+          <p>Um ator famoso é encontrado morto nos bastidores. Desvende os segredos do palco.</p>
+          <button class="btn-primary" style="width:100%;margin-top:16px" onclick="alert('Em desenvolvimento')">Em Breve</button>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-chess"></i> Xeque-Mate Fatal</h3>
+          <p>Um grande mestre de xadrez é envenenado. Cada movimento conta nesta investigação.</p>
+          <button class="btn-primary" style="width:100%;margin-top:16px" onclick="alert('Em desenvolvimento')">Em Breve</button>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-plus-circle"></i> Mais Casos</h3>
+          <p>Novos mistérios são adicionados regularmente. Fique de olho!</p>
+          <button class="btn-outline btn-small" style="width:100%;margin-top:16px" onclick="window.location.href='casos.html'">Ver Todos</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: ACHIEVEMENTS -->
+    <div class="tab-content" id="tab-achievements">
+      <h3 style="font-family:Montserrat;font-size:24px;margin-bottom:24px">Conquistas Desbloqueadas</h3>
+      
+      <div class="achievements">
+        <div class="achievement">
+          <div class="achievement-icon">🎯</div>
+          <div class="achievement-name">Primeiro Passo</div>
+          <div class="achievement-desc">Completou seu primeiro caso</div>
+        </div>
+        <div class="achievement locked">
+          <div class="achievement-icon">🔥</div>
+          <div class="achievement-name">Investigador Ativo</div>
+          <div class="achievement-desc">Resolva 5 casos</div>
+        </div>
+        <div class="achievement locked">
+          <div class="achievement-icon">⚡</div>
+          <div class="achievement-name">Velocista</div>
+          <div class="achievement-desc">Complete um caso em menos de 2h</div>
+        </div>
+        <div class="achievement locked">
+          <div class="achievement-icon">🏆</div>
+          <div class="achievement-name">Mestre Detetive</div>
+          <div class="achievement-desc">Alcance o Top 10 do ranking</div>
+        </div>
+        <div class="achievement locked">
+          <div class="achievement-icon">💎</div>
+          <div class="achievement-name">Perfeccionista</div>
+          <div class="achievement-desc">100% de precisão em 3 casos</div>
+        </div>
+        <div class="achievement locked">
+          <div class="achievement-icon">🎓</div>
+          <div class="achievement-name">Acadêmico</div>
+          <div class="achievement-desc">Resolva todos os casos disponíveis</div>
+        </div>
+        <div class="achievement locked">
+          <div class="achievement-icon">⭐</div>
+          <div class="achievement-name">Estrela Nascente</div>
+          <div class="achievement-desc">Alcance 5.000 pontos</div>
+        </div>
+        <div class="achievement locked">
+          <div class="achievement-icon">👑</div>
+          <div class="achievement-name">Lenda</div>
+          <div class="achievement-desc">Fique em 1º lugar no ranking</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: RANKING -->
+    <div class="tab-content" id="tab-ranking">
+      <h3 style="font-family:Montserrat;font-size:24px;margin-bottom:24px">Ranking Global</h3>
+      
+      <div class="ranking-table">
+        <div class="ranking-row">
+          <div class="rank">1º</div>
+          <div class="rank-user">
+            <div class="rank-avatar">SH</div>
+            <div>
+              <div style="font-weight:700">Sherlock Holmes</div>
+              <div style="font-size:12px;color:var(--muted)">Mestre Detetive</div>
+            </div>
+          </div>
+          <div class="rank-stat">12 casos</div>
+          <div class="rank-stat">9.850 pts</div>
+        </div>
+        <div class="ranking-row">
+          <div class="rank">2º</div>
+          <div class="rank-user">
+            <div class="rank-avatar">HP</div>
+            <div>
+              <div style="font-weight:700">Hercule Poirot</div>
+              <div style="font-size:12px;color:var(--muted)">Investigador Expert</div>
+            </div>
+          </div>
+          <div class="rank-stat">10 casos</div>
+          <div class="rank-stat">8.420 pts</div>
+        </div>
+        <div class="ranking-row">
+          <div class="rank">3º</div>
+          <div class="rank-user">
+            <div class="rank-avatar">MM</div>
+            <div>
+              <div style="font-weight:700">Miss Marple</div>
+              <div style="font-size:12px;color:var(--muted)">Detetive Veterana</div>
+            </div>
+          </div>
+          <div class="rank-stat">9 casos</div>
+          <div class="rank-stat">7.890 pts</div>
+        </div>
+        <div class="ranking-row me">
+          <div class="rank">42º</div>
+          <div class="rank-user">
+            <div class="rank-avatar">JD</div>
+            <div>
+              <div style="font-weight:700">João Detetive (Você)</div>
+              <div style="font-size:12px;color:var(--muted)">Detetive Iniciante</div>
+            </div>
+          </div>
+          <div class="rank-stat">1 caso</div>
+          <div class="rank-stat">2.450 pts</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: STATS -->
+    <div class="tab-content" id="tab-stats">
+      <h3 style="font-family:Montserrat;font-size:24px;margin-bottom:24px">Suas Estatísticas</h3>
+      
+      <div class="cards-grid">
+        <div class="card">
+          <h3><i class="fas fa-chart-line" style="color:var(--accent)"></i> Progresso Geral</h3>
+          <div style="margin-top:16px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+              <span style="font-size:14px">Casos Resolvidos</span>
+              <span style="font-weight:700">1/6</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:17%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h3><i class="fas fa-clock" style="color:var(--accent)"></i> Tempo Total</h3>
+          <div style="font-size:32px;font-weight:800;color:var(--accent);margin:16px 0">3h 45min</div>
+          <p style="margin:0">Tempo jogando casos</p>
+        </div>
+        
+        <div class="card">
+          <h3><i class="fas fa-target" style="color:var(--accent)"></i> Precisão</h3>
+          <div style="font-size:32px;font-weight:800;color:var(--accent);margin:16px 0">87%</div>
+          <p style="margin:0">Taxa de acertos nas respostas</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      © <strong>FATTO CRIMINAL</strong> 2024 — Todos os direitos reservados
+    </div>
+  </footer>
+
+  <script>
+    // Tab functionality
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active from all tabs
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(tc => tc.classList.remove('active'));
+
+        // Add active to clicked tab
+        tab.classList.add('active');
+        const tabName = tab.getAttribute('data-tab');
+        document.getElementById('tab-' + tabName).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

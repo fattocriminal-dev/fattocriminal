@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contato — FATTO CRIMINAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#070708; --card:#0f1113; --muted:#9da3a9; --accent:#dc3545; --accent-2:#ffd93d;
+      --maxw:1400px; --radius:14px; color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#070708; color:#e9eef2; margin:0; -webkit-font-smoothing:antialiased}
+
+/* TOP MARQUEE */
+.topbar{background:linear-gradient(90deg, rgba(220,53,69,0.08), rgba(220,53,69,0.02));font-weight:700;padding:10px 0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.02);overflow:hidden}
+.marquee{display:inline-block;white-space:nowrap;animation:scroll 20s linear infinite}
+@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(5,5,6,0.9), rgba(5,5,6,0.8));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.02)}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    nav.desktop{display:flex;gap:18px;align-items:center}
+    nav.desktop a{color:var(--muted);text-decoration:none;font-weight:600;transition:color 0.3s;font-size:14px}
+    nav.desktop a:hover{color:#fff}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-weight:800;border:none;cursor:pointer;transition:all 0.3s}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(220,53,69,0.4)}
+
+    /* HERO */
+    .hero{padding:80px 0 40px;text-align:center}
+    .hero h1{font-family:Montserrat;font-size:56px;font-weight:900;margin:0 0 20px 0;line-height:1.1}
+    .hero h1 .highlight{color:var(--accent)}
+    .hero p{font-size:20px;color:var(--muted);max-width:700px;margin:0 auto}
+
+    /* CONTACT LAYOUT */
+    .contact-wrapper{padding:60px 0;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+    @media(max-width:968px){.contact-wrapper{grid-template-columns:1fr}}
+
+    /* FORM */
+    .contact-form{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:40px}
+    .contact-form h2{font-family:Montserrat;font-size:28px;font-weight:800;margin:0 0 24px 0}
+    
+    .form-group{margin-bottom:24px}
+    .form-group label{display:block;font-size:14px;font-weight:600;margin-bottom:8px;color:#fff}
+    .form-group label span{color:var(--accent)}
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea{
+      width:100%;
+      padding:14px 16px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:10px;
+      color:#fff;
+      font-size:15px;
+      font-family:Inter;
+      transition:all 0.3s;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus{
+      outline:none;
+      border-color:var(--accent);
+      background:rgba(255,255,255,0.05);
+    }
+    
+    .form-group textarea{
+      min-height:150px;
+      resize:vertical;
+    }
+    
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:580px){.form-row{grid-template-columns:1fr}}
+    
+    .submit-btn{
+      width:100%;
+      padding:16px;
+      background:linear-gradient(90deg,var(--accent),#8b0000);
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      font-size:16px;
+      font-weight:800;
+      cursor:pointer;
+      transition:all 0.3s;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+    .submit-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 20px rgba(220,53,69,0.4);
+    }
+
+    /* INFO CARDS */
+    .contact-info h3{font-family:Montserrat;font-size:24px;font-weight:800;margin:0 0 24px 0}
+    
+    .info-card{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:12px;
+      padding:24px;
+      margin-bottom:20px;
+      display:flex;
+      gap:20px;
+      align-items:start;
+      transition:all 0.3s;
+    }
+    .info-card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(255,255,255,0.1);
+    }
+    
+    .info-icon{
+      width:60px;
+      height:60px;
+      flex-shrink:0;
+      background:linear-gradient(135deg,var(--accent),#8b0000);
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      font-size:26px;
+      color:#fff;
+    }
+    
+    .info-content h4{
+      font-size:18px;
+      margin:0 0 8px 0;
+      font-weight:700;
+    }
+    .info-content p{
+      font-size:15px;
+      color:var(--muted);
+      margin:0 0 8px 0;
+      line-height:1.6;
+    }
+    .info-content a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      transition:color 0.3s;
+    }
+    .info-content a:hover{
+      color:#fff;
+    }
+
+    /* SOCIAL */
+    .social-links{
+      display:flex;
+      gap:12px;
+      margin-top:32px;
+    }
+    .social-btn{
+      width:50px;
+      height:50px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:10px;
+      display:grid;
+      place-items:center;
+      color:var(--muted);
+      font-size:20px;
+      text-decoration:none;
+      transition:all 0.3s;
+    }
+    .social-btn:hover{
+      background:linear-gradient(135deg,var(--accent),#8b0000);
+      color:#fff;
+      border-color:transparent;
+      transform:translateY(-4px);
+    }
+
+    /* FAQ LINK */
+    .faq-banner{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:12px;
+      padding:24px;
+      margin-top:32px;
+      text-align:center;
+    }
+    .faq-banner h4{
+      font-size:18px;
+      margin:0 0 8px 0;
+      font-weight:700;
+    }
+    .faq-banner p{
+      font-size:14px;
+      color:var(--muted);
+      margin:0 0 16px 0;
+    }
+    .faq-banner a{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 20px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:8px;
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      font-size:14px;
+      transition:all 0.3s;
+    }
+    .faq-banner a:hover{
+      background:linear-gradient(90deg,var(--accent),#8b0000);
+      border-color:transparent;
+    }
+
+    footer{border-top:1px solid rgba(255,255,255,0.02);padding:32px 0;margin-top:60px;color:var(--muted);text-align:center}
+    
+    @media(max-width:880px){nav.desktop{display:none}}
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="marquee">🔥 NOVO CASO: "A ÚLTIMA TRANSMISSÃO" DISPONÍVEL AGORA • COMPRE E JOGUE NO MESMO DIA • ACESSO VITALÍCIO GARANTIDO 🔥</div>
+</div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <img src="images/logo.png" alt="FATTO CRIMINAL" style="height:70px;width:auto;">
+      </a>
+
+      <nav class="desktop">
+        <a href="index.html">Início</a>
+        <a href="casos.html">Casos</a>
+        <a href="como-funciona.html">Como Funciona</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="contato.html" style="color:#fff">Contato</a>
+        <a href="login.html" class="btn-primary">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>Entre em <span class="highlight">Contato</span></h1>
+      <p>Estamos aqui para ajudar com qualquer dúvida ou sugestão</p>
+    </div>
+  </section>
+
+  <!-- CONTACT CONTENT -->
+  <main class="container">
+    <div class="contact-wrapper">
+      
+      <!-- FORM -->
+      <div class="contact-form">
+        <h2><i class="fas fa-envelope"></i> Envie sua Mensagem</h2>
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nome <span>*</span></label>
+              <input type="text" id="firstName" placeholder="Seu nome" required />
+            </div>
+            <div class="form-group">
+              <label>Sobrenome <span>*</span></label>
+              <input type="text" id="lastName" placeholder="Seu sobrenome" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Email <span>*</span></label>
+            <input type="email" id="email" placeholder="seu@email.com" required />
+          </div>
+
+          <div class="form-group">
+            <label>Telefone (opcional)</label>
+            <input type="tel" id="phone" placeholder="(00) 00000-0000" />
+          </div>
+
+          <div class="form-group">
+            <label>Assunto <span>*</span></label>
+            <select id="subject" required>
+              <option value="">Selecione um assunto</option>
+              <option value="duvida">Dúvida sobre casos</option>
+              <option value="suporte">Suporte técnico</option>
+              <option value="pagamento">Problemas com pagamento</option>
+              <option value="sugestao">Sugestões e feedback</option>
+              <option value="parceria">Oportunidades de parceria</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Mensagem <span>*</span></label>
+            <textarea id="message" placeholder="Digite sua mensagem aqui..." required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-paper-plane"></i>
+            Enviar Mensagem
+          </button>
+        </form>
+      </div>
+
+      <!-- INFO -->
+      <div class="contact-info">
+        <h3>Outras Formas de Contato</h3>
+
+        <div class="info-card">
+          <div class="info-icon"><i class="fas fa-envelope"></i></div>
+          <div class="info-content">
+            <h4>Email</h4>
+            <p>Respondemos em até 24 horas</p>
+            <a href="mailto:contato@fattocriminal.com">contato@fattocriminal.com</a>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon"><i class="fab fa-whatsapp"></i></div>
+          <div class="info-content">
+            <h4>WhatsApp</h4>
+            <p>Segunda a Sexta, 9h às 18h</p>
+            <a href="https://wa.me/5517991951986?text=Olá!%20Preciso%20de%20ajuda%20com%20o%20FATTO%20CRIMINAL" target="_blank">(17) 99195-1986</a>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon"><i class="fas fa-life-ring"></i></div>
+          <div class="info-content">
+            <h4>Suporte Técnico</h4>
+            <p>Para problemas técnicos urgentes</p>
+            <a href="mailto:suporte@fattocriminal.com">suporte@fattocriminal.com</a>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon"><i class="fas fa-building"></i></div>
+          <div class="info-content">
+            <h4>Parcerias</h4>
+            <p>Quer trabalhar conosco?</p>
+            <a href="mailto:parcerias@fattocriminal.com">parcerias@fattocriminal.com</a>
+          </div>
+        </div>
+
+        <h3 style="margin-top:40px">Siga-nos nas Redes</h3>
+        <div class="social-links">
+          <a href="#" class="social-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn" title="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-btn" title="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-btn" title="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+
+        <div class="faq-banner">
+          <h4><i class="fas fa-question-circle"></i> Precisa de ajuda rápida?</h4>
+          <p>Confira nossa seção de perguntas frequentes</p>
+          <a href="como-funciona.html">
+            <i class="fas fa-book"></i>
+            Acessar FAQ
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      © <strong>FATTO CRIMINAL</strong> 2024 — Todos os direitos reservados
+    </div>
+  </footer>
+
+  <script>
+    // Form Submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+      
+      // Validate
+      if (!firstName || !lastName || !email || !subject || !message) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+      
+      // TODO: Send to backend API
+      console.log('Form Data:', {
+        firstName,
+        lastName,
+        email,
+        phone,
+        subject,
+        message
+      });
+      
+      // Success feedback
+      alert('✅ Mensagem enviada com sucesso!\n\nNossa equipe responderá em até 24 horas.');
+      
+      // Reset form
+      this.reset();
+    });
+
+    // Phone Formatting
+    document.getElementById('phone').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 11) value = value.slice(0, 11);
+      
+      if (value.length > 6) {
+        value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+      } else if (value.length > 2) {
+        value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+      } else if (value.length > 0) {
+        value = value.replace(/^(\d{0,2})/, '($1');
+      }
+      
+      e.target.value = value;
+    });
+  </script>
+
+</body>
+</html>

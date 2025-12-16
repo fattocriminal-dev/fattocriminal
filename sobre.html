@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sobre Nós — FATTO CRIMINAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#070708; --card:#0f1113; --muted:#9da3a9; --accent:#dc3545; --accent-2:#ffd93d;
+      --maxw:1400px; --radius:14px; color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#070708; color:#e9eef2; margin:0; -webkit-font-smoothing:antialiased}
+
+/* TOP MARQUEE */
+.topbar{background:linear-gradient(90deg, rgba(220,53,69,0.08), rgba(220,53,69,0.02));font-weight:700;padding:10px 0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.02);overflow:hidden}
+.marquee{display:inline-block;white-space:nowrap;animation:scroll 20s linear infinite}
+@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(5,5,6,0.9), rgba(5,5,6,0.8));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.02)}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    nav.desktop{display:flex;gap:18px;align-items:center}
+    nav.desktop a{color:var(--muted);text-decoration:none;font-weight:600;transition:color 0.3s;font-size:14px}
+    nav.desktop a:hover{color:#fff}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-weight:800;border:none;cursor:pointer;transition:all 0.3s}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(220,53,69,0.4)}
+
+    /* HERO */
+    .hero{padding:80px 0;text-align:center;background:transparent}
+    .hero h1{font-family:Montserrat;font-size:56px;font-weight:900;margin:0 0 20px 0;line-height:1.1}
+    .hero h1 .highlight{color:var(--accent)}
+    .hero p{font-size:20px;color:var(--muted);max-width:700px;margin:0 auto;line-height:1.6}
+
+    /* CONTENT */
+    .content{padding:60px 0}
+    .content-section{margin-bottom:80px}
+    .content-section h2{font-family:Montserrat;font-size:36px;font-weight:800;margin:0 0 24px 0;text-align:center}
+    .content-section p{font-size:18px;line-height:1.8;color:var(--muted);max-width:900px;margin:0 auto 20px}
+    
+    /* STORY */
+    .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:40px}
+    @media(max-width:968px){.story-grid{grid-template-columns:1fr}}
+    .story-image{height:400px;background:linear-gradient(135deg,#667eea 0%, #764ba2 100%);border-radius:16px;display:grid;place-items:center;font-size:80px;color:rgba(255,255,255,0.9)}
+    .story-content h3{font-family:Montserrat;font-size:28px;margin:0 0 16px 0;font-weight:700}
+    .story-content p{font-size:16px;line-height:1.7;color:var(--muted);margin:0 0 12px 0}
+
+    /* VALUES */
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px}
+    @media(max-width:968px){.values-grid{grid-template-columns:1fr}}
+    .value-card{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:32px;text-align:center;transition:all 0.3s}
+    .value-card:hover{transform:translateY(-8px);border-color:rgba(255,255,255,0.1)}
+    .value-icon{width:80px;height:80px;margin:0 auto 20px;background:linear-gradient(135deg,var(--accent),#8b0000);border-radius:50%;display:grid;place-items:center;font-size:36px;color:#fff}
+    .value-card h3{font-size:20px;margin:0 0 12px 0;font-weight:700}
+    .value-card p{font-size:15px;color:var(--muted);line-height:1.6;margin:0}
+
+    /* TEAM */
+    .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:40px}
+    @media(max-width:968px){.team-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:580px){.team-grid{grid-template-columns:1fr}}
+    .team-member{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;text-align:center;transition:all 0.3s}
+    .team-member:hover{transform:translateY(-4px);border-color:var(--accent)}
+    .team-avatar{width:100px;height:100px;margin:0 auto 16px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:50%;display:grid;place-items:center;font-size:40px;color:#fff;font-weight:800}
+    .team-member h4{font-size:18px;margin:0 0 4px 0;font-weight:700}
+    .team-member .role{font-size:13px;color:var(--accent);margin-bottom:12px;font-weight:600}
+    .team-member p{font-size:14px;color:var(--muted);line-height:1.5;margin:0}
+
+    /* STATS */
+    .stats{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:48px;margin:60px 0}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center}
+    @media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:480px){.stats-grid{grid-template-columns:1fr}}
+    .stat-item{display:flex;flex-direction:column;gap:8px}
+    .stat-value{font-size:48px;font-weight:800;color:var(--accent);font-family:Montserrat}
+    .stat-label{font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+
+    /* CTA */
+    .cta-section{background:linear-gradient(135deg,var(--accent),#8b0000);border-radius:16px;padding:60px;text-align:center;margin:60px 0}
+    .cta-section h2{font-family:Montserrat;font-size:36px;font-weight:900;margin:0 0 16px 0}
+    .cta-section p{font-size:18px;margin:0 0 32px 0;opacity:0.9}
+    .cta-section .btn-primary{background:#fff;color:var(--accent);font-size:18px;padding:16px 40px}
+    .cta-section .btn-primary:hover{transform:scale(1.05);box-shadow:0 12px 30px rgba(255,255,255,0.3)}
+
+    footer{border-top:1px solid rgba(255,255,255,0.02);padding:32px 0;margin-top:60px;color:var(--muted);text-align:center}
+    
+    @media(max-width:880px){nav.desktop{display:none}}
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="marquee">🔥 NOVO CASO: "A ÚLTIMA TRANSMISSÃO" DISPONÍVEL AGORA • COMPRE E JOGUE NO MESMO DIA • ACESSO VITALÍCIO GARANTIDO 🔥</div>
+</div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <img src="images/logo.png" alt="FATTO CRIMINAL" style="height:70px;width:auto;">
+      </a>
+
+      <nav class="desktop">
+        <a href="index.html">Início</a>
+        <a href="casos.html">Casos</a>
+        <a href="como-funciona.html">Como Funciona</a>
+        <a href="sobre.html" style="color:#fff">Sobre</a>
+        <a href="contato.html">Contato</a>
+        <a href="login.html" class="btn-primary">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>Criando <span class="highlight">experiências investigativas</span> inesquecíveis</h1>
+      <p>Somos apaixonados por mistérios e acreditamos que todos têm um detetive interior esperando para ser despertado.</p>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <main class="container content">
+    
+    <!-- NOSSA HISTÓRIA -->
+    <section class="content-section">
+      <h2>Nossa História</h2>
+      <div class="story-grid">
+        <div class="story-image">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <div class="story-content">
+          <h3>Como tudo começou</h3>
+          <p>O FATTO CRIMINAL nasceu da paixão de um grupo de entusiastas de mistério que acreditava que os jogos de investigação tradicionais poderiam ser muito mais imersivos e desafiadores.</p>
+          <p>Em 2024, depois de meses de pesquisa e desenvolvimento, lançamos nosso primeiro caso: "A Última Transmissão". A resposta foi além das nossas expectativas - pessoas de todo o Brasil começaram a resolver o mistério, compartilhando teorias e debatendo pistas.</p>
+          <p>Hoje, continuamos nossa missão de criar casos cada vez mais complexos e envolventes, sempre ouvindo nossa comunidade de detetives.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOSSOS VALORES -->
+    <section class="content-section">
+      <h2>Nossos Valores</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon"><i class="fas fa-lightbulb"></i></div>
+          <h3>Inovação</h3>
+          <p>Criamos experiências únicas que combinam investigação tradicional com elementos digitais modernos.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="fas fa-star"></i></div>
+          <h3>Qualidade</h3>
+          <p>Cada detalhe importa. Nossos casos são meticulosamente planejados para garantir uma experiência premium.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="fas fa-users"></i></div>
+          <h3>Comunidade</h3>
+          <p>Valorizamos cada detetive e construímos juntos uma comunidade apaixonada por mistérios.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESTATÍSTICAS -->
+    <div class="stats">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">5K+</div>
+          <div class="stat-label">Detetives Ativos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">98%</div>
+          <div class="stat-label">Satisfação</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">10K+</div>
+          <div class="stat-label">Casos Resolvidos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">6</div>
+          <div class="stat-label">Casos Disponíveis</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQUIPE -->
+    <section class="content-section">
+      <h2>Conheça a Equipe</h2>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="team-avatar">GM</div>
+          <h4>Guilherme Matos</h4>
+          <div class="role">Fundador & CEO</div>
+          <p>Criador dos casos e apaixonado por histórias de mistério.</p>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">AS</div>
+          <h4>Ana Silva</h4>
+          <div class="role">Designer de Casos</div>
+          <p>Responsável pela criação das evidências e documentos.</p>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">RC</div>
+          <h4>Rafael Costa</h4>
+          <div class="role">Desenvolvedor</div>
+          <p>Traz os casos para o mundo digital com tecnologia.</p>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">MO</div>
+          <h4>Mariana Oliveira</h4>
+          <div class="role">Suporte ao Cliente</div>
+          <p>Garante que todos os detetives tenham a melhor experiência.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <h2>Pronto para começar sua investigação?</h2>
+      <p>Junte-se a milhares de detetives e resolva mistérios complexos</p>
+      <a href="casos.html" class="btn-primary">
+        <i class="fas fa-play-circle"></i>
+        Ver Casos Disponíveis
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      © <strong>FATTO CRIMINAL</strong> 2024 — Todos os direitos reservados
+    </div>
+  </footer>
+
+</body>
+</html>

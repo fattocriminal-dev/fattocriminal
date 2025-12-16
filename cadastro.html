@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Criar Conta — FATTO CRIMINAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#070708; --card:#0f1113; --muted:#9da3a9; --accent:#dc3545; --accent-2:#ffd93d;
+      --maxw:1400px; --radius:14px; color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#070708; color:#e9eef2; margin:0; -webkit-font-smoothing:antialiased}
+
+/* TOP MARQUEE */
+.topbar{background:linear-gradient(90deg, rgba(220,53,69,0.08), rgba(220,53,69,0.02));font-weight:700;padding:10px 0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.02);overflow:hidden}
+.marquee{display:inline-block;white-space:nowrap;animation:scroll 20s linear infinite}
+@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(5,5,6,0.9), rgba(5,5,6,0.8));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.02)}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    nav.desktop{display:flex;gap:18px;align-items:center}
+    nav.desktop a{color:var(--muted);text-decoration:none;font-weight:600;transition:color 0.3s;font-size:14px}
+    nav.desktop a:hover{color:#fff}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-weight:800;border:none;cursor:pointer;transition:all 0.3s}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(220,53,69,0.4)}
+
+    /* SIGNUP PAGE */
+    .signup-container{min-height:calc(100vh - 100px);display:grid;place-items:center;padding:40px 20px}
+    .signup-box{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:40px;max-width:520px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+    .signup-header{text-align:center;margin-bottom:32px}
+    .signup-header h2{font-family:Montserrat;font-size:28px;margin:0 0 8px 0;font-weight:800}
+    .signup-header p{color:var(--muted);margin:0;font-size:14px}
+    
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:580px){.form-row{grid-template-columns:1fr}}
+    
+    .form-group{margin-bottom:20px}
+    .form-group label{display:block;margin-bottom:8px;font-weight:600;font-size:14px;color:#e9eef2}
+    .form-group input{width:100%;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-size:15px;transition:all 0.3s}
+    .form-group input:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,0.05)}
+    
+    .password-strength{margin-top:8px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden}
+    .password-strength-bar{height:100%;width:0%;background:var(--accent);transition:all 0.3s}
+    .password-hint{margin-top:4px;font-size:12px;color:var(--muted)}
+    
+    .checkbox-wrapper{display:flex;align-items:flex-start;gap:10px;margin-bottom:24px}
+    .checkbox-wrapper input{margin-top:4px;width:auto}
+    .checkbox-wrapper label{margin:0;font-size:13px;line-height:1.5;color:var(--muted)}
+    .checkbox-wrapper a{color:var(--accent);text-decoration:none}
+    .checkbox-wrapper a:hover{text-decoration:underline}
+    
+    .btn-signup{width:100%;padding:16px;background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:10px}
+    .btn-signup:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(220,53,69,0.5)}
+    
+    .divider{display:flex;align-items:center;gap:12px;margin:28px 0;color:var(--muted);font-size:13px}
+    .divider::before, .divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.08)}
+    
+    .social-signup{display:grid;gap:12px}
+    .btn-social{padding:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-weight:600;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+    .btn-social:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.12)}
+    .btn-social i{font-size:18px}
+    
+    .login-link{text-align:center;margin-top:24px;color:var(--muted);font-size:14px}
+    .login-link a{color:var(--accent);text-decoration:none;font-weight:700}
+    .login-link a:hover{text-decoration:underline}
+    
+    .benefits{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:20px;margin-bottom:24px}
+    .benefits h3{font-size:16px;margin:0 0 12px 0;color:var(--accent)}
+    .benefits ul{margin:0;padding:0;list-style:none}
+    .benefits li{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:14px;color:var(--muted)}
+    .benefits li i{color:var(--accent)}
+    
+    footer{border-top:1px solid rgba(255,255,255,0.02);padding:32px 0;margin-top:40px;color:var(--muted);text-align:center}
+    
+    @media(max-width:880px){nav.desktop{display:none}}
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="marquee">🔥 NOVO CASO: "A ÚLTIMA TRANSMISSÃO" DISPONÍVEL AGORA • COMPRE E JOGUE NO MESMO DIA • ACESSO VITALÍCIO GARANTIDO 🔥</div>
+</div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <img src="images/logo.png" alt="FATTO CRIMINAL" style="height:70px;width:auto;">
+      </a>
+
+      <nav class="desktop">
+        <a href="index.html">Início</a>
+        <a href="casos.html">Casos</a>
+        <a href="como-funciona.html">Como Funciona</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="contato.html">Contato</a>
+        <a href="login.html" class="btn-primary">Entrar</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- SIGNUP FORM -->
+  <div class="signup-container">
+    <div class="signup-box">
+      <div class="signup-header">
+        <h2>Crie sua conta de detetive</h2>
+        <p>Comece a resolver mistérios complexos hoje mesmo</p>
+      </div>
+
+      <div class="benefits">
+        <h3><i class="fas fa-crown"></i> Benefícios da conta:</h3>
+        <ul>
+          <li><i class="fas fa-check-circle"></i> Acesso vitalício aos casos comprados</li>
+          <li><i class="fas fa-check-circle"></i> Progresso salvo automaticamente</li>
+          <li><i class="fas fa-check-circle"></i> Ranking global de detetives</li>
+          <li><i class="fas fa-check-circle"></i> Estatísticas detalhadas</li>
+        </ul>
+      </div>
+
+      <form id="signupForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome"><i class="fas fa-user"></i> Nome</label>
+            <input type="text" id="nome" placeholder="Seu nome" required>
+          </div>
+          <div class="form-group">
+            <label for="sobrenome">Sobrenome</label>
+            <input type="text" id="sobrenome" placeholder="Sobrenome" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Email</label>
+          <input type="email" id="email" placeholder="seu@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> Senha</label>
+          <input type="password" id="password" placeholder="Mínimo 8 caracteres" required minlength="8">
+          <div class="password-strength">
+            <div class="password-strength-bar" id="strengthBar"></div>
+          </div>
+          <div class="password-hint" id="strengthText">Digite uma senha forte</div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword"><i class="fas fa-lock"></i> Confirmar Senha</label>
+          <input type="password" id="confirmPassword" placeholder="Digite a senha novamente" required>
+        </div>
+
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="terms" required>
+          <label for="terms">
+            Eu concordo com os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a> do FATTO CRIMINAL
+          </label>
+        </div>
+
+        <button type="submit" class="btn-signup">
+          <i class="fas fa-user-plus"></i>
+          Criar Conta Gratuita
+        </button>
+      </form>
+
+      <div class="divider">ou cadastre-se com</div>
+
+      <div class="social-signup">
+        <button class="btn-social" id="googleSignup">
+          <i class="fab fa-google"></i>
+          Continuar com Google
+        </button>
+        <button class="btn-social" id="facebookSignup">
+          <i class="fab fa-facebook"></i>
+          Continuar com Facebook
+        </button>
+      </div>
+
+      <div class="login-link">
+        Já tem uma conta? <a href="login.html">Faça login</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      © <strong>FATTO CRIMINAL</strong> 2024 — Todos os direitos reservados
+    </div>
+  </footer>
+
+  <script>
+    // Password strength checker
+    const passwordInput = document.getElementById('password');
+    const strengthBar = document.getElementById('strengthBar');
+    const strengthText = document.getElementById('strengthText');
+
+    passwordInput.addEventListener('input', () => {
+      const password = passwordInput.value;
+      let strength = 0;
+
+      if (password.length >= 8) strength += 25;
+      if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength += 25;
+      if (password.match(/[0-9]/)) strength += 25;
+      if (password.match(/[^a-zA-Z0-9]/)) strength += 25;
+
+      strengthBar.style.width = strength + '%';
+      
+      if (strength <= 25) {
+        strengthBar.style.background = '#dc3545';
+        strengthText.textContent = 'Senha fraca';
+        strengthText.style.color = '#dc3545';
+      } else if (strength <= 50) {
+        strengthBar.style.background = '#ffc107';
+        strengthText.textContent = 'Senha média';
+        strengthText.style.color = '#ffc107';
+      } else if (strength <= 75) {
+        strengthBar.style.background = '#28a745';
+        strengthText.textContent = 'Senha boa';
+        strengthText.style.color = '#28a745';
+      } else {
+        strengthBar.style.background = '#00ff00';
+        strengthText.textContent = 'Senha forte!';
+        strengthText.style.color = '#00ff00';
+      }
+    });
+
+    // Form submission
+    document.getElementById('signupForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (password !== confirmPassword) {
+        alert('As senhas não coincidem!');
+        return;
+      }
+      
+      const nome = document.getElementById('nome').value;
+      const sobrenome = document.getElementById('sobrenome').value;
+      const email = document.getElementById('email').value;
+      
+      // TODO: Integrar com Firebase Authentication
+      console.log('Signup attempt:', { nome, sobrenome, email });
+      
+      alert('Cadastro em desenvolvimento! Redirecionando para o perfil...');
+      window.location.href = 'perfil.html';
+    });
+
+    // Social signup placeholders
+    document.getElementById('googleSignup').addEventListener('click', () => {
+      alert('Cadastro com Google em desenvolvimento!');
+    });
+
+    document.getElementById('facebookSignup').addEventListener('click', () => {
+      alert('Cadastro com Facebook em desenvolvimento!');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ranking Global — FATTO CRIMINAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#070708; --card:#0f1113; --muted:#9da3a9; --accent:#dc3545; --accent-2:#ffd93d;
+      --maxw:1400px; --radius:14px; color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#070708; color:#e9eef2; margin:0; -webkit-font-smoothing:antialiased}
+
+/* TOP MARQUEE */
+.topbar{background:linear-gradient(90deg, rgba(220,53,69,0.08), rgba(220,53,69,0.02));font-weight:700;padding:10px 0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.02);overflow:hidden}
+.marquee{display:inline-block;white-space:nowrap;animation:scroll 20s linear infinite}
+@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(5,5,6,0.9), rgba(5,5,6,0.8));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.02)}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    nav.desktop{display:flex;gap:18px;align-items:center}
+    nav.desktop a{color:var(--muted);text-decoration:none;font-weight:600;transition:color 0.3s;font-size:14px}
+    nav.desktop a:hover{color:#fff}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-weight:800;border:none;cursor:pointer;transition:all 0.3s}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(220,53,69,0.4)}
+
+    /* PAGE HEADER */
+    .page-header{padding:40px 0;text-align:center}
+    .page-header h1{font-family:Montserrat;font-size:48px;font-weight:900;margin:0 0 12px 0}
+    .page-header p{font-size:18px;color:var(--muted);margin:0 0 32px}
+
+    /* TABS */
+    .tabs{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .tab-btn{padding:12px 24px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:var(--muted);font-weight:600;cursor:pointer;transition:all 0.3s;font-size:14px;border:none;display:flex;align-items:center;gap:8px}
+    .tab-btn:hover, .tab-btn.active{background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;border-color:transparent}
+
+    /* PODIUM */
+    .podium{display:flex;justify-content:center;align-items:flex-end;gap:20px;padding:60px 0;max-width:800px;margin:0 auto}
+    .podium-place{flex:1;text-align:center;position:relative;cursor:pointer;transition:all 0.3s}
+    .podium-place:hover{transform:translateY(-8px)}
+    
+    .podium-avatar{width:100px;height:100px;margin:0 auto 16px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:50%;display:grid;place-items:center;font-size:40px;color:#fff;font-weight:800;position:relative;z-index:2}
+    .podium-place.first .podium-avatar{width:130px;height:130px;font-size:52px;border:4px solid #ffd700;box-shadow:0 0 30px rgba(255,215,0,0.5)}
+    .podium-place.second .podium-avatar{border:3px solid #c0c0c0}
+    .podium-place.third .podium-avatar{border:3px solid #cd7f32}
+
+    .podium-rank{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:20px;font-weight:800;z-index:3}
+    .podium-place.first .podium-rank{background:linear-gradient(135deg,#ffd700,#ffed4e);color:#000;width:50px;height:50px;font-size:24px}
+    .podium-place.second .podium-rank{background:linear-gradient(135deg,#c0c0c0,#e8e8e8);color:#000}
+    .podium-place.third .podium-rank{background:linear-gradient(135deg,#cd7f32,#e89c66);color:#000}
+
+    .podium-name{font-size:18px;font-weight:700;margin:0 0 4px 0}
+    .podium-place.first .podium-name{font-size:22px}
+    .podium-title{font-size:12px;color:var(--accent);font-weight:600;margin-bottom:8px}
+    .podium-stats{font-size:14px;color:var(--muted)}
+    .podium-stats strong{color:#fff}
+
+    .podium-base{height:120px;background:transparent;border:1px solid rgba(255,255,255,0.08);border-radius:12px 12px 0 0;margin-top:16px;display:flex;flex-direction:column;justify-content:center;padding:16px}
+    .podium-place.first .podium-base{height:160px;background:rgba(255,215,0,0.05);border-color:rgba(255,215,0,0.2)}
+    .podium-place.second .podium-base{height:140px}
+
+    /* LEADERBOARD */
+    .leaderboard{padding:40px 0 80px}
+    .leaderboard-title{font-family:Montserrat;font-size:28px;font-weight:800;margin:0 0 24px 0;text-align:center}
+
+    .leaderboard-table{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:12px;overflow:hidden}
+    
+    .leaderboard-row{display:grid;grid-template-columns:80px 1fr 120px 120px 120px;gap:16px;padding:16px 24px;border-bottom:1px solid rgba(255,255,255,0.03);align-items:center;transition:all 0.3s}
+    .leaderboard-row:hover{background:rgba(255,255,255,0.02)}
+    .leaderboard-row:last-child{border-bottom:none}
+    .leaderboard-row.header{background:rgba(255,255,255,0.03);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted)}
+    .leaderboard-row.current-user{background:rgba(220,53,69,0.08);border-left:3px solid var(--accent)}
+
+    @media(max-width:768px){
+      .leaderboard-row{grid-template-columns:60px 1fr 100px;gap:12px;padding:12px 16px}
+      .leaderboard-row .cases, .leaderboard-row .accuracy{display:none}
+    }
+
+    .rank{font-size:20px;font-weight:800;text-align:center}
+    .rank.top3{color:var(--accent)}
+
+    .player{display:flex;align-items:center;gap:12px}
+    .player-avatar{width:40px;height:40px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:50%;display:grid;place-items:center;font-size:16px;color:#fff;font-weight:800;flex-shrink:0}
+    .player-info{flex:1}
+    .player-name{font-weight:700;font-size:15px;margin:0 0 2px 0}
+    .player-title{font-size:12px;color:var(--accent);font-weight:600}
+
+    .stat-cell{text-align:center;font-weight:600}
+
+    /* PAGINATION */
+    .pagination{display:flex;justify-content:center;gap:8px;margin-top:32px}
+    .page-btn{padding:10px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:var(--muted);font-weight:600;cursor:pointer;transition:all 0.3s;border:none}
+    .page-btn:hover, .page-btn.active{background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;border-color:transparent}
+    .page-btn:disabled{opacity:0.3;cursor:not-allowed}
+    .page-btn:disabled:hover{background:rgba(255,255,255,0.03);color:var(--muted)}
+
+    footer{border-top:1px solid rgba(255,255,255,0.02);padding:32px 0;margin-top:60px;color:var(--muted);text-align:center}
+    
+    @media(max-width:880px){nav.desktop{display:none}}
+    @media(max-width:580px){
+      .podium{flex-direction:column;align-items:center}
+      .podium-place{max-width:300px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="marquee">🔥 NOVO CASO: "A ÚLTIMA TRANSMISSÃO" DISPONÍVEL AGORA • COMPRE E JOGUE NO MESMO DIA • ACESSO VITALÍCIO GARANTIDO 🔥</div>
+</div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <img src="images/logo.png" alt="FATTO CRIMINAL" style="height:70px;width:auto;">
+      </a>
+
+      <nav class="desktop">
+        <a href="index.html">Início</a>
+        <a href="casos.html">Casos</a>
+        <a href="ranking.html" style="color:#fff">Ranking</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="login.html" class="btn-primary">Sair</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <section class="container page-header">
+    <h1><i class="fas fa-trophy"></i> Ranking Global</h1>
+    <p>Os melhores detetives do FATTO CRIMINAL</p>
+  </section>
+
+  <!-- TABS -->
+  <section class="container">
+    <div class="tabs">
+      <button class="tab-btn active" data-period="all-time">
+        <i class="fas fa-infinity"></i> Todos os Tempos
+      </button>
+      <button class="tab-btn" data-period="monthly">
+        <i class="fas fa-calendar-alt"></i> Mensal
+      </button>
+      <button class="tab-btn" data-period="weekly">
+        <i class="fas fa-calendar-week"></i> Semanal
+      </button>
+      <button class="tab-btn" data-period="daily">
+        <i class="fas fa-calendar-day"></i> Hoje
+      </button>
+    </div>
+  </section>
+
+  <!-- PODIUM - TOP 3 -->
+  <section class="container">
+    <div class="podium">
+      
+      <!-- 2º LUGAR -->
+      <div class="podium-place second">
+        <div class="podium-rank">2</div>
+        <div class="podium-avatar">MB</div>
+        <h3 class="podium-name">Maria Beatriz</h3>
+        <div class="podium-title">Investigadora Expert</div>
+        <div class="podium-stats">
+          <strong>8.920</strong> pontos
+        </div>
+        <div class="podium-base">
+          <div class="podium-stats">5 casos • 92% acerto</div>
+        </div>
+      </div>
+
+      <!-- 1º LUGAR -->
+      <div class="podium-place first">
+        <div class="podium-rank">🏆</div>
+        <div class="podium-avatar">DF</div>
+        <h3 class="podium-name">Daniel Ferreira</h3>
+        <div class="podium-title">🔥 Detetive Lendário</div>
+        <div class="podium-stats">
+          <strong>12.850</strong> pontos
+        </div>
+        <div class="podium-base">
+          <div class="podium-stats">6 casos • 95% acerto</div>
+        </div>
+      </div>
+
+      <!-- 3º LUGAR -->
+      <div class="podium-place third">
+        <div class="podium-rank">3</div>
+        <div class="podium-avatar">AS</div>
+        <h3 class="podium-name">Ana Silva</h3>
+        <div class="podium-title">Investigadora Veterana</div>
+        <div class="podium-stats">
+          <strong>7.340</strong> pontos
+        </div>
+        <div class="podium-base">
+          <div class="podium-stats">4 casos • 89% acerto</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LEADERBOARD TABLE -->
+  <main class="container leaderboard">
+    <h2 class="leaderboard-title">Classificação Completa</h2>
+    
+    <div class="leaderboard-table">
+      <div class="leaderboard-row header">
+        <div class="rank">Rank</div>
+        <div class="player">Detetive</div>
+        <div class="cases">Casos</div>
+        <div class="accuracy">Precisão</div>
+        <div class="points">Pontos</div>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="rank top3">#1</div>
+        <div class="player">
+          <div class="player-avatar">DF</div>
+          <div class="player-info">
+            <div class="player-name">Daniel Ferreira</div>
+            <div class="player-title">Detetive Lendário</div>
+          </div>
+        </div>
+        <div class="stat-cell cases">6</div>
+        <div class="stat-cell accuracy">95%</div>
+        <div class="stat-cell points">12.850</div>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="rank top3">#2</div>
+        <div class="player">
+          <div class="player-avatar">MB</div>
+          <div class="player-info">
+            <div class="player-name">Maria Beatriz</div>
+            <div class="player-title">Investigadora Expert</div>
+          </div>
+        </div>
+        <div class="stat-cell cases">5</div>
+        <div class="stat-cell accuracy">92%</div>
+        <div class="stat-cell points">8.920</div>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="rank top3">#3</div>
+        <div class="player">
+          <div class="player-avatar">AS</div>
+          <div class="player-info">
+            <div class="player-name">Ana Silva</div>
+            <div class="player-title">Investigadora Veterana</div>
+          </div>
+        </div>
+        <div class="stat-cell cases">4</div>
+        <div class="stat-cell accuracy">89%</div>
+        <div class="stat-cell points">7.340</div>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="rank">#4</div>
+        <div class="player">
+          <div class="player-avatar">RC</div>
+          <div class="player-info">
+            <div class="player-name">Rafael Costa</div>
+            <div class="player-title">Investigador Avançado</div>
+          </div>
+        </div>
+        <div class="stat-cell cases">4</div>
+        <div class="stat-cell accuracy">85%</div>
+        <div class="stat-cell points">6.720</div>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="rank">#5</div>
+        <div class="player">
+          <div class="player-avatar">LP</div>
+          <div class="player-info">
+            <div class="player-name">Lucas Pereira</div>
+            <div class="player-title">Detetive Experiente</div>
+          </div>
+        </div>
+        <div class="stat-cell cases">3</div>
+        <div class="stat-cell accuracy">91%</div>
+        <div class="stat-cell points">5.890</div>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="rank">#6</div>
+        <div class="player">
+          <div class="player-avatar">CF</div>
+          <div class="player-info">
+            <div class="player-name">Carla Fernandes</div>
+            <div class="player-title">Investigadora</div>
+          </div>
+        </div>
+        <div class="stat-cell cases">3</div>
+        <div class="stat-cell accuracy">88%</div>
+        <div class="stat-cell points">5.120</div>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="rank">#7</div>
+        <div class="player">
+          <div class="player-avatar">TS</div>
+          <div class="player-info">
+            <div class="player-name">Thiago Santos</div>
+            <div class="player-title">Detetive</div>
+          </div>
+        </div>
+        <div class="stat-cell cases">2</div>
+        <div class="stat-cell accuracy">94%</div>
+        <div class="stat-cell points">4.750</div>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="rank">#41</div>
+        <div class="player">
+          <div class="player-avatar">PM</div>
+          <div class="player-info">
+            <div class="player-name">Paula Mendes</div>
+            <div class="player-title">Iniciante</div>
+          </div>
+        </div>
+        <div class="stat-cell cases">1</div>
+        <div class="stat-cell accuracy">83%</div>
+        <div class="stat-cell points">2.380</div>
+      </div>
+
+      <!-- CURRENT USER -->
+      <div class="leaderboard-row current-user">
+        <div class="rank">#42</div>
+        <div class="player">
+          <div class="player-avatar">JD</div>
+          <div class="player-info">
+            <div class="player-name">João Detetive (Você)</div>
+            <div class="player-title">Investigador Ativo</div>
+          </div>
+        </div>
+        <div class="stat-cell cases">1</div>
+        <div class="stat-cell accuracy">87%</div>
+        <div class="stat-cell points">2.450</div>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="rank">#43</div>
+        <div class="player">
+          <div class="player-avatar">BC</div>
+          <div class="player-info">
+            <div class="player-name">Bruno Carvalho</div>
+            <div class="player-title">Iniciante</div>
+          </div>
+        </div>
+        <div class="stat-cell cases">1</div>
+        <div class="stat-cell accuracy">79%</div>
+        <div class="stat-cell points">2.150</div>
+      </div>
+
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+      <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn">4</button>
+      <button class="page-btn">5</button>
+      <button class="page-btn">...</button>
+      <button class="page-btn">15</button>
+      <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      © <strong>FATTO CRIMINAL</strong> 2024 — Todos os direitos reservados
+    </div>
+  </footer>
+
+  <script>
+    // Tab Switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const period = btn.dataset.period;
+        
+        // Update active tab
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // TODO: Load ranking data for selected period
+        console.log('Loading ranking for:', period);
+        alert(`Carregando ranking ${period}...`);
+      });
+    });
+
+    // Pagination
+    document.querySelectorAll('.page-btn').forEach(btn => {
+      if (!btn.disabled && btn.textContent !== '...') {
+        btn.addEventListener('click', () => {
+          // Update active page
+          document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          // TODO: Load page data
+          console.log('Loading page:', btn.textContent);
+          
+          // Scroll to top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

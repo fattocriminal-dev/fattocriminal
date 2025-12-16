@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Como Funciona — FATTO CRIMINAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#070708; --card:#0f1113; --muted:#9da3a9; --accent:#dc3545; --accent-2:#ffd93d;
+      --maxw:1400px; --radius:14px; color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#070708; color:#e9eef2; margin:0; -webkit-font-smoothing:antialiased}
+
+/* TOP MARQUEE */
+.topbar{background:linear-gradient(90deg, rgba(220,53,69,0.08), rgba(220,53,69,0.02));font-weight:700;padding:10px 0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.02);overflow:hidden}
+.marquee{display:inline-block;white-space:nowrap;animation:scroll 20s linear infinite}
+@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(5,5,6,0.9), rgba(5,5,6,0.8));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.02)}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    nav.desktop{display:flex;gap:18px;align-items:center}
+    nav.desktop a{color:var(--muted);text-decoration:none;font-weight:600;transition:color 0.3s;font-size:14px}
+    nav.desktop a:hover{color:#fff}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-weight:800;border:none;cursor:pointer;transition:all 0.3s}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(220,53,69,0.4)}
+
+    /* HERO */
+    .hero{padding:80px 0 40px;text-align:center}
+    .hero h1{font-family:Montserrat;font-size:56px;font-weight:900;margin:0 0 20px 0;line-height:1.1}
+    .hero h1 .highlight{color:var(--accent)}
+    .hero p{font-size:20px;color:var(--muted);max-width:700px;margin:0 auto 10px}
+    .hero .subtitle{font-size:18px;color:var(--accent-2);font-weight:700}
+
+    /* SECTIONS */
+    section{padding:60px 0}
+    section h2{font-family:Montserrat;font-size:42px;font-weight:900;text-align:center;margin:0 0 48px 0}
+    section h2 i{color:var(--accent)}
+
+    /* STEPS - 4 PASSOS */
+    .steps-grid{display:grid;gap:32px;max-width:1000px;margin:0 auto}
+    .step{display:grid;grid-template-columns:100px 1fr;gap:28px;padding:36px;background:transparent;border:2px solid rgba(255,255,255,0.08);border-radius:12px;transition:all 0.4s}
+    .step:hover{transform:translateX(12px);border-color:var(--accent);background:rgba(220,53,69,0.02)}
+    .step-number{width:100px;height:100px;background:linear-gradient(135deg,var(--accent),#8b0000);border-radius:50%;display:grid;place-items:center;font-size:42px;font-weight:800;color:#fff;flex-shrink:0;box-shadow:0 8px 24px rgba(220,53,69,0.4)}
+    .step-content h3{font-family:Montserrat;font-size:26px;margin:0 0 12px 0;font-weight:700}
+    .step-content h3 i{color:var(--accent);margin-right:10px}
+    .step-content p{font-size:16px;color:var(--muted);line-height:1.8;margin:0}
+    .step-content .detail{font-size:14px;color:var(--accent-2);margin-top:12px;font-style:italic}
+
+    /* TENTATIVAS TABLE */
+    .tentativas-section{background:rgba(220,53,69,0.02);padding:60px 0}
+    .tentativas-table{max-width:900px;margin:32px auto;border:2px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden}
+    .tentativas-table table{width:100%;border-collapse:collapse}
+    .tentativas-table thead{background:linear-gradient(90deg,var(--accent),#8b0000)}
+    .tentativas-table th{padding:16px;text-align:left;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:0.5px}
+    .tentativas-table td{padding:16px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:15px}
+    .tentativas-table tr:hover{background:rgba(255,255,255,0.02)}
+    .tentativas-table .pontos{color:var(--accent-2);font-weight:700;font-size:18px}
+    .tentativas-table .bonus{color:#4caf50;font-weight:600;font-size:14px}
+    .tentativas-table .tag-icon{font-size:18px;margin-right:6px}
+    .dica-box{max-width:900px;margin:32px auto;padding:24px;background:linear-gradient(90deg,rgba(255,215,0,0.08),rgba(255,215,0,0.02));border-left:4px solid var(--accent-2);border-radius:8px}
+    .dica-box h4{margin:0 0 8px 0;color:var(--accent-2);font-size:18px;font-weight:700}
+    .dica-box h4 i{margin-right:8px}
+    .dica-box p{margin:0;color:#fff;line-height:1.7}
+
+    /* TIMELINE - COMPRA E JOGO */
+    .timeline{max-width:800px;margin:0 auto;position:relative}
+    .timeline::before{content:'';position:absolute;left:30px;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--accent),rgba(220,53,69,0.2))}
+    .timeline-item{display:grid;grid-template-columns:60px 1fr;gap:24px;margin-bottom:40px}
+    .timeline-number{width:60px;height:60px;background:linear-gradient(135deg,var(--accent),#8b0000);border-radius:50%;display:grid;place-items:center;font-size:24px;font-weight:800;color:#fff;box-shadow:0 4px 16px rgba(220,53,69,0.4);position:relative;z-index:2}
+    .timeline-content{padding:20px 0}
+    .timeline-content h3{font-size:20px;margin:0 0 8px 0;font-weight:700}
+    .timeline-content p{font-size:15px;color:var(--muted);margin:0;line-height:1.7}
+
+    /* COMPARATIVO DIGITAL VS FÍSICO */
+    .comparativo{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:1000px;margin:0 auto}
+    @media(max-width:768px){.comparativo{grid-template-columns:1fr}}
+    .versao-card{padding:40px;background:rgba(255,255,255,0.02);border:2px solid rgba(255,255,255,0.08);border-radius:12px;transition:all 0.4s}
+    .versao-card:hover{transform:translateY(-8px);border-color:var(--accent);box-shadow:0 12px 40px rgba(220,53,69,0.2)}
+    .versao-card h3{font-family:Montserrat;font-size:28px;margin:0 0 8px 0;font-weight:800}
+    .versao-card h3 i{color:var(--accent);margin-right:12px}
+    .versao-card .preco{font-size:36px;color:var(--accent-2);font-weight:900;margin:12px 0 24px}
+    .versao-card ul{list-style:none;padding:0;margin:0}
+    .versao-card ul li{padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:15px;display:flex;align-items:center;gap:12px}
+    .versao-card ul li i{color:var(--accent);font-size:18px}
+
+    /* PATENTES */
+    .patentes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;max-width:1200px;margin:0 auto}
+    .patente-card{padding:32px;background:rgba(255,255,255,0.02);border:2px solid rgba(255,255,255,0.05);border-radius:12px;text-align:center;transition:all 0.4s}
+    .patente-card:hover{transform:translateY(-8px);border-color:var(--accent-2);box-shadow:0 12px 30px rgba(255,215,0,0.15)}
+    .patente-icon{font-size:48px;margin-bottom:16px}
+    .patente-card h3{font-size:18px;margin:0 0 8px 0;font-weight:700}
+    .patente-card .requisito{font-size:13px;color:var(--muted);margin:0 0 12px}
+    .patente-card .bonus{font-size:20px;color:var(--accent-2);font-weight:700}
+
+    /* FAQ */
+    .faq-container{max-width:900px;margin:0 auto}
+    .faq-item{margin-bottom:16px;border:1px solid rgba(255,255,255,0.08);border-radius:8px;overflow:hidden}
+    .faq-question{padding:20px 24px;background:rgba(255,255,255,0.02);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s;font-weight:700;font-size:16px}
+    .faq-question:hover{background:rgba(220,53,69,0.05)}
+    .faq-question i{color:var(--accent);transition:transform 0.3s}
+    .faq-answer{padding:0 24px;max-height:0;overflow:hidden;transition:all 0.4s;color:var(--muted);line-height:1.8}
+    .faq-answer p{margin:0;padding:20px 0}
+    .faq-item.active .faq-answer{max-height:500px}
+    .faq-item.active .faq-question i{transform:rotate(180deg)}
+
+    /* CTA FINAL */
+    .cta-section{background:linear-gradient(135deg,var(--accent),#8b0000);border-radius:16px;padding:60px;text-align:center;margin:60px 0}
+    .cta-section h2{font-family:Montserrat;font-size:36px;font-weight:900;margin:0 0 16px 0;color:#fff}
+    .cta-section p{font-size:18px;margin:0 0 32px 0;opacity:0.9}
+    .cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+    .cta-section .btn{padding:16px 32px;border-radius:10px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:10px;font-size:16px;transition:all 0.3s;border:none;cursor:pointer}
+    .cta-section .btn-white{background:#fff;color:var(--accent)}
+    .cta-section .btn-white:hover{transform:scale(1.05);box-shadow:0 12px 30px rgba(255,255,255,0.3)}
+    .cta-section .btn-outline{background:transparent;color:#fff;border:2px solid #fff}
+    .cta-section .btn-outline:hover{background:rgba(255,255,255,0.1)}
+
+    /* FAQ COMPLETO */
+    .faq-search{max-width:600px;margin:0 auto 32px;position:relative}
+    .faq-search input{width:100%;padding:16px 50px 16px 20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;color:#fff;font-size:16px;font-family:Inter}
+    .faq-search input:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,0.05)}
+    .faq-search i{position:absolute;right:20px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:20px}
+    
+    .faq-categories{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+    .faq-category-btn{padding:12px 24px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:var(--muted);font-weight:600;cursor:pointer;transition:all 0.3s;font-size:14px}
+    .faq-category-btn:hover, .faq-category-btn.active{background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;border-color:transparent}
+    
+    .faq-section{margin-bottom:48px}
+    .faq-section h3{font-family:Montserrat;font-size:28px;font-weight:800;margin:0 0 24px 0;color:#fff;display:flex;align-items:center;gap:12px}
+    .faq-section h3 i{color:var(--accent)}
+
+    footer{border-top:1px solid rgba(255,255,255,0.02);padding:32px 0;margin-top:60px;color:var(--muted);text-align:center}
+
+    @media(max-width:880px){
+      nav.desktop{display:none}
+      .hero h1{font-size:36px}
+      .step{grid-template-columns:70px 1fr;padding:24px}
+      .step-number{width:70px;height:70px;font-size:32px}
+      .tentativas-table{overflow-x:auto}
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="marquee">🔥 NOVO CASO: "A ÚLTIMA TRANSMISSÃO" DISPONÍVEL AGORA • COMPRE E JOGUE NO MESMO DIA • ACESSO VITALÍCIO GARANTIDO 🔥</div>
+</div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <img src="images/logo.png" alt="FATTO CRIMINAL" style="height:70px;width:auto;">
+      </a>
+
+      <nav class="desktop">
+        <a href="index.html">Início</a>
+        <a href="casos.html">Casos</a>
+        <a href="como-funciona.html" style="color:#fff">Como Funciona</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="contato.html">Contato</a>
+        <a href="login.html" class="btn-primary">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>Como <span class="highlight">Funciona</span>?</h1>
+      <p>Entenda os 4 passos para desvendar um crime de fatto</p>
+      <p class="subtitle">"Existe um crime de fatto. Resolva-o"</p>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    
+    <!-- JORNADA DO DETETIVE - 4 PASSOS -->
+    <section>
+      <h2><i class="fas fa-route"></i> Jornada do Detetive</h2>
+      <div class="steps-grid">
+        
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3><i class="fas fa-search"></i> Explore as Provas</h3>
+            <p>Tenha acesso a documentos confidenciais: laudos técnicos e periciais. Cada item é uma pista crucial. Leia cada documento com atenção. Cada detalhe pode ser crucial para resolver o caso.</p>
+            <p class="detail">✓ Laudos forenses • Depoimentos • Fotos da cena • Relatórios técnicos</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3><i class="fas fa-globe"></i> Investigue Além do Básico</h3>
+            <p>Nossos casos não se limitam aos documentos fornecidos. Você pode (e deve!) ir mais fundo: pesquise online, explore fontes externas, analise perfis fictícios com informações relevantes.</p>
+            <p class="detail">✓ Pesquise online • Redes sociais fictícias • Conexões ocultas</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3><i class="fas fa-bullseye"></i> Monte Sua Teoria</h3>
+            <p>Com todas as pistas coletadas, construa sua solução: quem é o assassino, qual arma foi usada, o motivo, o local e como aconteceu.</p>
+            <p class="detail">✓ Assassino • Arma • Motivo • Local • Como aconteceu</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3><i class="fas fa-trophy"></i> Suba no Ranking Global</h3>
+            <p>Resolva casos na primeira tentativa dentro do tempo limite e ganhe até 650 pontos! Conquiste tags, promoções de patente e torne-se uma lenda.</p>
+            <p class="detail">✓ Pontuação • Tags • Patentes • Ranking global</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SISTEMA DE TENTATIVAS -->
+    <section class="tentativas-section">
+      <h2><i class="fas fa-exclamation-triangle"></i> Você tem 5 Tentativas</h2>
+      
+      <div class="tentativas-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Tentativa</th>
+              <th>Pontos Base</th>
+              <th>Bônus (se dentro do tempo)</th>
+              <th>Total Possível</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1ª tentativa</strong></td>
+              <td class="pontos">500 pts</td>
+              <td class="bonus"><span class="tag-icon">🏆</span>+150 pts (Lupa de Ouro)</td>
+              <td class="pontos">650 pts</td>
+            </tr>
+            <tr>
+              <td><strong>2ª tentativa</strong></td>
+              <td class="pontos">400 pts</td>
+              <td class="bonus"><span class="tag-icon">🥈</span>+120 pts (Lupa de Prata)</td>
+              <td class="pontos">520 pts</td>
+            </tr>
+            <tr>
+              <td><strong>3ª tentativa</strong></td>
+              <td class="pontos">300 pts</td>
+              <td class="bonus"><span class="tag-icon">🥉</span>+100 pts (Lupa de Bronze)</td>
+              <td class="pontos">400 pts</td>
+            </tr>
+            <tr>
+              <td><strong>4ª tentativa</strong></td>
+              <td class="pontos">200 pts</td>
+              <td class="bonus"><span class="tag-icon">🎖️</span>+70 pts (Ajudante de Honra)</td>
+              <td class="pontos">270 pts</td>
+            </tr>
+            <tr>
+              <td><strong>5ª tentativa</strong></td>
+              <td class="pontos">100 pts</td>
+              <td class="bonus"><span class="tag-icon">⚠️</span>+50 pts (Advertido)</td>
+              <td class="pontos">150 pts</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="dica-box">
+        <h4><i class="fas fa-lightbulb"></i> Dica Importante</h4>
+        <p>Para maximizar sua pontuação: resolva casos na primeira tentativa dentro do tempo limite! Você ganhará até <strong style="color:#ffd93d">650 pontos</strong> por caso (500 + 150 da Lupa de Ouro).</p>
+      </div>
+    </section>
+
+    <!-- COMO COMPRAR E JOGAR -->
+    <section>
+      <h2><i class="fas fa-shopping-cart"></i> Da Compra à Solução em 8 Passos</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-number">1</div>
+          <div class="timeline-content">
+            <h3>Cadastre-se</h3>
+            <p>Crie sua conta e receba seu ID de Detetive único</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-number">2</div>
+          <div class="timeline-content">
+            <h3>Escolha o Caso</h3>
+            <p>Digital (PDF + QR Codes) ou Físico (Kit impresso com brindes)</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-number">3</div>
+          <div class="timeline-content">
+            <h3>Finalize a Compra</h3>
+            <p>PIX ou Cartão de crédito - processo rápido e seguro</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-number">4</div>
+          <div class="timeline-content">
+            <h3>Receba o Acesso</h3>
+            <p>Digital: acesso imediato | Físico: 5-7 dias úteis via Correios</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-number">5</div>
+          <div class="timeline-content">
+            <h3>Inicie a Investigação</h3>
+            <p>Clique em "Iniciar" e o tempo começa a contar!</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-number">6</div>
+          <div class="timeline-content">
+            <h3>Interaja com o Delegado Virtual</h3>
+            <p>Tire dúvidas via WhatsApp sem receber spoilers</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-number">7</div>
+          <div class="timeline-content">
+            <h3>Envie Sua Teoria</h3>
+            <p>Você tem até 5 tentativas para acertar</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-number">8</div>
+          <div class="timeline-content">
+            <h3>Veja o Resultado</h3>
+            <p>Ganhe pontos, tags e suba no ranking global!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERSÕES DO JOGO -->
+    <section>
+      <h2><i class="fas fa-balance-scale"></i> Versões do Jogo</h2>
+      <div class="comparativo">
+        
+        <div class="versao-card">
+          <h3><i class="fas fa-mobile-alt"></i> Digital</h3>
+          <div class="preco">R$ 54,90</div>
+          <ul>
+            <li><i class="fas fa-file-pdf"></i> PDF + Links interativos</li>
+            <li><i class="fas fa-bolt"></i> Acesso imediato</li>
+            <li><i class="fas fa-qrcode"></i> QR Codes para áudios/vídeos</li>
+            <li><i class="fas fa-laptop"></i> Jogue em qualquer dispositivo</li>
+            <li><i class="fas fa-cloud"></i> Acesso vitalício online</li>
+          </ul>
+        </div>
+
+        <div class="versao-card">
+          <h3><i class="fas fa-box-open"></i> Física</h3>
+          <div class="preco">R$ 109,90</div>
+          <ul>
+            <li><i class="fas fa-print"></i> Kit impresso + brindes</li>
+            <li><i class="fas fa-shipping-fast"></i> Entrega em 5-7 dias</li>
+            <li><i class="fas fa-search"></i> Lupa + Caneta + Crachá</li>
+            <li><i class="fas fa-envelope"></i> Envelopes personalizados</li>
+            <li><i class="fas fa-shield-alt"></i> Selo CONFIDENCIAL</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SISTEMA DE PATENTES -->
+    <section>
+      <h2><i class="fas fa-medal"></i> Evolua sua Carreira de Detetive</h2>
+      <div class="patentes-grid">
+        
+        <div class="patente-card">
+          <div class="patente-icon">🏅</div>
+          <h3>Detetive Júnior</h3>
+          <p class="requisito">Patente inicial</p>
+          <div class="bonus">0 pts</div>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">⭐</div>
+          <h3>Sargento</h3>
+          <p class="requisito">Resolva 1 caso</p>
+          <div class="bonus">+200 pts</div>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🎖️</div>
+          <h3>Inspetor</h3>
+          <p class="requisito">Resolva 3 casos</p>
+          <div class="bonus">+250 pts</div>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">👮</div>
+          <h3>Inspetor-Chefe</h3>
+          <p class="requisito">Resolva 5 casos</p>
+          <div class="bonus">+300 pts</div>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🏆</div>
+          <h3>Lenda: Sherlock Holmes</h3>
+          <p class="requisito">Resolva 10 casos</p>
+          <div class="bonus">+500 pts</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FAQ COMPLETO -->
+    <section id="faq">
+      <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes</h2>
+      
+      <!-- BUSCA -->
+      <div class="faq-search">
+        <input type="text" id="faqSearchInput" placeholder="Buscar pergunta..." />
+        <i class="fas fa-search"></i>
+      </div>
+
+      <!-- CATEGORIAS -->
+      <div class="faq-categories">
+        <button class="faq-category-btn active" data-category="all">Todas</button>
+        <button class="faq-category-btn" data-category="geral">Geral</button>
+        <button class="faq-category-btn" data-category="compra">Compra & Pagamento</button>
+        <button class="faq-category-btn" data-category="jogabilidade">Jogabilidade</button>
+        <button class="faq-category-btn" data-category="tecnico">Técnico</button>
+      </div>
+
+      <div class="faq-container">
+        
+        <!-- GERAL -->
+        <div class="faq-section" data-category="geral">
+          <h3><i class="fas fa-info-circle"></i> Perguntas Gerais</h3>
+          
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              O que é FATTO CRIMINAL?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>FATTO CRIMINAL é uma plataforma de jogos investigativos onde você assume o papel de detetive para resolver casos criminais complexos. Cada caso contém evidências reais, documentos forenses, depoimentos e pistas que você precisa analisar para identificar o culpado.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Preciso de conhecimento prévio em investigação criminal?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Não! Nossos casos são projetados para serem acessíveis a qualquer pessoa com interesse em mistérios. Fornecemos todas as informações necessárias para resolver cada caso, incluindo glossários de termos técnicos quando necessário.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Quanto tempo leva para resolver um caso?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>A duração varia conforme a complexidade: Casos iniciantes (2-4h), Intermediários (4-6h), Avançados (6-10h). Você pode pausar e retomar quando quiser - seu progresso é salvo automaticamente.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Posso jogar em grupo?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Sim! Recomendamos jogar em grupo de 2-4 pessoas. A experiência fica mais divertida e permite discussões interessantes sobre as pistas. Uma única compra permite acesso ilimitado.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Os casos têm diferentes níveis de dificuldade?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Sim! Classificamos como Fácil (iniciantes), Médio (detetives experientes) e Difícil (mestres da dedução). Cada caso indica claramente seu nível.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMPRA & PAGAMENTO -->
+        <div class="faq-section" data-category="compra">
+          <h3><i class="fas fa-shopping-cart"></i> Compra & Pagamento</h3>
+          
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Quais formas de pagamento são aceitas?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Aceitamos: Cartão de crédito (Visa, Mastercard, Elo - até 12x sem juros), PIX (acesso imediato), e Boleto bancário (confirmação em 2 dias úteis). Pagamentos processados com segurança via Mercado Pago.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              O pagamento é único ou há mensalidades?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p><strong>Pagamento único!</strong> Você compra o caso uma vez e tem acesso vitalício. Sem assinaturas, mensalidades ou custos ocultos. Jogue quantas vezes quiser, sem prazos ou limitações.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Posso solicitar reembolso?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Sim! Garantia de 7 dias. Se não estiver satisfeito, entre em contato dentro de 7 dias para reembolso integral. Única condição: não ter revelado a solução completa do caso.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Há cupons de desconto disponíveis?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Sim! Oferecemos cupons em: Primeira compra (cadastre-se), Datas especiais (Black Friday, Natal), e Programa de indicação (ganhe descontos ao indicar amigos). Siga nossas redes sociais!</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Qual a diferença entre versão Digital e Física?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p><strong>Digital (R$ 54,90):</strong> PDF + QR Codes, acesso imediato. <strong>Física (R$ 109,90):</strong> Kit impresso + brindes (lupa, caneta, crachá), entrega 5-7 dias. Ambas têm o mesmo conteúdo investigativo!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- JOGABILIDADE -->
+        <div class="faq-section" data-category="jogabilidade">
+          <h3><i class="fas fa-gamepad"></i> Jogabilidade</h3>
+          
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Como funciona o sistema de pontuação?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Você ganha pontos por: Precisão (identificar corretamente culpado/método/motivação), Velocidade (resolver rapidamente), Tentativas (1ª = 500pts, 2ª = 400pts...), e Bônus de tempo (tags especiais). Sua pontuação aparece no ranking global!</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Quantas tentativas tenho para resolver?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Você tem 5 tentativas. Cada tentativa reduz a pontuação: 1ª (500pts), 2ª (400pts), 3ª (300pts), 4ª (200pts), 5ª (100pts). Resolver dentro do tempo limite dá bônus extras (Lupa de Ouro, Prata, Bronze).</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Posso pedir ajuda sem receber spoilers?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Sim! Sistema de dicas progressivas: Nível 1 (direcionamento geral), Nível 2 (dica específica), Nível 3 (revelação parcial). Você escolhe quando acessar. Usar dicas reduz levemente sua pontuação.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Preciso jogar os casos em ordem?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Não! Cada caso é independente. Recomendamos começar pelos casos de nível iniciante se nunca jogou antes, mas não é obrigatório. Alguns casos fazem pequenas referências a outros, mas não afeta sua resolução.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Como funcionam as patentes de detetive?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Você evolui resolvendo casos: Detetive Júnior (inicial), Sargento (1 caso), Inspetor (3 casos), Inspetor-Chefe (5 casos), Lenda Sherlock Holmes (10 casos). Cada promoção dá bônus de pontos!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TÉCNICO -->
+        <div class="faq-section" data-category="tecnico">
+          <h3><i class="fas fa-laptop"></i> Suporte Técnico</h3>
+          
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Em quais dispositivos posso jogar?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>FATTO CRIMINAL funciona em qualquer dispositivo: Computadores (Windows/Mac/Linux), Tablets (iPad/Android), Smartphones (iPhone/Android). A interface se adapta automaticamente. Recomendamos tela de 10 polegadas ou maior.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Preciso instalar algum aplicativo?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Não! Funciona 100% no navegador. Basta fazer login e começar a jogar. Sem downloads, instalações ou configurações. Você pode alternar entre dispositivos livremente.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Meu progresso é salvo automaticamente?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Sim! Tudo é salvo em tempo real: documentos abertos, anotações, pistas marcadas, tempo de investigação. Pode fechar o navegador e retomar exatamente de onde parou.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Os materiais podem ser impressos?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Sim! Todos os documentos podem ser baixados em PDF e impressos. Muitos detetives preferem trabalhar com documentos físicos para anotações. Oferecemos também Kit Físico opcional com tudo pré-impresso em alta qualidade.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Como funcionam os QR Codes?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>QR Codes levam a áudios de depoimentos, vídeos de cenas, documentos extras e simulações interativas. Basta escanear com a câmera do celular para acessar conteúdo exclusivo.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Encontrei um bug. Como reportar?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Reporte via formulário de contato ou email suporte@fattocriminal.com. Inclua: descrição detalhada, dispositivo/navegador, screenshot se possível, e passos para reproduzir. Respondemos em até 24h.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <div class="cta-section">
+      <h2>Pronto para Resolver seu Primeiro Caso?</h2>
+      <p>Escolha um caso e comece a resolver mistérios agora mesmo</p>
+      <div class="cta-buttons">
+        <a href="casos.html" class="btn btn-white">
+          <i class="fas fa-folder-open"></i>
+          Ver Casos Disponíveis
+        </a>
+        <a href="https://wa.me/5517991951986?text=Olá!%20Preciso%20de%20ajuda%20com%20o%20FATTO%20CRIMINAL" class="btn btn-outline" target="_blank">
+          <i class="fab fa-whatsapp"></i>
+          Falar com o Delegado Virtual
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      © <strong>FATTO CRIMINAL</strong> 2024 — Todos os direitos reservados
+    </div>
+  </footer>
+
+  <script>
+    function toggleFaq(element) {
+      const faqItem = element.parentElement;
+      const wasActive = faqItem.classList.contains('active');
+      
+      // Fecha todos os outros
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Abre o clicado (se não estava aberto)
+      if (!wasActive) {
+        faqItem.classList.add('active');
+      }
+    }
+
+    // Filtro de Categorias FAQ
+    document.querySelectorAll('.faq-category-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.dataset.category;
+        
+        // Atualiza botão ativo
+        document.querySelectorAll('.faq-category-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Filtra seções
+        document.querySelectorAll('.faq-section').forEach(section => {
+          if (category === 'all' || section.dataset.category === category) {
+            section.style.display = 'block';
+          } else {
+            section.style.display = 'none';
+          }
+        });
+        
+        // Fecha todos os accordions
+        document.querySelectorAll('.faq-item').forEach(item => {
+          item.classList.remove('active');
+        });
+      });
+    });
+
+    // Busca no FAQ
+    const faqSearchInput = document.getElementById('faqSearchInput');
+    if (faqSearchInput) {
+      faqSearchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        
+        if (searchTerm === '') {
+          // Mostra todas as seções
+          document.querySelectorAll('.faq-section').forEach(s => s.style.display = 'block');
+          document.querySelectorAll('.faq-item').forEach(item => item.style.display = 'block');
+          return;
+        }
+        
+        // Busca em todos os itens
+        document.querySelectorAll('.faq-item').forEach(item => {
+          const question = item.querySelector('.faq-question').textContent.toLowerCase();
+          const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+          
+          if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+            item.style.display = 'block';
+            item.parentElement.style.display = 'block'; // Mostra seção pai
+          } else {
+            item.style.display = 'none';
+          }
+        });
+        
+        // Esconde seções vazias
+        document.querySelectorAll('.faq-section').forEach(section => {
+          const hasVisibleItems = Array.from(section.querySelectorAll('.faq-item')).some(
+            item => item.style.display !== 'none'
+          );
+          section.style.display = hasVisibleItems ? 'block' : 'none';
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>

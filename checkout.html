@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Checkout — FATTO CRIMINAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#070708; --card:#0f1113; --muted:#9da3a9; --accent:#dc3545; --accent-2:#ffd93d;
+      --maxw:1400px; --radius:14px; color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#070708; color:#e9eef2; margin:0; -webkit-font-smoothing:antialiased}
+
+/* TOP MARQUEE */
+.topbar{background:linear-gradient(90deg, rgba(220,53,69,0.08), rgba(220,53,69,0.02));font-weight:700;padding:10px 0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.02);overflow:hidden}
+.marquee{display:inline-block;white-space:nowrap;animation:scroll 20s linear infinite}
+@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(5,5,6,0.9), rgba(5,5,6,0.8));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.02)}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    
+    /* SECURITY BAR */
+    .security-bar{background:rgba(40,167,69,0.1);border-bottom:1px solid rgba(40,167,69,0.2);padding:12px 0;text-align:center}
+    .security-bar i{color:#28a745;margin-right:8px}
+
+    /* CHECKOUT LAYOUT */
+    .checkout-container{padding:48px 0}
+    .checkout-grid{display:grid;grid-template-columns:1fr 420px;gap:40px}
+    @media(max-width:968px){.checkout-grid{grid-template-columns:1fr}}
+
+    /* FORM SECTION */
+    .form-section{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:32px;margin-bottom:24px}
+    .form-section h2{font-family:Montserrat;font-size:22px;margin:0 0 24px 0;font-weight:700;display:flex;align-items:center;gap:12px}
+    .form-section h2 i{color:var(--accent)}
+    
+    .form-group{margin-bottom:20px}
+    .form-group label{display:block;margin-bottom:8px;font-weight:600;font-size:14px}
+    .form-group input, .form-group select{width:100%;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-size:15px;transition:all 0.3s}
+    .form-group input:focus, .form-group select:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,0.05)}
+    
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:580px){.form-row{grid-template-columns:1fr}}
+    
+    .form-3col{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px}
+    @media(max-width:580px){.form-3col{grid-template-columns:1fr}}
+
+    /* PAYMENT METHODS */
+    .payment-methods{display:grid;gap:12px}
+    .payment-method{background:rgba(255,255,255,0.03);border:2px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:12px}
+    .payment-method:hover{border-color:rgba(255,255,255,0.15)}
+    .payment-method.selected{border-color:var(--accent);background:rgba(220,53,69,0.05)}
+    .payment-method input[type="radio"]{margin:0}
+    .payment-icon{width:50px;height:35px;display:grid;place-items:center;background:rgba(255,255,255,0.05);border-radius:6px;font-size:20px}
+
+    /* ORDER SUMMARY */
+    .order-summary{background:transparent;border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:28px;position:sticky;top:100px}
+    .order-summary h3{font-family:Montserrat;font-size:20px;margin:0 0 20px 0;font-weight:700}
+    
+    .order-item{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .order-item:last-child{border-bottom:none}
+    .item-image{width:80px;height:80px;background:linear-gradient(135deg,#667eea 0%, #764ba2 100%);border-radius:8px;display:grid;place-items:center;font-size:32px;color:#fff}
+    .item-details h4{font-size:16px;margin:0 0 4px 0;font-weight:700}
+    .item-details p{font-size:13px;color:var(--muted);margin:0}
+    .item-price{margin-left:auto;font-weight:800;color:var(--accent);font-size:20px}
+    
+    .order-totals{margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.05)}
+    .total-row{display:flex;justify-content:space-between;margin-bottom:12px;font-size:15px}
+    .total-row.final{font-size:24px;font-weight:800;color:var(--accent);margin-top:16px;padding-top:16px;border-top:2px solid rgba(255,255,255,0.1)}
+    
+    .btn-checkout{width:100%;padding:18px;background:linear-gradient(90deg,var(--accent),#8b0000);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer;transition:all 0.3s;margin-top:20px;display:flex;align-items:center;justify-content:center;gap:10px}
+    .btn-checkout:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(220,53,69,0.5)}
+    
+    .trust-badges{display:flex;justify-content:space-around;margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.05)}
+    .trust-badge{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+    .trust-badge i{font-size:24px;color:var(--accent)}
+    
+    .coupon-box{display:flex;gap:8px;margin-top:16px}
+    .coupon-box input{flex:1}
+    .coupon-box button{padding:14px 20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-weight:700;cursor:pointer;transition:all 0.3s}
+    .coupon-box button:hover{background:rgba(255,255,255,0.08)}
+
+    footer{border-top:1px solid rgba(255,255,255,0.02);padding:32px 0;margin-top:60px;color:var(--muted);text-align:center}
+    
+    @media(max-width:880px){.nav a:not(.brand){display:none}}
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="marquee">🔥 CHECKOUT SEGURO • PAGAMENTO 100% PROTEGIDO • ACESSO VITALÍCIO GARANTIDO 🔥</div>
+</div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <img src="images/logo.png" alt="FATTO CRIMINAL" style="height:70px;width:auto;">
+      </a>
+    </div>
+  </header>
+
+  <!-- SECURITY BAR -->
+  <div class="security-bar">
+    <i class="fas fa-shield-alt"></i>
+    <strong>Pagamento 100% Seguro</strong> — Seus dados estão protegidos
+  </div>
+
+  <!-- CHECKOUT -->
+  <main class="container">
+    <div class="checkout-container">
+      <div class="checkout-grid">
+        
+        <!-- LEFT: FORMS -->
+        <div>
+          <!-- CONTACT INFO -->
+          <div class="form-section">
+            <h2><i class="fas fa-user"></i> Informações de Contato</h2>
+            <form id="checkoutForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="nome">Nome Completo</label>
+                  <input type="text" id="nome" placeholder="João Silva" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" placeholder="seu@email.com" required>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="telefone">Telefone</label>
+                  <input type="tel" id="telefone" placeholder="(11) 99999-9999">
+                </div>
+                <div class="form-group">
+                  <label for="cpf">CPF</label>
+                  <input type="text" id="cpf" placeholder="000.000.000-00" required>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- PAYMENT METHOD -->
+          <div class="form-section">
+            <h2><i class="fas fa-credit-card"></i> Método de Pagamento</h2>
+            
+            <div class="payment-methods">
+              <label class="payment-method selected">
+                <input type="radio" name="payment" value="credit" checked>
+                <div class="payment-icon"><i class="fas fa-credit-card"></i></div>
+                <div>
+                  <div style="font-weight:700">Cartão de Crédito</div>
+                  <div style="font-size:12px;color:var(--muted)">Acesso imediato</div>
+                </div>
+              </label>
+              
+              <label class="payment-method">
+                <input type="radio" name="payment" value="pix">
+                <div class="payment-icon"><i class="fas fa-qrcode"></i></div>
+                <div>
+                  <div style="font-weight:700">PIX</div>
+                  <div style="font-size:12px;color:var(--muted)">Pagamento instantâneo</div>
+                </div>
+              </label>
+              
+              <label class="payment-method">
+                <input type="radio" name="payment" value="boleto">
+                <div class="payment-icon"><i class="fas fa-barcode"></i></div>
+                <div>
+                  <div style="font-weight:700">Boleto</div>
+                  <div style="font-size:12px;color:var(--muted)">Vencimento em 3 dias</div>
+                </div>
+              </label>
+            </div>
+
+            <!-- CREDIT CARD FIELDS -->
+            <div id="creditCardFields" style="margin-top:24px">
+              <div class="form-group">
+                <label for="cardNumber">Número do Cartão</label>
+                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19">
+              </div>
+              
+              <div class="form-group">
+                <label for="cardName">Nome no Cartão</label>
+                <input type="text" id="cardName" placeholder="Como está no cartão">
+              </div>
+              
+              <div class="form-3col">
+                <div class="form-group">
+                  <label for="cardExpiry">Validade</label>
+                  <input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5">
+                </div>
+                <div class="form-group">
+                  <label for="cardCvv">CVV</label>
+                  <input type="text" id="cardCvv" placeholder="000" maxlength="4">
+                </div>
+                <div class="form-group">
+                  <label for="cardInstallments">Parcelas</label>
+                  <select id="cardInstallments">
+                    <option>1x R$ 49,90</option>
+                    <option>2x R$ 24,95</option>
+                    <option>3x R$ 16,63</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: ORDER SUMMARY -->
+        <div>
+          <div class="order-summary">
+            <h3>Resumo do Pedido</h3>
+            
+            <div class="order-item">
+              <div class="item-image"><i class="fas fa-skull-crossbones"></i></div>
+              <div class="item-details">
+                <h4>A Última Transmissão</h4>
+                <p>Acesso digital vitalício</p>
+                <p style="margin-top:4px"><i class="fas fa-check-circle" style="color:#28a745"></i> Disponível imediatamente</p>
+              </div>
+              <div class="item-price">R$ 49,90</div>
+            </div>
+
+            <div class="coupon-box">
+              <input type="text" placeholder="Cupom de desconto" id="couponInput">
+              <button onclick="applyCoupon()">Aplicar</button>
+            </div>
+
+            <div class="order-totals">
+              <div class="total-row">
+                <span>Subtotal</span>
+                <span>R$ 49,90</span>
+              </div>
+              <div class="total-row">
+                <span>Desconto</span>
+                <span id="discountAmount" style="color:#28a745">R$ 0,00</span>
+              </div>
+              <div class="total-row final">
+                <span>Total</span>
+                <span id="totalAmount">R$ 49,90</span>
+              </div>
+            </div>
+
+            <button class="btn-checkout" onclick="processPayment()">
+              <i class="fas fa-lock"></i>
+              Finalizar Compra
+            </button>
+
+            <div class="trust-badges">
+              <div class="trust-badge">
+                <i class="fas fa-shield-check"></i>
+                <span>Pagamento<br>Seguro</span>
+              </div>
+              <div class="trust-badge">
+                <i class="fas fa-infinity"></i>
+                <span>Acesso<br>Vitalício</span>
+              </div>
+              <div class="trust-badge">
+                <i class="fas fa-headset"></i>
+                <span>Suporte<br>24/7</span>
+              </div>
+            </div>
+
+            <p style="font-size:12px;color:var(--muted);text-align:center;margin:20px 0 0">
+              Ao finalizar a compra, você concorda com nossos <a href="#" style="color:var(--accent)">Termos de Uso</a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      © <strong>FATTO CRIMINAL</strong> 2024 — Todos os direitos reservados
+    </div>
+  </footer>
+
+  <script>
+    // Payment method selection
+    const paymentMethods = document.querySelectorAll('.payment-method');
+    const creditCardFields = document.getElementById('creditCardFields');
+
+    paymentMethods.forEach(method => {
+      method.addEventListener('click', () => {
+        paymentMethods.forEach(m => m.classList.remove('selected'));
+        method.classList.add('selected');
+        
+        const radio = method.querySelector('input[type="radio"]');
+        radio.checked = true;
+
+        // Show/hide credit card fields
+        if (radio.value === 'credit') {
+          creditCardFields.style.display = 'block';
+        } else {
+          creditCardFields.style.display = 'none';
+        }
+      });
+    });
+
+    // Card number formatting
+    document.getElementById('cardNumber')?.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\s/g, '');
+      let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+      e.target.value = formattedValue;
+    });
+
+    // Card expiry formatting
+    document.getElementById('cardExpiry')?.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        value = value.slice(0, 2) + '/' + value.slice(2, 4);
+      }
+      e.target.value = value;
+    });
+
+    // CPF formatting
+    document.getElementById('cpf')?.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length <= 11) {
+        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+      }
+      e.target.value = value;
+    });
+
+    // Apply coupon
+    function applyCoupon() {
+      const coupon = document.getElementById('couponInput').value.toUpperCase();
+      const discountAmount = document.getElementById('discountAmount');
+      const totalAmount = document.getElementById('totalAmount');
+      
+      if (coupon === 'BEMVINDO10') {
+        discountAmount.textContent = '- R$ 4,99';
+        totalAmount.textContent = 'R$ 44,91';
+        alert('✅ Cupom aplicado! Você ganhou 10% de desconto!');
+      } else if (coupon === 'PRIMEIRA20') {
+        discountAmount.textContent = '- R$ 9,98';
+        totalAmount.textContent = 'R$ 39,92';
+        alert('✅ Cupom aplicado! Você ganhou 20% de desconto!');
+      } else if (coupon) {
+        alert('❌ Cupom inválido');
+      }
+    }
+
+    // Process payment
+    function processPayment() {
+      const nome = document.getElementById('nome').value;
+      const email = document.getElementById('email').value;
+      const cpf = document.getElementById('cpf').value;
+
+      if (!nome || !email || !cpf) {
+        alert('Por favor, preencha todos os campos obrigatórios');
+        return;
+      }
+
+      const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+
+      // TODO: Integrar com Mercado Pago / Stripe
+      console.log('Processing payment:', { nome, email, cpf, method: selectedPayment });
+
+      alert('🎉 Pagamento em desenvolvimento!\n\nEm produção, você seria redirecionado para:\n• PIX: QR Code\n• Boleto: PDF para impressão\n• Cartão: Gateway de pagamento\n\nRedirecionando para página de sucesso...');
+      
+      window.location.href = 'obrigado.html';
+    }
+  </script>
+</body>
+</html>
