@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Galeria - Celular de Lucas</title>
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+background: #191970;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+	overflow: hidden;    
+    touch-action: none; 	
+    margin: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+        .iphone-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+			padding-top: -100px;
+        }
+
+        .iphone-frame {
+            width: 375px;
+            height: 812px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+transform: scale(1.0);  /* ← ADICIONE essa linha (aumenta) */
+margin-top: -100px;      /* ← ADICIONE essa linha (sobe) */
+        }
+
+        .notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #1a1a1a;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ========================================
+           HEADER DA GALERIA
+        ======================================== */
+        .gallery-header {
+            background: #fff;
+            color: #000;
+            padding: 45px 15px 10px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            flex-shrink: 0;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: #007aff;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .gallery-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        /* ========================================
+           LISTA DE ÁLBUNS
+        ======================================== */
+        .albums-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background: #fff;
+        }
+
+        .albums-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .album-item {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .album-item:active {
+            opacity: 0.7;
+        }
+
+        .album-cover {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin-bottom: 5px;
+            position: relative;
+            overflow: hidden;
+			color: white;
+			font-size: 48px;
+        }
+
+        .album-cover.important {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+        }
+
+        .album-warning {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #ff3b30;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .album-info {
+            padding: 0 5px;
+        }
+
+        .album-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 2px;
+        }
+
+        .album-count {
+            font-size: 13px;
+            color: #8e8e93;
+        }
+
+        /* ========================================
+           TELA DO ÁLBUM (THUMBNAILS)
+        ======================================== */
+        .album-screen {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            flex-direction: column;
+            background: #fff;
+            border-radius: 32px;
+        }
+
+        .album-screen.active {
+            display: flex;
+        }
+
+        .album-header {
+            background: #fff;
+            padding: 45px 15px 10px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            flex-shrink: 0;
+        }
+
+        .album-header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .close-album {
+            background: none;
+            border: none;
+            color: #007aff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .album-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .album-subtitle {
+            font-size: 14px;
+            color: #8e8e93;
+            margin-top: 5px;
+        }
+
+        .photos-grid {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            align-content: start;
+        }
+
+        .photo-item {
+            aspect-ratio: 1;
+            background: #f0f0f0;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-item:active {
+            opacity: 0.7;
+        }
+
+.photo-placeholder {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;  /* ← MUDE de center para space-evenly */
+    font-size: 24px;  /* ← DIMINUA de 28px para 24px */
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    padding: 8px 5px;  /* ← MUDE para esse */
+}
+
+.photo-label {
+    font-size: 9px;  /* ← VOLTE para 9px */
+    color: #000;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;  /* ← MUDE de 1.3 para 1.2 */
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    padding: 3px 4px;  /* ← DIMINUA o padding */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+        /* ========================================
+           VISUALIZADOR DE FOTO
+        ======================================== */
+        .photo-viewer {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2000;
+            background: #000;
+            border-radius: 32px;
+        }
+
+        .photo-viewer.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .viewer-header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 45px 15px 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .close-viewer {
+            background: none;
+            border: none;
+            color: #007aff;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .photo-counter {
+            color: white;
+            font-size: 14px;
+        }
+
+        .viewer-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+            padding: 20px;
+        }
+
+        .photo-full {
+            max-width: 100%;
+            max-height: 100%;
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .photo-full-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .photo-full-description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ddd;
+            white-space: pre-wrap;
+        }
+
+        @media (max-height: 900px) {
+            .iphone-frame {
+                transform: scale(0.85);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .iphone-frame {
+                transform: scale(0.75);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="iphone-container">
+        <div class="iphone-frame">
+            <div class="notch"></div>
+            
+            <div class="iphone-screen">
+                <!-- Header da Galeria -->
+                <div class="gallery-header">
+                    <div class="header-top">
+                        <button class="back-btn" onclick="window.location.href='home.html'">← Home</button>
+                        <div></div>
+                    </div>
+                    <h1 class="gallery-title">Álbuns</h1>
+                </div>
+                
+                <!-- Lista de Álbuns -->
+                <div class="albums-container">
+                    <div class="albums-section">
+                        <h2 class="section-title">Meus Álbuns</h2>
+                        <div class="albums-grid" id="albumsGrid">
+                            <!-- Álbuns serão inseridos aqui -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tela do Álbum (Grid de Fotos) -->
+                <div class="album-screen" id="albumScreen">
+                    <div class="album-header">
+                        <div class="album-header-top">
+                            <button class="close-album" onclick="closeAlbum()">← Álbuns</button>
+                            <div></div>
+                        </div>
+                        <h1 class="album-title" id="albumTitleText"></h1>
+                        <p class="album-subtitle" id="albumSubtitle"></p>
+                    </div>
+                    
+                    <div class="photos-grid" id="photosGrid">
+                        <!-- Fotos serão inseridas aqui -->
+                    </div>
+                </div>
+
+                <!-- Visualizador de Foto -->
+                <div class="photo-viewer" id="photoViewer">
+                    <div class="viewer-header">
+                        <button class="close-viewer" onclick="closeViewer()">Fechar</button>
+                        <span class="photo-counter" id="photoCounter"></span>
+                    </div>
+                    <div class="viewer-content">
+                        <div class="photo-full" id="photoFull">
+                            <!-- Conteúdo da foto será inserido aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentAlbum = null;
+        let currentPhotoIndex = 0;
+
+        // Base de dados dos álbuns
+        const albums = [
+            {
+                id: 1,
+                name: "Screenshots",
+                count: 47,
+                icon: '<i class="fas fa-mobile-alt"></i>',
+                important: false,
+                photos: [] // Álbum genérico
+            },
+            {
+                id: 2,
+                name: "Caso Diego",
+                count: 23,
+                icon: '<i class="fas fa-exclamation-triangle"></i>',
+                important: true,
+                photos: [
+                    {
+                        title: "Print 1/23: Vítima Desesperada",
+                        description: `CONVERSA WHATSAPP
+
+Seguidor desconhecido:
+"Lucas me ajuda por favor! Investi R$ 50 mil na empresa que você indicou e agora não consigo resgatar"
+
+"Eles ficam enrolando, dizendo que tá em 'período de carência' mas já fazem 8 meses"
+
+"Eu preciso desse dinheiro pra cirurgia da minha mãe. Por favor me ajuda"
+
+[Print de conversa real mostrando desespero da vítima]`
+                    },
+                    {
+                        title: "Print 2/23: Análise do Contador",
+                        description: `ANÁLISE TÉCNICA FINANCEIRA
+Contador: Roberto Almeida (CRC 45.678/SP)
+
+Empresa analisada: Almeida Investimentos LTDA
+
+CONCLUSÃO:
+Após análise minuciosa dos documentos fornecidos, concluo que a empresa NÃO possui investimentos reais correspondentes aos valores captados.
+
+O modelo de negócio apresentado é compatível com ESQUEMA PONZI/PIRÂMIDE FINANCEIRA, onde retornos de investidores antigos são pagos com capital de novos investidores.
+
+Estima-se prejuízo total de R$ 80 MILHÕES com aproximadamente 5.000 vítimas.
+
+Data: 27/julho/2024`
+                    },
+                    {
+                        title: "Print 3/23: Documento Oficial",
+                        description: `ALMEIDA INVESTIMENTOS LTDA
+CNPJ: 12.345.678/0001-90
+
+Promessa aos investidores:
+Retorno de 8% ao mês
+
+Total captado (estimado):
+R$ 80.000.000 (oitenta milhões)
+
+Período de operação:
+2020 - 2024
+
+[Anotação manuscrita de Lucas em vermelho:]
+"ONDE ESTÁ ESSE DINHEIRO???"
+
+[Documento com carimbo oficial da empresa]`
+                    },
+                    {
+                        title: "Print 4/23: Vítima #2",
+                        description: `E-MAIL DE VÍTIMA
+
+Assunto: Preciso de ajuda urgente
+
+Lucas,
+
+Investí R$ 100 mil (dinheiro da venda do apartamento dos meus pais) na Almeida Investimentos após ver seus vídeos.
+
+Não consigo resgatar há 10 meses. O suporte não responde mais.
+
+Estou morando de aluguel agora. Minha família está passando necessidade.
+
+Por favor, você pode fazer algo?`
+                    },
+                    {
+                        title: "Print 5/23: Vítima #3",
+                        description: `WHATSAPP - PRINT
+
+Investidor relata:
+"Perdi economias de 15 anos"
+
+Total investido: R$ 75 mil
+
+Empresa alega: "Problemas técnicos temporários"
+
+Status: Sem resposta há 7 meses
+
+[Print mostrando mensagens não respondidas]`
+                    },
+                    {
+                        title: "Print 6/23: Contrato Padrão",
+                        description: `CONTRATO DE INVESTIMENTO
+Almeida Investimentos LTDA
+
+Promessas destacadas:
+✓ Retorno garantido de 8% ao mês
+✓ Segurança total do capital
+✓ Resgate a qualquer momento
+✓ Sem riscos
+
+Observações de Lucas:
+"Cláusulas confusas sobre resgate"
+"Ausência de registro em órgãos reguladores"
+"Termos genéricos sobre 'investimentos'"
+
+[Documento escaneado com anotações]`
+                    },
+                    {
+                        title: "Print 7/23: Organograma da Pirâmide",
+                        description: `ESQUEMA DESENHADO POR LUCAS
+
+Como funciona a fraude:
+
+┌─────────────────────┐
+│ NOVOS INVESTIDORES  │
+│  (dinheiro entra)   │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│   DIEGO ALMEIDA     │
+│ (controla o fluxo)  │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ INVESTIDORES ANTIGOS│
+│ (recebem "retorno") │
+└─────────────────────┘
+
+❌ NENHUM INVESTIMENTO REAL
+❌ Dinheiro novo paga o antigo
+❌ Quando para de entrar, colapsa
+
+Total estimado: R$ 80 milhões
+Vítimas estimadas: 5.000 pessoas`
+                    },
+                    {
+                        title: "Print 8/23: Vítima #4 - Aposentado",
+                        description: `Relato enviado por e-mail:
+
+"Tenho 67 anos. Investi minha aposentadoria inteira (R$ 120 mil) na Almeida Investimentos.
+
+Lucas, vi você recomendando por anos. Confiei.
+
+Agora não tenho mais nada. Minha esposa está doente e não posso pagar tratamento.
+
+Tentei suicídio semana passada.
+
+Por favor, faça algo."
+
+[E-mail recebido em 20/julho/2024]`
+                    },
+                    {
+                        title: "Print 9/23: Vítima #5 - Jovem Casal",
+                        description: `PRINT DE INSTAGRAM DM
+
+Casal relata:
+"Investimos R$ 85 mil (juntamos por 5 anos para casamento)"
+
+"Seguimos você desde 2020. Confiamos na sua recomendação"
+
+"Perdemos tudo. Casamento cancelado. Relacionamento destruído"
+
+"Como você pôde fazer isso?"
+
+[Mensagem enviada em agosto/2024]`
+                    },
+                    {
+                        title: "Print 10/23: Análise Financeira Detalhada",
+                        description: `RELATÓRIO COMPLETO DO CONTADOR
+
+1. ENTRADA DE CAPITAL:
+   - 2020: R$ 5 milhões
+   - 2021: R$ 15 milhões
+   - 2022: R$ 25 milhões
+   - 2023: R$ 35 milhões
+   TOTAL: R$ 80 milhões
+
+2. INVESTIMENTOS REAIS IDENTIFICADOS:
+   - ZERO reais
+
+3. DESTINO DO DINHEIRO:
+   - 30% pagamento de "retornos" antigos
+   - 20% comissões e publicidade
+   - 50% destino desconhecido (provavelmente contas pessoais de Diego)
+
+4. CARACTERÍSTICAS DE PIRÂMIDE:
+   ✓ Retornos incompatíveis com mercado
+   ✓ Sem lastro real
+   ✓ Dependência de novos investidores
+   ✓ Dificuldade de resgate
+
+CONCLUSÃO: Pirâmide financeira clássica`
+                    },
+                    {
+                        title: "Print 11/23: Vítima #6 - Mãe Solteira",
+                        description: `Depoimento registrado:
+
+"Sou mãe solteira de 3 filhos. Investi R$ 60 mil (herança do meu pai falecido).
+
+Era tudo que eu tinha para garantir o futuro dos meus filhos.
+
+Vi seus vídeos falando que era seguro. Você parecia tão confiável.
+
+Agora não tenho nada. Não sei como vou pagar o aluguel mês que vem.
+
+Meus filhos vão passar fome por causa disso."
+
+[Mensagem recebida em 15/agosto/2024]`
+                    },
+                    {
+                        title: "Print 12/23: Checklist de Fraude",
+                        description: `SINAIS DE PIRÂMIDE FINANCEIRA
+(checklist de Lucas)
+
+✓ Promessa de retornos muito altos (8% ao mês = 150% ao ano)
+✓ "Sem risco" ou "risco zero" (impossível no mercado real)
+✓ Complexidade artificial (para confundir investidores)
+✓ Pressão para investir rápido
+✓ Incentivo para trazer novos investidores
+✓ Dificuldade de resgate
+✓ Falta de transparência nos investimentos
+✓ Não registrado em órgãos reguladores
+✓ Promessas vagas sobre "estratégias secretas"
+
+ALMEIDA INVESTIMENTOS:
+9 de 9 sinais presentes ❌
+
+CONCLUSÃO ÓBVIA:
+É UMA PIRÂMIDE!`
+                    },
+                    {
+                        title: "Print 13/23: Vítima #7 - Empresário",
+                        description: `Relato via e-mail:
+
+"Vendi minha empresa (que construí em 20 anos) por R$ 500 mil.
+
+Investi R$ 300 mil na Almeida após ver você promovendo.
+
+Agora descobri que é fraude. Perdi quase tudo que tinha.
+
+Minha família me culpa. Estou em depressão.
+
+Você vai ter que viver com isso na consciência."
+
+[Recebido em 22/agosto/2024]`
+                    },
+                    {
+                        title: "Print 14/23: Documentos Societários",
+                        description: `ALMEIDA INVESTIMENTOS LTDA
+Documentação oficial
+
+SÓCIOS:
+- Diego Almeida (90%)
+- Laranja (10%)
+
+CAPITAL SOCIAL DECLARADO:
+R$ 50.000 (ridiculamente baixo)
+
+ENDEREÇO REGISTRADO:
+Escritório compartilhado (não tem estrutura real)
+
+FUNCIONÁRIOS:
+3 pessoas (impossível gerir R$ 80 milhões)
+
+OBSERVAÇÃO DE LUCAS:
+"Empresa fantasma. Estrutura mínima para parecer legítima."
+
+[Cópia de documentos da Receita Federal]`
+                    },
+                    {
+                        title: "Print 15/23: Vítima #8 - Professor",
+                        description: `Mensagem recebida:
+
+"Sou professor há 30 anos. Investi R$ 150 mil (economia de vida inteira) para complementar aposentadoria.
+
+Você sempre pareceu honesto. Confiei completamente.
+
+Agora, aos 62 anos, estou falido. Vou ter que trabalhar até morrer.
+
+Meus netos não vão poder estudar na faculdade.
+
+Isso é muito duro de aceitar."
+
+[WhatsApp - 10/agosto/2024]`
+                    },
+                    {
+                        title: "Print 16/23: Histórico de Reclamações",
+                        description: `REGISTRO DE RECLAMAÇÕES
+Compilado por Lucas
+
+2022:
+- 15 reclamações de dificuldade de resgate
+- Diego sempre dava desculpas
+
+2023:
+- 87 reclamações registradas
+- Aumentou pressão sobre suporte
+- Várias pessoas ameaçaram processar
+
+2024 (Jan-Ago):
+- 243 reclamações!
+- A maioria não consegue mais contato
+- Sistema está colapsando
+- É questão de tempo até estourar
+
+CONCLUSÃO:
+O esquema está no fim. Por isso Diego está desesperado.`
+                    },
+                    {
+                        title: "Print 17/23: Vítima #9 - Viúva",
+                        description: `Relato emocionante:
+
+"Meu marido faleceu ano passado. Me deixou R$ 200 mil de seguro de vida.
+
+Investi R$ 180 mil na Almeida Investimentos para garantir meu futuro.
+
+Agora descobri que perdi tudo. O dinheiro que meu marido deixou para me proteger.
+
+Sinto que traí a memória dele.
+
+Não sei como vou sobreviver."
+
+[E-mail - 18/agosto/2024]`
+                    },
+                    {
+                        title: "Print 18/23: Artigos sobre Pirâmides",
+                        description: `PESQUISAS DE LUCAS
+
+Artigos salvos:
+- "Como identificar esquemas Ponzi"
+- "Maiores pirâmides financeiras do Brasil"
+- "Telexfree: a maior pirâmide do país"
+- "Sinais de alerta em investimentos"
+- "CVM alerta sobre promessas irreais"
+
+NOTAS DE LUCAS:
+"A Almeida Investimentos tem TODOS os sinais.
+É igual a Telexfree e outras pirâmides que quebraram.
+Preciso agir AGORA antes que mais gente perca dinheiro."
+
+[Screenshots de artigos]`
+                    },
+                    {
+                        title: "Print 19/23: Vítima #10 - Estudante",
+                        description: `Mensagem via Instagram:
+
+"Tinha 19 anos quando investi. Era meu dinheiro para faculdade (R$ 40 mil que meus pais juntaram desde que nasci).
+
+Agora tenho 21 anos e tive que trancar a faculdade.
+
+Meus pais estão arrasados. Eles confiaram em você.
+
+Meu futuro foi roubado."
+
+[DM - 25/agosto/2024]`
+                    },
+                    {
+                        title: "Print 20/23: Planilha de Vítimas",
+                        description: `LISTA PARCIAL DE VÍTIMAS
+Compilada por Lucas
+
+Total que entraram em contato: 157 pessoas
+
+Prejuízo total relatado: R$ 12.000.000
+
+Média por pessoa: R$ 76.305
+
+Casos graves:
+- 3 tentativas de suicídio
+- 12 pessoas perderam casa/apartamento
+- 8 casamentos destruídos
+- 23 idosos sem aposentadoria
+- 34 pessoas que pegaram empréstimo para investir
+
+ESTIMATIVA REAL:
+Se 157 pessoas me contataram, quantas NÃO contataram?
+Provável: Milhares de vítimas.`
+                    },
+                    {
+                        title: "Print 21/23: E-mails Ameaçadores",
+                        description: `PRINTS DE E-MAILS
+
+Vítimas ameaçando processar Lucas:
+
+"Você é cúmplice dessa fraude!"
+"Vou te processar por tudo que perdi!"
+"Você destruiu minha vida!"
+"Espero que você pague por isso!"
+
+REAÇÃO DE LUCAS:
+"Eles têm razão em estar com raiva. Eu promovi isso. Mesmo sem saber, eu ajudei a roubar essas pessoas. Preciso consertar isso."
+
+[Collection de e-mails salvos]`
+                    },
+                    {
+                        title: "Print 22/23: Cronograma da Denúncia",
+                        description: `PLANO DE AÇÃO
+Escrito por Lucas - 25/agosto/2024
+
+PASSO 1: ✓ Coletar todas as evidências
+PASSO 2: ✓ Consultar contador
+PASSO 3: ✓ Contratar advogado
+PASSO 4: ✓ Preparar documentação
+PASSO 5: ✓ Dar ultimato para Diego (até 30/set)
+PASSO 6: [ ] Protocolar denúncia na CVM (01/out)
+PASSO 7: [ ] Exposição pública (01/out - 20h)
+PASSO 8: [ ] BO na delegacia (01/out - 21h)
+PASSO 9: [ ] Organizar vítimas
+PASSO 10: [ ] Buscar ressarcimento via justiça
+
+"Não há volta. Amanhã é o dia."
+
+[Última atualização: 30/set/2024]`
+                    },
+                    {
+                        title: "Print 23/23: Última Reflexão",
+                        description: `NOTA PESSOAL DE LUCAS
+Escrita em 29/setembro/2024
+
+"Amanhã pode ser o dia mais importante da minha vida.
+
+Ou Diego se entrega, ou eu exponho tudo.
+Sei que vou perder patrocínio. Sei que vou perder seguidores. Sei que posso ser processado.
+Mas não posso viver sabendo que ajudei a roubar milhares de pessoas inocentes.
+Prefiro perder tudo e dormir em paz do que continuar rico e cúmplice.
+Meu pai sempre dizia: 'Caráter é fazer a coisa certa mesmo quando ninguém está olhando.'
+Todo mundo vai estar olhando amanhã. Mas mesmo que ninguém estivesse, eu faria a mesma coisa.
+É o certo a fazer.
+
+Que Deus me proteja."
+
+- Lucas Mendes
+29/setembro/2024, 23:45h`
+                    }
+                ]
+            },
+            {
+                id: 3,
+                name: "Lives",
+                count: 156,
+                icon: '<i class="fas fa-gamepad"></i>',
+                important: false,
+                photos: []
+            },
+            {
+                id: 4,
+                name: "Pessoal",
+                count: 89,
+                icon: '<i class="fas fa-camera"></i>',
+                important: false,
+                photos: []
+            },
+            {
+                id: 5,
+                name: "Downloads",
+                count: 12,
+                icon: '<i class="fas fa-download"></i>',
+                important: false,
+                photos: []
+            }
+        ];
+
+        // Renderizar álbuns
+        function renderAlbums() {
+            const grid = document.getElementById('albumsGrid');
+            grid.innerHTML = '';
+            
+            albums.forEach(album => {
+                const albumDiv = document.createElement('div');
+                albumDiv.className = 'album-item';
+                albumDiv.onclick = () => openAlbum(album);
+                
+                albumDiv.innerHTML = `
+                    <div class="album-cover ${album.important ? 'important' : ''}">
+                        ${album.important ? '<div class="album-warning">⚠️</div>' : ''}
+                        <span>${album.icon}</span>
+                    </div>
+                    <div class="album-info">
+                        <div class="album-name">${album.name}</div>
+                        <div class="album-count">${album.count}</div>
+                    </div>
+                `;
+                
+                grid.appendChild(albumDiv);
+            });
+        }
+
+        // Abrir álbum
+        function openAlbum(album) {
+            currentAlbum = album;
+            
+            document.getElementById('albumTitleText').textContent = album.name;
+            document.getElementById('albumSubtitle').textContent = `${album.count} ${album.count === 1 ? 'foto' : 'fotos'}`;
+            
+            const grid = document.getElementById('photosGrid');
+            grid.innerHTML = '';
+            
+            if (album.photos.length > 0) {
+                // Álbum com fotos (Caso Diego)
+                album.photos.forEach((photo, index) => {
+                    const photoDiv = document.createElement('div');
+                    photoDiv.className = 'photo-item';
+                    photoDiv.onclick = () => viewPhoto(index);
+                    
+                    photoDiv.innerHTML = `
+                        <div class="photo-placeholder">
+                            📄
+                            <div class="photo-label">${photo.title.split(':')[0]}</div>
+                        </div>
+                    `;
+                    
+                    grid.appendChild(photoDiv);
+                });
+            } else {
+                // Álbum genérico (placeholder)
+                for (let i = 0; i < Math.min(album.count, 30); i++) {
+                    const photoDiv = document.createElement('div');
+                    photoDiv.className = 'photo-item';
+                    photoDiv.innerHTML = `
+                        <div class="photo-placeholder">
+                            ${album.icon}
+                        </div>
+                    `;
+                    grid.appendChild(photoDiv);
+                }
+            }
+            
+            document.getElementById('albumScreen').classList.add('active');
+            console.log("📷 Álbum aberto:", album.name);
+        }
+
+        // Ver foto em tela cheia
+        function viewPhoto(index) {
+            if (!currentAlbum || currentAlbum.photos.length === 0) return;
+            
+            currentPhotoIndex = index;
+            const photo = currentAlbum.photos[index];
+            
+            document.getElementById('photoCounter').textContent = `${index + 1} de ${currentAlbum.photos.length}`;
+            document.getElementById('photoFull').innerHTML = `
+                <div class="photo-full-title">${photo.title}</div>
+                <div class="photo-full-description">${photo.description}</div>
+            `;
+            
+            document.getElementById('photoViewer').classList.add('active');
+            console.log("🔍 Foto visualizada:", photo.title);
+        }
+
+        // Fechar álbum
+        function closeAlbum() {
+            document.getElementById('albumScreen').classList.remove('active');
+            currentAlbum = null;
+        }
+
+        // Fechar visualizador
+        function closeViewer() {
+            document.getElementById('photoViewer').classList.remove('active');
+        }
+
+        // Inicializar
+        renderAlbums();
+        console.log("📷 Galeria carregada - 5 álbuns disponíveis");
+        console.log("⚠️ Álbum 'Caso Diego' contém 23 evidências cruciais!");
+    </script>
+</body>
+</html>

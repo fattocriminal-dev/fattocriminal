@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WhatsApp - Celular de Lucas</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+background: #191970;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+	overflow: hidden;    
+    touch-action: none; 
+    margin: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+        .iphone-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+			padding-top: -100px;
+        }
+
+        .iphone-frame {
+            width: 375px;
+            height: 812px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+transform: scale(1.0);  /* ← ADICIONE essa linha (aumenta) */
+margin-top: -100px;      /* ← ADICIONE essa linha (sobe) */
+        }
+
+        .notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #1a1a1a;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ========================================
+           HEADER DO WHATSAPP
+        ======================================== */
+        .whatsapp-header {
+            background: #075e54;
+            color: white;
+            padding: 45px 15px 10px 15px;
+            flex-shrink: 0;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .whatsapp-title {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icon {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Barra de pesquisa */
+        .search-bar {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-icon {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+        }
+
+        .search-input {
+            background: none;
+            border: none;
+            color: white;
+            flex: 1;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ========================================
+           LISTA DE CONVERSAS
+        ======================================== */
+        .chats-list {
+            flex: 1;
+            overflow-y: auto;
+            background: #fff;
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.1s;
+            gap: 12px;
+        }
+
+        .chat-item:hover {
+            background: #f5f5f5;
+        }
+
+        .chat-item:active {
+            background: #e8e8e8;
+        }
+
+        /* Avatar */
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #25d366;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .chat-avatar.mom {
+            background: #ff6b6b;
+        }
+
+        .chat-avatar.lawyer {
+            background: #4158d0;
+        }
+
+        .chat-avatar.friend {
+            background: #f6c23e;
+        }
+
+        .chat-avatar.girlfriend {
+            background: #ee5a6f;
+        }
+
+        .chat-avatar.assistant {
+            background: #9b59b6;
+        }
+
+        /* Conteúdo do chat */
+        .chat-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 3px;
+        }
+
+        .chat-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: #000;
+        }
+
+        .chat-time {
+            font-size: 12px;
+            color: #667781;
+        }
+
+        .chat-preview {
+            font-size: 14px;
+            color: #667781;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .chat-preview.unread {
+            color: #000;
+            font-weight: 500;
+        }
+
+        /* Badge de mensagens não lidas */
+        .unread-badge {
+            background: #25d366;
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        /* ========================================
+           TELA DE CONVERSA
+        ======================================== */
+        .chat-screen {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            flex-direction: column;
+            border-radius: 32px;
+            background: #e5ddd5;
+        }
+
+        .chat-screen.active {
+            display: flex;
+        }
+
+        /* Header da conversa */
+        .chat-header {
+            background: #075e54;
+            color: white;
+            padding: 45px 15px 10px 15px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .chat-header-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            color: #075e54;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .chat-header-info {
+            flex: 1;
+        }
+
+        .chat-header-name {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .chat-header-status {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Mensagens */
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0,0,0,0.03) 0px,
+                    rgba(0,0,0,0.03) 1px,
+                    transparent 1px,
+                    transparent 20px
+                );
+        }
+
+        .message-group {
+            margin-bottom: 15px;
+        }
+
+        .message-date {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .date-badge {
+            background: rgba(225, 245, 254, 0.92);
+            color: #667781;
+            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 7px;
+            display: inline-block;
+        }
+
+        .message {
+            max-width: 75%;
+            margin-bottom: 5px;
+            clear: both;
+        }
+
+        .message.sent {
+            float: right;
+        }
+
+        .message.received {
+            float: left;
+        }
+
+        .message-bubble {
+            padding: 6px 10px 8px 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.4;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .message.sent .message-bubble {
+            background: #dcf8c6;
+            color: #000;
+        }
+
+        .message.received .message-bubble {
+            background: #fff;
+            color: #000;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #667781;
+            text-align: right;
+            margin-top: 2px;
+            padding-right: 2px;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        @media (max-height: 900px) {
+            .iphone-frame {
+                transform: scale(0.85);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .iphone-frame {
+                transform: scale(0.75);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="iphone-container">
+        <div class="iphone-frame">
+            <div class="notch"></div>
+            
+            <div class="iphone-screen">
+                <!-- Header do WhatsApp -->
+                <div class="whatsapp-header">
+                    <div class="header-top">
+                        <div class="header-left">
+                            <button class="back-btn" onclick="window.location.href='home.html'">←</button>
+                            <div class="whatsapp-title">WhatsApp</div>
+                        </div>
+                        <div class="header-icons">
+                            <button class="header-icon">🔍</button>
+                            <button class="header-icon">⋮</button>
+                        </div>
+                    </div>
+                    
+                    <div class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" placeholder="Pesquisar...">
+                    </div>
+                </div>
+                
+                <!-- Lista de Conversas -->
+                <div class="chats-list" id="chatsList">
+                    <!-- As conversas serão inseridas aqui pelo JavaScript -->
+                </div>
+
+                <!-- Tela de Conversa Individual -->
+                <div class="chat-screen" id="chatScreen">
+                    <div class="chat-header">
+                        <button class="close-chat" onclick="closeChat()">←</button>
+                        <div class="chat-header-avatar" id="headerAvatar"></div>
+                        <div class="chat-header-info">
+                            <div class="chat-header-name" id="headerName"></div>
+                            <div class="chat-header-status">online</div>
+                        </div>
+                    </div>
+                    
+                    <div class="messages-container" id="messagesContainer">
+                        <!-- Mensagens serão inseridas aqui -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Base de dados das conversas
+        const chats = [
+            {
+                id: 1,
+                name: "Rafael Santos",
+                avatar: "R",
+                avatarClass: "friend",
+                lastMessage: "Qualquer coisa tô aqui mano",
+                time: "19:42",
+                unread: 0,
+                messages: [
+                    { date: "Sábado, 28/set", messages: [
+                        { type: "received", text: "Cara, tá tudo certo pra domingo?", time: "22:15" },
+                        { type: "sent", text: "Tá sim mano. Vou fazer a live normal, mas é a última antes da bomba estourar", time: "22:16" },
+                        { type: "received", text: "Cuidado viu. Esse Diego não parece ser flor que se cheire", time: "22:17" },
+                        { type: "sent", text: "Eu sei. Mas não vou recuar agora", time: "22:18" },
+                        { type: "sent", text: "Muita gente foi roubada por minha causa", time: "22:18" },
+                        { type: "received", text: "Você NÃO sabia. Não se culpa", time: "22:19" },
+                        { type: "sent", text: "Mas agora eu SEI. E tenho que fazer algo", time: "22:20" }
+                    ]},
+                    { date: "Domingo, 29/set", messages: [
+                        { type: "received", text: "Posso aparecer aí amanhã?", time: "14:32" },
+                        { type: "received", text: "Fazer uma participação na live?", time: "14:32" },
+                        { type: "sent", text: "Claro! Chega umas 18h", time: "14:35" },
+                        { type: "sent", text: "Vamos jogar um pouco antes da treta começar na segunda", time: "14:35" },
+                        { type: "received", text: "Fechado! Até amanhã", time: "14:36" }
+                    ]},
+                    { date: "Segunda, 30/set", messages: [
+                        { type: "received", text: "Saindo aí. Foi massa jogar contigo hoje", time: "19:42" },
+                        { type: "sent", text: "Tmj mano! Valeu por aparecer", time: "19:43" },
+                        { type: "received", text: "Qualquer coisa tô aqui mano", time: "19:44" },
+                        { type: "received", text: "Sério. Liga se precisar", time: "19:44" },
+                        { type: "sent", text: "👊", time: "19:45" }
+                    ]}
+                ]
+            },
+            {
+                id: 2,
+                name: "Dr. Paulo Mendes",
+                avatar: "P",
+                avatarClass: "lawyer",
+                lastMessage: "Segunda a gente protocola. Fique...",
+                time: "Ontem",
+                unread: 0,
+                messages: [
+                    { date: "Sexta, 27/set", messages: [
+                        { type: "received", text: "Lucas, os documentos estão prontos", time: "16:47" },
+                        { type: "received", text: "Segunda de manhã protocolamos na CVM", time: "16:47" },
+                        { type: "sent", text: "Perfeito doutor. E a exposição?", time: "16:50" },
+                        { type: "received", text: "NÃO exponha antes de segunda", time: "16:52" },
+                        { type: "received", text: "Deixe eu protocolar primeiro", time: "16:52" },
+                        { type: "received", text: "Senão ele pode te processar", time: "16:52" },
+                        { type: "sent", text: "Ok. Vou esperar. Mas se ele não se entregar até amanhã, na segunda eu solto tudo", time: "16:55" },
+                        { type: "received", text: "Entendo sua ansiedade mas AGUARDE", time: "16:57" },
+                        { type: "received", text: "Segunda cedo eu protocolo", time: "16:57" },
+                        { type: "received", text: "Segunda à tarde você faz o que quiser", time: "16:57" }
+                    ]},
+                    { date: "Sábado, 28/set", messages: [
+                        { type: "sent", text: "Doutor, recebi e-mail do Diego me ameaçando", time: "10:23" },
+                        { type: "received", text: "Encaminhe pra mim. Isso é mais uma prova contra ele", time: "10:25" },
+                        { type: "sent", text: "Já mandei", time: "10:26" },
+                        { type: "received", text: "Perfeito. Tá tudo documentado", time: "10:28" },
+                        { type: "received", text: "Ele tá se enterrando sozinho", time: "10:28" }
+                    ]},
+                    { date: "Domingo, 29/set", messages: [
+                        { type: "received", text: "Segunda a gente protocola. Fique tranquilo. Você tá fazendo a coisa certa", time: "15:23" },
+                        { type: "sent", text: "Obrigado doutor. Tô nervoso mas é o certo a fazer", time: "15:30" }
+                    ]}
+                ]
+            },
+            {
+                id: 3,
+                name: "Júlia Martins",
+                avatar: "J",
+                avatarClass: "assistant",
+                lastMessage: "Cheguei! Pedro já tá aí?",
+                time: "18:35",
+                unread: 0,
+                messages: [
+                    { date: "Domingo, 30/set", messages: [
+                        { type: "received", text: "Oi Lucas! Já tô saindo de casa", time: "17:50" },
+                        { type: "received", text: "Chego aí umas 18h30", time: "17:50" },
+                        { type: "sent", text: "Tranquilo! Live começa 18h mesmo", time: "17:52" },
+                        { type: "received", text: "Precisa de alguma coisa específica hoje?", time: "17:54" },
+                        { type: "sent", text: "Não, só a rotina mesmo", time: "17:55" },
+                        { type: "sent", text: "Moderar chat, essas coisas", time: "17:55" },
+                        { type: "received", text: "Pode deixar! Tô chegando", time: "17:56" },
+                        { type: "received", text: "Cheguei! Pedro já tá aí?", time: "18:35" },
+                        { type: "sent", text: "Tá sim, na sala. Entra aí", time: "18:36" }
+                    ]}
+                ]
+            },
+            {
+                id: 4,
+                name: "Amanda Lima",
+                avatar: "A",
+                avatarClass: "girlfriend",
+                lastMessage: "❤️",
+                time: "17:05",
+                unread: 0,
+                messages: [
+                    { date: "Domingo, 30/set", messages: [
+                        { type: "received", text: "Oi amor ❤️ que horas você quer que eu chegue hoje?", time: "16:20" },
+                        { type: "sent", text: "Oi bb! Pode chegar umas 17h?", time: "16:22" },
+                        { type: "sent", text: "Live começa 18h", time: "16:22" },
+                        { type: "received", text: "Fechado! Levo alguma coisa?", time: "16:24" },
+                        { type: "sent", text: "Não precisa amor", time: "16:25" },
+                        { type: "sent", text: "Já pedi comida pra todo mundo", time: "16:25" },
+                        { type: "received", text: "Tá bom! Te amo ❤️", time: "16:26" },
+                        { type: "sent", text: "Também te amo ❤️", time: "16:27" },
+                        { type: "received", text: "Chegando aí! Tô na portaria", time: "17:05" },
+                        { type: "sent", text: "Sobe! Pedro já tá aqui também", time: "17:06" },
+                        { type: "received", text: "❤️", time: "17:06" }
+                    ]}
+                ]
+            },
+            {
+                id: 5,
+                name: "Mãe",
+                avatar: "❤️",
+                avatarClass: "mom",
+                lastMessage: "Te amo filho ❤️",
+                time: "12:15",
+                unread: 0,
+                messages: [
+                    { date: "Domingo, 30/set", messages: [
+                        { type: "received", text: "Bom dia meu filho! Almoça direito", time: "12:03" },
+                        { type: "received", text: "Não fica só comendo besteira", time: "12:03" },
+                        { type: "sent", text: "Oi mãe ❤️ Vou almoçar sim", time: "12:05" },
+                        { type: "sent", text: "Pedi comida", time: "12:05" },
+                        { type: "received", text: "Tá trabalhando muito?", time: "12:08" },
+                        { type: "sent", text: "Só a live de domingo como sempre", time: "12:10" },
+                        { type: "sent", text: "Semana que vem vai ter novidade", time: "12:10" },
+                        { type: "received", text: "Que novidade?", time: "12:12" },
+                        { type: "sent", text: "Vou te contar depois mãe", time: "12:13" },
+                        { type: "sent", text: "Coisa boa, não se preocupa", time: "12:13" },
+                        { type: "received", text: "Tá bom filho. Te amo ❤️", time: "12:15" },
+                        { type: "sent", text: "Também te amo ❤️", time: "12:16" }
+                    ]}
+                ]
+            }
+        ];
+
+        // Renderizar lista de conversas
+        function renderChats() {
+            const list = document.getElementById('chatsList');
+            list.innerHTML = '';
+            
+            chats.forEach(chat => {
+                const chatDiv = document.createElement('div');
+                chatDiv.className = 'chat-item';
+                chatDiv.onclick = () => openChat(chat);
+                
+                chatDiv.innerHTML = `
+                    <div class="chat-avatar ${chat.avatarClass}">${chat.avatar}</div>
+                    <div class="chat-content">
+                        <div class="chat-header-row">
+                            <div class="chat-name">${chat.name}</div>
+                            <div class="chat-time">${chat.time}</div>
+                        </div>
+                        <div class="chat-preview ${chat.unread ? 'unread' : ''}">${chat.lastMessage}</div>
+                    </div>
+                    ${chat.unread ? `<div class="unread-badge">${chat.unread}</div>` : ''}
+                `;
+                
+                list.appendChild(chatDiv);
+            });
+        }
+
+        // Abrir conversa
+        function openChat(chat) {
+            document.getElementById('headerAvatar').textContent = chat.avatar;
+            document.getElementById('headerName').textContent = chat.name;
+            
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML = '';
+            
+            // Renderizar mensagens
+            chat.messages.forEach(group => {
+                // Data
+                const dateDiv = document.createElement('div');
+                dateDiv.className = 'message-date';
+                dateDiv.innerHTML = `<span class="date-badge">${group.date}</span>`;
+                container.appendChild(dateDiv);
+                
+                // Mensagens do grupo
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'message-group clearfix';
+                
+                group.messages.forEach(msg => {
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = `message ${msg.type}`;
+                    msgDiv.innerHTML = `
+                        <div class="message-bubble">
+                            ${msg.text}
+                            <div class="message-time">${msg.time}</div>
+                        </div>
+                    `;
+                    groupDiv.appendChild(msgDiv);
+                });
+                
+                container.appendChild(groupDiv);
+            });
+            
+            // Rolar para o final
+            container.scrollTop = container.scrollHeight;
+            
+            // Mostrar tela de chat
+            document.getElementById('chatScreen').classList.add('active');
+            
+            console.log("💬 Conversa aberta:", chat.name);
+        }
+
+        // Fechar conversa
+        function closeChat() {
+            document.getElementById('chatScreen').classList.remove('active');
+        }
+
+        // Inicializar
+        renderChats();
+        console.log("💬 WhatsApp carregado - 5 conversas disponíveis");
+    </script>
+</body>
+</html>

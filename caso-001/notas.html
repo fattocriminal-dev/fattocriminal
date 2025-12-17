@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Notas - Celular de Lucas</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+background: #191970;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+	overflow: hidden;    
+    touch-action: none; 
+    margin: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+        .iphone-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+			padding-top: -100px;
+        }
+
+        .iphone-frame {
+            width: 375px;
+            height: 812px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+transform: scale(1.0);  /* ← ADICIONE essa linha (aumenta) */
+margin-top: -100px;      /* ← ADICIONE essa linha (sobe) */
+        }
+
+        .notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #1a1a1a;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ========================================
+           HEADER DAS NOTAS
+        ======================================== */
+        .notes-header {
+            background: #fff;
+            padding: 45px 15px 10px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            flex-shrink: 0;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: #007aff;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 400;
+        }
+
+        .notes-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .notes-count {
+            font-size: 14px;
+            color: #8e8e93;
+            margin-top: 5px;
+        }
+
+        /* Barra de pesquisa */
+        .search-bar {
+            background: #f2f2f7;
+            border-radius: 10px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .search-icon {
+            color: #8e8e93;
+            font-size: 16px;
+        }
+
+        .search-input {
+            background: none;
+            border: none;
+            color: #000;
+            flex: 1;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: #8e8e93;
+        }
+
+        /* ========================================
+           LISTA DE NOTAS
+        ======================================== */
+        .notes-list {
+            flex: 1;
+            overflow-y: auto;
+            background: #fff;
+        }
+
+        .note-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e5ea;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .note-item:hover {
+            background: #f9f9f9;
+        }
+
+        .note-item:active {
+            background: #e8e8e8;
+        }
+
+        .note-item.important {
+            background: #fff3cd;
+        }
+
+        .note-item.important:hover {
+            background: #ffecb3;
+        }
+
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+
+        .note-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        .note-date {
+            font-size: 14px;
+            color: #8e8e93;
+            margin-left: 10px;
+        }
+
+        .note-preview {
+            font-size: 14px;
+            color: #8e8e93;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .important-badge {
+            background: #ff9500;
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        /* ========================================
+           VISUALIZADOR DE NOTA
+        ======================================== */
+        .note-viewer {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            flex-direction: column;
+            background: #fff;
+            border-radius: 32px;
+        }
+
+        .note-viewer.active {
+            display: flex;
+        }
+
+        .viewer-header {
+            background: #fff;
+            padding: 45px 15px 10px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .close-note {
+            background: none;
+            border: none;
+            color: #007aff;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 400;
+        }
+
+        .viewer-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #007aff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .note-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #fffbf0;
+        }
+
+        .note-full-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .note-full-date {
+            font-size: 13px;
+            color: #8e8e93;
+            margin-bottom: 20px;
+        }
+
+        .note-full-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #000;
+            white-space: pre-wrap;
+            font-family: 'Noteworthy', -apple-system, sans-serif;
+        }
+
+        @media (max-height: 900px) {
+            .iphone-frame {
+                transform: scale(0.85);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .iphone-frame {
+                transform: scale(0.75);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="iphone-container">
+        <div class="iphone-frame">
+            <div class="notch"></div>
+            
+            <div class="iphone-screen">
+                <!-- Header das Notas -->
+                <div class="notes-header">
+                    <div class="header-top">
+                        <button class="back-btn" onclick="window.location.href='home.html'">← Pastas</button>
+                        <div></div>
+                    </div>
+                    <h1 class="notes-title">Notas</h1>
+                    <p class="notes-count">6 notas</p>
+                    
+                    <div class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" placeholder="Pesquisar">
+                    </div>
+                </div>
+                
+                <!-- Lista de Notas -->
+                <div class="notes-list" id="notesList">
+                    <!-- As notas serão inseridas aqui -->
+                </div>
+
+                <!-- Visualizador de Nota -->
+                <div class="note-viewer" id="noteViewer">
+                    <div class="viewer-header">
+                        <button class="close-note" onclick="closeNote()">< Notas</button>
+                        <div class="viewer-actions">
+                            <button class="action-btn">📤</button>
+                            <button class="action-btn">🗑️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="note-content">
+                        <div class="note-full-title" id="noteTitle"></div>
+                        <div class="note-full-date" id="noteDate"></div>
+                        <div class="note-full-text" id="noteText"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Base de dados das notas
+        const notes = [
+            {
+                id: 1,
+                title: "Roteiro Live Exposição - 01/out",
+                date: "25/set - 23:15",
+                preview: "⚠️ ESSA VAI SER A LIVE MAIS IMPORTANTE...",
+                important: true,
+                content: `LIVE DE SEGUNDA 01/OUTUBRO - 20H
+
+⚠️ ESSA VAI SER A LIVE MAIS IMPORTANTE DA MINHA VIDA
+
+────────────────────────────────────────────
+
+ROTEIRO COMPLETO:
+
+1. ABERTURA (5min)
+   - Avisar que é assunto muito sério
+   - Pedir para compartilharem ao máximo
+   - Desligar música de fundo
+   - Avisar que vai ser pesado
+
+2. CONTEXTO (10min)
+   - Explicar parceria com Almeida Investimentos
+   - Admitir que recomendei por 4 anos
+   - Pedir desculpas pela confiança cega
+   - Assumir responsabilidade moral
+
+3. A DESCOBERTA (15min)
+   - Mostrar print da primeira vítima
+   - Contar que fui investigar
+   - Mostrar análise do contador
+   - REVELAR: É PIRÂMIDE FINANCEIRA
+
+4. AS PROVAS (20min)
+   - Mostrar documentos na tela
+   - Ler trechos da análise técnica
+   - Mostrar prints de outras vítimas
+   - Explicar como funciona o esquema
+   - Revelar valores: R$ 80 MILHÕES
+
+5. IMPACTO (10min)
+   - Número estimado: 5.000 vítimas
+   - Famílias destruídas
+   - Pessoas que perderam tudo
+   - Suicídios relacionados (pesquisar)
+
+6. AÇÃO LEGAL (10min)
+   - Avisar que já procurei advogado
+   - Segunda de manhã: denúncia CVM
+   - Segunda tarde: Ministério Público
+   - Incentivar outras vítimas a denunciar
+
+7. FECHAMENTO (5min)
+   - Pedir desculpas novamente
+   - Assumir responsabilidade moral
+   - Prometer ajudar todas as vítimas
+   - Disponibilizar canal de contato
+
+8. GRANDE FINAL - AO VIVO:
+   - Ligar para polícia
+   - Fazer BO transmitido ao vivo
+   - Entregar documentos em delegacia
+   - Gravar tudo
+
+────────────────────────────────────────────
+
+FRASES IMPORTANTES (decorar):
+
+"Eu fui cúmplice sem saber, mas agora que EU SEI, eu tenho obrigação moral e legal de agir"
+
+"Prefiro perder patrocínio, perder dinheiro, perder seguidores do que perder minha dignidade"
+
+"Diego, se você está assistindo: você teve sua última chance. Escolheu o caminho errado. Agora as consequências são suas"
+
+"Para quem perdeu dinheiro: eu vou lutar por vocês. Vou fazer tudo que estiver ao meu alcance"
+
+────────────────────────────────────────────
+
+CHECKLIST TÉCNICO:
+
+□ Testar gravação de tela
+□ Backup dos documentos
+□ Segunda câmera filmando
+□ Advogado de plantão
+□ Número da delegacia salvo
+□ Lista de vítimas impressa
+
+────────────────────────────────────────────
+
+NÃO HÁ VOLTA.
+AMANHÃ É O DIA.`
+            },
+            {
+                id: 2,
+                title: "Lista de Vítimas (157 pessoas)",
+                date: "29/set - 18:20",
+                preview: "PESSOAS QUE ME CONTATARAM DIRETAMENTE...",
+                important: false,
+                content: `LISTA DE VÍTIMAS
+
+Atualizada em: 29/set/2024
+
+────────────────────────────────────────────
+
+PESSOAS QUE ME CONTATARAM DIRETAMENTE:
+
+1. João Silva - R$ 50.000
+   Tel: (11) 98888-1111
+   Situação: Não consegue resgatar há 8 meses
+   Obs: Dinheiro era para cirurgia da mãe
+
+2. Maria Ferreira - R$ 100.000
+   Tel: (11) 97777-2222
+   Situação: Dinheiro da venda do apartamento
+   Obs: Está morando de aluguel, desesperada
+
+3. Pedro Alves - R$ 30.000
+   Tel: (11) 96666-3333
+   Situação: Economias de 10 anos de trabalho
+   Obs: Ia usar para casamento
+
+4. Ana Costa - R$ 75.000
+   Tel: (11) 95555-4444
+   Situação: Herança do pai falecido
+   Obs: Único bem que tinha da família
+
+5. Roberto Martins - R$ 45.000
+   Tel: (11) 94444-5555
+   Situação: Aposentadoria investida
+   Obs: 67 anos, sem outra fonte de renda
+
+[... continua com mais 152 nomes ...]
+
+────────────────────────────────────────────
+
+RESUMO ESTATÍSTICO:
+
+Total de pessoas que me contataram: 157
+Total confirmado perdido: R$ 12.000.000
+
+Estimativa REAL (segundo contador):
+- Total captado: R$ 80.000.000
+- Número estimado de vítimas: 5.000 pessoas
+- Prejuízo médio por pessoa: R$ 16.000
+
+────────────────────────────────────────────
+
+CASOS MAIS GRAVES:
+
+⚠️ 3 pessoas relataram tentativa de suicídio
+⚠️ 12 pessoas perderam casa/apartamento
+⚠️ 8 pessoas tiveram casamento destruído
+⚠️ 23 idosos perderam aposentadoria
+⚠️ 34 pessoas pegaram empréstimo para investir
+
+────────────────────────────────────────────
+
+AÇÃO NECESSÁRIA:
+
+- Passar lista completa para advogado
+- Enviar para Ministério Público
+- Criar grupo de WhatsApp com vítimas
+- Organizar ação coletiva
+- Buscar ressarcimento via justiça
+
+ISSO NÃO PODE FICAR ASSIM.`
+            },
+            {
+                id: 3,
+                title: "Cronograma Denúncia",
+                date: "28/set - 22:45",
+                preview: "TIMELINE COMPLETA - CASO DIEGO...",
+                important: false,
+                content: `CRONOGRAMA DENÚNCIA
+
+────────────────────────────────────────────
+
+TIMELINE COMPLETA - CASO DIEGO:
+
+✅ 25/JUL - Recebi primeiro alerta de seguidor
+✅ 26/JUL - Solicitei documentos da empresa
+✅ 27/JUL - Contador analisou documentos
+✅ 28/JUL - CONFIRMADO: É pirâmide financeira
+✅ 05/AGO - Consultei Dr. Paulo (advogado)
+✅ 15/SET - Enviei ultimato final para Diego
+✅ 16/SET - Diego me ameaçou por e-mail
+
+⏰ 30/SET (DOMINGO) - Prazo final para Diego se entregar
+
+────────────────────────────────────────────
+
+📅 SEGUNDA-FEIRA 01/OUTUBRO:
+
+09:00h - Dr. Paulo protocola denúncia na CVM
+14:00h - Protocolo no Ministério Público
+20:00h - LIVE DE EXPOSIÇÃO PÚBLICA
+21:00h - BO na delegacia (transmitido ao vivo)
+22:00h - Entrevista para jornalistas (se houver)
+
+────────────────────────────────────────────
+
+📅 TERÇA-FEIRA 02/OUTUBRO:
+
+- Acompanhar repercussão na mídia
+- Responder jornalistas
+- Reunião com advogado
+- Organizar vítimas
+
+────────────────────────────────────────────
+
+📅 QUARTA-FEIRA 03/OUTUBRO:
+
+- Primeira reunião com grupo de vítimas
+- Planejar ação coletiva
+- Pressionar autoridades
+
+────────────────────────────────────────────
+
+DOCUMENTOS PREPARADOS:
+
+✅ Análise do contador (28 páginas)
+✅ Prints de 157 vítimas
+✅ E-mails trocados com Diego
+✅ Contratos da empresa
+✅ Planilha financeira
+✅ Organograma da fraude
+✅ Timeline completa dos fatos
+✅ Lista de testemunhas
+
+────────────────────────────────────────────
+
+TUDO PRONTO. AMANHÃ É O DIA.
+
+Não há volta. Diego teve sua chance.
+
+Agora é com a justiça.`
+            },
+            {
+                id: 4,
+                title: "Documentos para Advogado",
+                date: "26/set - 15:30",
+                preview: "MATERIAL JÁ ENTREGUE PARA DR. PAULO...",
+                important: false,
+                content: `DOCUMENTOS PARA ADVOGADO
+
+────────────────────────────────────────────
+
+MATERIAL JÁ ENTREGUE PARA DR. PAULO:
+
+✅ Cópia da análise técnica do contador
+✅ Prints de conversas com 157 vítimas
+✅ Todos os e-mails trocados com Diego
+✅ Contratos padrão da empresa
+✅ Documentos societários da Almeida Invest
+✅ Comprovantes de pagamento (meu patrocínio)
+✅ Vídeos das minhas recomendações (arquivo)
+
+────────────────────────────────────────────
+
+AINDA PRECISO ENVIAR:
+
+□ Organograma completo do esquema
+□ Planilha atualizada com novos casos
+□ Prints das ameaças mais recentes
+□ Histórico completo de e-mails (2020-2024)
+
+────────────────────────────────────────────
+
+PERGUNTAS PARA O DR. PAULO:
+
+1. Posso ser processado por difamação?
+2. Posso perder a ação de "devolução dos R$ 1,4mi"?
+3. Como proteger as vítimas legalmente?
+4. Quanto tempo até Diego ser preso?
+5. Chance real de ressarcimento das vítimas?
+
+────────────────────────────────────────────
+
+PRÓXIMA REUNIÃO:
+Segunda, 01/out - 08:00h
+Local: Escritório do Dr. Paulo
+
+Levar:
+- Pen drive com backup completo
+- Documentos físicos
+- Lista atualizada de vítimas`
+            },
+            {
+                id: 5,
+                title: "Ideias de Conteúdo - Outubro",
+                date: "20/set - 14:00",
+                preview: "Lives planejadas para outubro...",
+                important: false,
+                content: `IDEIAS DE CONTEÚDO - OUTUBRO
+
+(Essa nota ficou desatualizada após descobrir o caso Diego)
+
+────────────────────────────────────────────
+
+Lives planejadas para outubro:
+
+- 01/out: ❌ CANCELADO - Será a exposição do Diego
+- 08/out: Gameplay novo jogo de terror
+- 15/out: Especial Halloween - maratona 12h
+- 22/out: Colaboração com outros streamers
+- 29/out: Q&A com seguidores
+
+────────────────────────────────────────────
+
+Vídeos para YouTube:
+
+- Top 10 melhores jogos 2024
+- Review do PS5 Pro
+- Dicas para streamers iniciantes
+- Tour pelo novo setup
+
+────────────────────────────────────────────
+
+Nota: Tudo pode mudar dependendo da repercussão do caso.
+
+Provavelmente vou perder patrocínios.
+Provavelmente vou perder seguidores.
+Provavelmente vai ter muita polêmica.
+
+Mas é o certo a fazer.`
+            },
+            {
+                id: 6,
+                title: "Compras do Mês",
+                date: "15/set - 11:20",
+                preview: "Lista de compras para outubro...",
+                important: false,
+                content: `COMPRAS DO MÊS
+
+Lista de compras para outubro:
+
+────────────────────────────────────────────
+
+EQUIPAMENTOS:
+
+□ Novo microfone (atual com chiado)
+  Preço estimado: R$ 3.500
+
+□ Webcam 4K
+  Preço estimado: R$ 2.800
+
+□ Cadeira gamer nova
+  Preço estimado: R$ 2.200
+
+□ Iluminação LED adicional
+  Preço estimado: R$ 1.500
+
+□ SSD 2TB para backup
+  Preço estimado: R$ 1.200
+
+────────────────────────────────────────────
+
+TOTAL: R$ 11.200
+
+Orçamento disponível: R$ 15.000
+
+────────────────────────────────────────────
+
+Nota: Talvez adiar tudo dependendo do que acontecer com o caso Diego.
+
+Vai ter muito gasto com advogado.
+Posso perder patrocínios.
+Melhor segurar as compras por enquanto.`
+            }
+        ];
+
+        // Renderizar lista de notas
+        function renderNotes() {
+            const list = document.getElementById('notesList');
+            list.innerHTML = '';
+            
+            notes.forEach(note => {
+                const noteDiv = document.createElement('div');
+                noteDiv.className = 'note-item' + (note.important ? ' important' : '');
+                noteDiv.onclick = () => openNote(note);
+                
+                noteDiv.innerHTML = `
+                    <div class="note-header">
+                        <div class="note-title">
+                            ${note.title}
+                            ${note.important ? '<span class="important-badge">⚠️ IMPORTANTE</span>' : ''}
+                        </div>
+                        <div class="note-date">${note.date}</div>
+                    </div>
+                    <div class="note-preview">${note.preview}</div>
+                `;
+                
+                list.appendChild(noteDiv);
+            });
+        }
+
+        // Abrir nota
+        function openNote(note) {
+            document.getElementById('noteTitle').textContent = note.title;
+            document.getElementById('noteDate').textContent = note.date;
+            document.getElementById('noteText').textContent = note.content;
+            
+            document.getElementById('noteViewer').classList.add('active');
+            
+            console.log("📝 Nota aberta:", note.title);
+        }
+
+        // Fechar nota
+        function closeNote() {
+            document.getElementById('noteViewer').classList.remove('active');
+        }
+
+        // Inicializar
+        renderNotes();
+        console.log("📝 Notas carregadas - 6 notas disponíveis");
+        console.log("⚠️ Nota 'Roteiro Live Exposição' é CRÍTICA!");
+    </script>
+</body>
+</html>

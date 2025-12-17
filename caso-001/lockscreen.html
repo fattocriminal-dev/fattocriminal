@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.1, maximum-scale=1.1, user-scalable=no">
+    <title>Celular de Lucas - FATTO CRIMINAL</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+background: #191970;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    overflow: hidden;
+    touch-action: none;
+    margin: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+        .iphone-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+			padding-top: -100px;
+        }
+
+        .iphone-frame {
+            width: 375px;
+            height: 812px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+transform: scale(1.0);  /* ← ADICIONE essa linha (aumenta) */
+margin-top: -100px;      /* ← ADICIONE essa linha (sobe) */
+        }
+
+        .notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #1a1a1a;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 20px;
+            padding-top: 14px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .lockscreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 20px 20px 20px;
+            color: #fff;
+            height: calc(100% - 30px);
+            justify-content: space-between;
+        }
+
+        .lock-time {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .lock-day {
+            font-size: 16px;
+            font-weight: 500;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .lock-hour {
+            font-size: 60px;
+            font-weight: 300;
+            margin: 0;
+        }
+
+        .lock-icon {
+            font-size: 36px;
+            margin: 15px 0 8px;
+        }
+
+        .lock-text {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+
+        .pin-dots {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .dot.filled {
+            background: #fff;
+        }
+
+        .pin-dots.error {
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .numpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 260px;
+            margin-bottom: 10px;
+        }
+
+        .num-btn {
+            width: 70px;
+            height: 70px;
+            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            font-size: 22px;
+            font-weight: 300;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .num-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+
+        .num-btn:active {
+            transform: scale(0.95);
+        }
+
+        .error-message {
+            color: #ff3b30;
+            font-size: 13px;
+            margin-top: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-align: center;
+        }
+
+        .error-message.show {
+            opacity: 1;
+        }
+
+        .emergency-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin-top: 5px;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .emergency-btn:hover {
+            opacity: 1;
+        }
+
+        @media (max-height: 900px) {
+            .iphone-frame {
+                transform: scale(0.85);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .iphone-frame {
+                transform: scale(0.75);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="iphone-container">
+        <div class="iphone-frame">
+            <div class="notch"></div>
+            
+            <div class="iphone-screen">
+                <div class="status-bar">
+                    <span class="status-left">📶 5G</span>
+                    <span class="status-right">🔋 87% 20:35</span>
+                </div>
+                
+                <div class="lockscreen">
+                    <div class="lock-time">
+                        <p class="lock-day">Segunda, 30 Set</p>
+                        <h1 class="lock-hour">20:35</h1>
+                    </div>
+                    
+                    <div class="lock-icon">🔒</div>
+                    <p class="lock-text">Digite a senha</p>
+                    
+                    <div class="pin-dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    
+                    <div class="numpad">
+                        <button class="num-btn" data-num="1">1</button>
+                        <button class="num-btn" data-num="2">2</button>
+                        <button class="num-btn" data-num="3">3</button>
+                        <button class="num-btn" data-num="4">4</button>
+                        <button class="num-btn" data-num="5">5</button>
+                        <button class="num-btn" data-num="6">6</button>
+                        <button class="num-btn" data-num="7">7</button>
+                        <button class="num-btn" data-num="8">8</button>
+                        <button class="num-btn" data-num="9">9</button>
+                        <button class="num-btn" data-num="del">⌫</button>
+                        <button class="num-btn" data-num="0">0</button>
+                        <button class="num-btn" data-num="ok">OK</button>
+                    </div>
+                    
+                    <p class="error-message">Senha incorreta! Tente novamente.</p>
+                    <button class="emergency-btn">Emergência</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        console.log("✅ FATTO CRIMINAL - Tela de Bloqueio");
+        
+        let pin = '';
+        const correctPin = '1503';
+        const dots = document.querySelectorAll('.dot');
+        const numButtons = document.querySelectorAll('.num-btn');
+        const errorMessage = document.querySelector('.error-message');
+        const pinDotsContainer = document.querySelector('.pin-dots');
+
+        function updateDots() {
+            dots.forEach((dot, index) => {
+                if (index < pin.length) {
+                    dot.classList.add('filled');
+                } else {
+                    dot.classList.remove('filled');
+                }
+            });
+        }
+
+        function showError() {
+            pinDotsContainer.classList.add('error');
+            errorMessage.classList.add('show');
+            
+            if (navigator.vibrate) {
+                navigator.vibrate(200);
+            }
+            
+            setTimeout(() => {
+                pinDotsContainer.classList.remove('error');
+                errorMessage.classList.remove('show');
+                pin = '';
+                updateDots();
+            }, 1000);
+        }
+
+        function checkPin() {
+            console.log("🔐 Verificando senha:", pin);
+            
+            if (pin === correctPin) {
+                console.log("✅ SENHA CORRETA! Abrindo celular...");
+                
+                // Animação de desbloqueio
+                document.querySelector('.lockscreen').style.opacity = '0';
+                document.querySelector('.lockscreen').style.transform = 'scale(0.9)';
+                document.querySelector('.lockscreen').style.transition = 'all 0.3s';
+                
+                // Redireciona para home
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 300);
+            } else {
+                console.log("❌ Senha incorreta");
+                showError();
+            }
+        }
+
+        numButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const value = button.getAttribute('data-num');
+                
+                if (value === 'del') {
+                    pin = pin.slice(0, -1);
+                    updateDots();
+                } 
+                else if (value === 'ok') {
+                    if (pin.length === 4) {
+                        checkPin();
+                    }
+                } 
+                else {
+                    if (pin.length < 4) {
+                        pin += value;
+                        updateDots();
+                        
+                        if (pin.length === 4) {
+                            setTimeout(() => checkPin(), 300);
+                        }
+                    }
+                }
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key >= '0' && e.key <= '9') {
+                if (pin.length < 4) {
+                    pin += e.key;
+                    updateDots();
+                    if (pin.length === 4) {
+                        setTimeout(() => checkPin(), 300);
+                    }
+                }
+            } else if (e.key === 'Backspace') {
+                pin = pin.slice(0, -1);
+                updateDots();
+            } else if (e.key === 'Enter') {
+                if (pin.length === 4) {
+                    checkPin();
+                }
+            }
+        });
+
+        document.querySelector('.emergency-btn').addEventListener('click', () => {
+            alert('📞 Emergência\n(Simulador apenas)');
+        });
+
+        console.log("🔑 Senha: 1503");
+    </script>
+</body>
+</html>
